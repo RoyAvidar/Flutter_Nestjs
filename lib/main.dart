@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         title: 'Lunchies',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          accentColor: Colors.black,
         ),
         home: OverviewScreen(),
         routes: Routes().routers,

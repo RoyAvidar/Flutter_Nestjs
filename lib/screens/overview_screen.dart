@@ -11,17 +11,23 @@ class OverviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lunchies'),
+        title: const Text('Lunchies'),
       ),
       body: GridView(
+        padding: const EdgeInsets.all(25),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
         ),
         children: DUMMY_PRODUCTS
             .map(
               (prodData) => ProductItem(
+                prodData.id,
                 prodData.name,
                 prodData.description,
+                prodData.imageUrl,
                 prodData.price,
               ),
             )
