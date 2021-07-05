@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_main/providers/auth.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/auth_screen.dart';
 import '../screens/overview_screen.dart';
 import '../widgets/router.dart';
+import './providers/products_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,16 +15,20 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => Auth(),
+          create: (ctx) => ProductsProvider(),
         ),
       ],
       child: MaterialApp(
         title: 'Lunchies',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          accentColor: Colors.black,
+          accentColor: Colors.lightBlue[100],
+          fontFamily: 'Lato',
         ),
-        home: OverviewScreen(),
+        home: DefaultTabController(
+          length: 3,
+          child: OverviewScreen(),
+        ),
         routes: Routes().routers,
       ),
     );

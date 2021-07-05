@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
 class SingleProductScreen extends StatelessWidget {
-  static final routeName = '/singleProduct';
+  static const routeName = '/singleProduct';
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final productName = routeArgs['name'];
-    final productDescriptoin = routeArgs['description'];
-    // final productImageUrl = routeArgs['imageUrl'];
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    // final productName = routeArgs['name'];
+    // final productDescriptoin = routeArgs['description'];
     return Scaffold(
       appBar: AppBar(
-        title: Text(productName),
+        title: Text('title'),
       ),
       body: Center(
-        child: Text(productDescriptoin),
+        child: Text('description'),
       ),
     );
   }
