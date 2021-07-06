@@ -12,13 +12,16 @@ class OverviewScreen extends StatelessWidget {
         bottom: TabBar(
           tabs: [
             Tab(
-              text: 'Sandwiches',
+              text: 'Sandwich',
             ),
             Tab(
               text: 'Salad',
             ),
             Tab(
               text: 'Lunch',
+            ),
+            Tab(
+              text: 'Favorites',
             )
           ],
         ),

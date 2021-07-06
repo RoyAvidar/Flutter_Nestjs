@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/overview_screen.dart';
 import '../widgets/router.dart';
-import './providers/products_provider.dart';
+import 'models/products_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lato',
         ),
         home: DefaultTabController(
-          length: 3,
+          length: 4,
           child: OverviewScreen(),
         ),
         routes: Routes().routers,

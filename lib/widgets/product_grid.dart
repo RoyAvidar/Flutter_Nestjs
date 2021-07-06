@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../dummy_data.dart';
 import '../widgets/product_item.dart';
+import '../models/products_provider.dart';
 
 class ProductGrid extends StatelessWidget {
-  const ProductGrid({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final productsData = Provider.of<ProductsProvider>(context);
+    final products = productsData.items;
     return GridView.builder(
       padding: const EdgeInsets.all(25),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -16,13 +17,17 @@ class ProductGrid extends StatelessWidget {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),
-      itemCount: DUMMY_PRODUCTS.length,
-      itemBuilder: (ctx, i) => ProductItem(
-        DUMMY_PRODUCTS[i].id ?? '',
-        DUMMY_PRODUCTS[i].name ?? '',
-        DUMMY_PRODUCTS[i].description ?? '',
-        DUMMY_PRODUCTS[i].imageUrl ?? '',
-        DUMMY_PRODUCTS[i].price ?? 0,
+      itemCount: products.length,
+      itemBuilder: (ctx, i) => ChangeNotifierProvider(
+        // will return a single product as it stored in the products_provider class.
+        create: (c) => products[i],
+        child: ProductItem(
+            // products[i].id ?? '',
+            // products[i].name ?? '',
+            // products[i].description ?? '',
+            // products[i].imageUrl ?? '',
+            // products[i].price ?? 0,
+            ),
       ),
     );
   }
