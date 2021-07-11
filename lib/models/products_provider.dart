@@ -10,6 +10,7 @@ class ProductsProvider with ChangeNotifier {
       price: 9.99,
       imageUrl:
           'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
+      categoryName: 'Sandwich',
     ),
     Product(
       id: 'c2',
@@ -18,6 +19,7 @@ class ProductsProvider with ChangeNotifier {
       price: 8.99,
       imageUrl:
           'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
+      categoryName: 'Sandwich',
     ),
     Product(
       id: 'c3',
@@ -26,6 +28,7 @@ class ProductsProvider with ChangeNotifier {
       price: 7.99,
       imageUrl:
           'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
+      categoryName: 'Sandwich',
     ),
     Product(
       id: 'c4',
@@ -34,6 +37,7 @@ class ProductsProvider with ChangeNotifier {
       price: 6.99,
       imageUrl:
           'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
+      categoryName: 'Sandwich',
     ),
   ];
 
@@ -44,9 +48,4 @@ class ProductsProvider with ChangeNotifier {
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
-
-  // void _setFavValue(bool newValue) {
-  //   isFavorite = newValue;
-  //   notifyListeners();
-  // }
 }
