@@ -25,10 +25,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.lightBlue[100],
           fontFamily: 'Lato',
         ),
-        home: DefaultTabController(
-          length: 4,
-          child: OverviewScreen(),
-        ),
+        home: OverviewScreen(),
         routes: Routes().routers,
       ),
     );
