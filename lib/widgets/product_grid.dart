@@ -21,7 +21,9 @@ class ProductGrid extends StatelessWidget {
       itemBuilder: (ctx, i) => ChangeNotifierProvider(
         // will return a single product as it stored in the products_provider class.
         create: (c) => products[i],
-        child: ProductItem(),
+        child: products[i].categoryName == 'Sandwich'
+            ? ProductItem()
+            : Container(),
       ),
     );
   }

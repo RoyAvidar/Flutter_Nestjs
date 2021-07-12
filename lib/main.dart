@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         title: 'Lunchies',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          accentColor: Colors.lightBlue[100],
+          accentColor: Colors.lightBlue[200],
           fontFamily: 'Lato',
         ),
         home: OverviewScreen(),

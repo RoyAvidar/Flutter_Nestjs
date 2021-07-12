@@ -3,6 +3,7 @@ import 'package:flutter_main/screens/favorites_screen.dart';
 import 'package:flutter_main/screens/lunch_screen.dart';
 import 'package:flutter_main/screens/salad_screen.dart';
 import 'package:flutter_main/screens/sandwich_screen.dart';
+// import 'package:flutter_main/widgets/product_grid.dart';
 
 const List<Tab> tabs = <Tab>[
   Tab(text: 'Sandwich'),
@@ -33,6 +34,12 @@ class OverviewScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Lunchies'),
             bottom: TabBar(
+              indicatorWeight: 1,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.horizontal(), // Creates border
+                color: Theme.of(context).accentColor,
+              ),
               tabs: tabs,
             ),
           ),
