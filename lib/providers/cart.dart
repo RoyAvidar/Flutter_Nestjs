@@ -21,6 +21,11 @@ class CartProvider with ChangeNotifier {
     return {...?_items};
   }
 
+  //counts the amount of entries in the map.
+  int get itemCount {
+    return _items == null ? 0 : _items!.length;
+  }
+
   void addItem(String productId, double price, String title) {
     if (_items!.containsKey(productId)) {
       //..
@@ -43,5 +48,6 @@ class CartProvider with ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
   }
 }

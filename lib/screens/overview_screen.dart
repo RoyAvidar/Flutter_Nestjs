@@ -3,6 +3,9 @@ import 'package:flutter_main/screens/favorites_screen.dart';
 import 'package:flutter_main/screens/lunch_screen.dart';
 import 'package:flutter_main/screens/salad_screen.dart';
 import 'package:flutter_main/screens/sandwich_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/cart.dart';
+import '../widgets/badge.dart';
 // import 'package:flutter_main/widgets/product_grid.dart';
 
 const List<Tab> tabs = <Tab>[
@@ -12,9 +15,14 @@ const List<Tab> tabs = <Tab>[
   Tab(text: 'Favorites'),
 ];
 
-class OverviewScreen extends StatelessWidget {
+class OverviewScreen extends StatefulWidget {
   const OverviewScreen({Key? key}) : super(key: key);
 
+  @override
+  _OverviewScreenState createState() => _OverviewScreenState();
+}
+
+class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -43,7 +51,18 @@ class OverviewScreen extends StatelessWidget {
               tabs: tabs,
             ),
             actions: [
-              Icon(Icons.shopping_cart),
+              Consumer<CartProvider>(
+                builder: (context, cart, ch) => Badge(
+                  child: ch,
+                  value: cart.itemCount.toString(),
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.shopping_bag,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
           body: TabBarView(
