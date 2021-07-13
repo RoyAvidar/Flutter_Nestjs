@@ -42,6 +42,9 @@ class OverviewScreen extends StatelessWidget {
               ),
               tabs: tabs,
             ),
+            actions: [
+              Icon(Icons.shopping_cart),
+            ],
           ),
           body: TabBarView(
             children: [
