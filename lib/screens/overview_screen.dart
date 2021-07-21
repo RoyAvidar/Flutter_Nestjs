@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/screens/favorites_screen.dart';
-import 'package:flutter_main/screens/lunch_screen.dart';
-import 'package:flutter_main/screens/salad_screen.dart';
-import 'package:flutter_main/screens/sandwich_screen.dart';
 import 'package:provider/provider.dart';
+import '../screens/salad_screen.dart';
+import '../screens/sandwich_screen.dart';
+import '../screens/lunch_screen.dart';
+import '../screens/cart_screen.dart';
 import '../providers/cart.dart';
 import '../widgets/badge.dart';
 // import 'package:flutter_main/widgets/product_grid.dart';
@@ -60,7 +61,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   icon: Icon(
                     Icons.shopping_bag,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CartScreen.routeName);
+                  },
                 ),
               ),
             ],

@@ -19,13 +19,26 @@ class SingleProductScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(loadedProduct.name.toString()),
       ),
-      body: Container(
-        child: ListView(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            Center(
-              child: Text(
-                loadedProduct.description.toString(),
+            Container(
+              height: 250,
+              width: double.infinity,
+              child: Image.network(
+                loadedProduct.imageUrl!,
+                fit: BoxFit.cover,
               ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              '\$${loadedProduct.price.toString()}',
+            ),
+            SizedBox(height: 10),
+            Text(
+              loadedProduct.description.toString(),
+              textAlign: TextAlign.center,
+              softWrap: true,
             ),
             ElevatedButton(
               onPressed: () {
