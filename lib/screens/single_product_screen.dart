@@ -42,8 +42,11 @@ class SingleProductScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                cart.addItem(loadedProduct.id!, loadedProduct.price!,
-                    loadedProduct.name!);
+                cart.addItem(
+                  loadedProduct.id!,
+                  loadedProduct.price!,
+                  loadedProduct.name!,
+                );
               },
               child: Text('Add To Cart'),
             )

@@ -31,14 +31,14 @@ class AppDrawer extends StatelessWidget {
                   .pushReplacementNamed(OrdersScreen.routeName);
             },
           ),
-          // Divider(),
-          // ListTile(
-          //   title: Text('Shop'),
-          //   leading: Icon(Icons.shop),
-          //   onTap: () {
-          //     Navigator.of(context).pushReplacementNamed('/');
-          //   },
-          // ),
+          Divider(),
+          ListTile(
+            title: Text('Logout'),
+            leading: Icon(Icons.logout),
+            onTap: () {
+              // Navigator.of(context).pushReplacementNamed('/');
+            },
+          ),
         ],
       ),
     );

@@ -54,6 +54,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
               tabs: tabs,
             ),
             actions: [
+              //consumer only rebuilds a part of a widget.
               Consumer<CartProvider>(
                 builder: (context, cart, ch) => Badge(
                   child: ch,
