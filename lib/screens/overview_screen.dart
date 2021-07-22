@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/screens/favorites_screen.dart';
 import 'package:provider/provider.dart';
+
+import '../widgets/app_drawer.dart';
 import '../screens/salad_screen.dart';
 import '../screens/sandwich_screen.dart';
 import '../screens/lunch_screen.dart';
@@ -68,6 +70,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
               ),
             ],
           ),
+          drawer: AppDrawer(),
           body: TabBarView(
             children: [
               SandwichScreen(),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show CartProvider;
 import '../widgets/cart_item.dart';
+import '../providers/orders.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -57,7 +58,13 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<OrdersProvider>(context, listen: false).addOrder(
+                cart.items.values.toList(),
+                cart.totalAmount,
+              );
+              cart.clearCart();
+            },
             style: buttonStyle,
             child: Text('Order Now'),
           ),
