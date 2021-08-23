@@ -7,7 +7,7 @@ import '../../widgets/app_drawer.dart';
 import './edit_product_screen.dart';
 
 class AdminProductsScreen extends StatelessWidget {
-  static const routeName = 'admin-products';
+  static const routeName = '/admin-products';
 
   const AdminProductsScreen({Key? key}) : super(key: key);
 
@@ -19,11 +19,12 @@ class AdminProductsScreen extends StatelessWidget {
         title: const Text('Hello Admin'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.add),
             onPressed: () {
               //... navigate to the add product screen.
-              Navigator.of(context).pushNamed(EditProductScreen.routeName);
+              Navigator.of(context)
+                  .pushNamed(EditProductScreen.routeName, arguments: null);
             },
-            icon: const Icon(Icons.add),
           ),
         ],
       ),
@@ -32,6 +33,7 @@ class AdminProductsScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(10),
         child: ListView.builder(
+          itemCount: productsData.items.length,
           itemBuilder: (_, i) => Column(
             children: [
               AdminProductItem(
@@ -42,7 +44,6 @@ class AdminProductsScreen extends StatelessWidget {
               Divider(),
             ],
           ),
-          itemCount: productsData.items.length,
         ),
       ),
     );

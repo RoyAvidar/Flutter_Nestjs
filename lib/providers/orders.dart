@@ -36,4 +36,8 @@ class OrdersProvider with ChangeNotifier {
     );
     notifyListeners();
   }
+
+  double get totalAmount {
+    return totalAmount;
+  }
 }

@@ -26,6 +26,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
     imageUrl: '',
     categoryName: '',
   );
+  var _initValues = {
+    'title': '',
+    'description': '',
+    'price': '',
+    'category': '',
+    'imageUrl': '',
+  };
   var _isInit = true;
 
   void _updateImageUrl() {
@@ -36,9 +43,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
     _form.currentState!.save();
-    Provider.of<ProductsProvider>(context, listen: false)
-        .addProduct(_editedProduct);
+    //editing
+    if (_editedProduct.id != null) {
+      Provider.of<ProductsProvider>(context, listen: false)
+          .updateProduct(_editedProduct.id!, _editedProduct);
+    } else {
+      Provider.of<ProductsProvider>(context, listen: false)
+          .addProduct(_editedProduct);
+    }
     Navigator.of(context).pop();
   }
 
@@ -53,10 +70,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      final productId = ModalRoute.of(context)!.settings.arguments as String;
-      final product = Provider.of<ProductsProvider>(context, listen: false)
-          .findById(productId);
-      _editedProduct = product;
+      final productId = ModalRoute.of(context)!.settings.arguments;
+      if (productId != null) {
+        _editedProduct = Provider.of<ProductsProvider>(context, listen: false)
+            .findById(productId as String);
+        _initValues = {
+          'title': _editedProduct.name!,
+          'description': _editedProduct.description!,
+          'price': _editedProduct.price!.toString(),
+          'category': _editedProduct.categoryName!,
+          // 'imageUrl': _editedProduct.imageUrl!
+          'imageUrl': '',
+        };
+        _imageUrlController.text = _editedProduct.imageUrl!;
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -85,6 +112,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: [
               TextFormField(
+                initialValue: _initValues['title'],
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 validator: (value) {
@@ -96,7 +124,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
-                    id: null,
+                    id: _editedProduct.id,
+                    isFavorite: _editedProduct.isFavorite,
                     name: value,
                     price: _editedProduct.price,
                     description: _editedProduct.description,
@@ -106,6 +135,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValues['price'],
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -124,7 +154,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
-                    id: null,
+                    id: _editedProduct.id,
+                    isFavorite: _editedProduct.isFavorite,
                     name: _editedProduct.name,
                     price: double.parse(value!),
                     description: _editedProduct.description,
@@ -134,6 +165,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValues['description'],
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
@@ -146,7 +178,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
-                    id: null,
+                    id: _editedProduct.id,
+                    isFavorite: _editedProduct.isFavorite,
                     name: _editedProduct.name,
                     price: _editedProduct.price,
                     description: value,
@@ -155,28 +188,34 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   );
                 },
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Category'),
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please provide a value.';
-                  }
-                  // if (value.contains(other)) {}
-                  else {
-                    return null;
-                  }
-                },
-                onSaved: (value) {
+              DropdownButton<String>(
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 20,
+                elevation: 16,
+                style: const TextStyle(color: Colors.lightBlue),
+                underline: Container(
+                  height: 2,
+                  color: Colors.blue,
+                ),
+                onChanged: (value) {
                   _editedProduct = Product(
-                    id: null,
+                    id: _editedProduct.id,
+                    isFavorite: _editedProduct.isFavorite,
                     name: _editedProduct.name,
                     price: _editedProduct.price,
                     description: _editedProduct.description,
                     imageUrl: _editedProduct.imageUrl,
                     categoryName: value,
                   );
+                  setState(() {});
                 },
+                items: <String>['Sandwich', 'Salad', 'Lunch']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
               // By adding onEditingComplete now and by calling setState() in there (even though it's empty), we force Flutter to update the screen.
               Row(
@@ -230,7 +269,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                       onSaved: (value) {
                         _editedProduct = Product(
-                          id: null,
+                          id: _editedProduct.id,
+                          isFavorite: _editedProduct.isFavorite,
                           name: _editedProduct.name,
                           price: _editedProduct.price,
                           description: _editedProduct.description,
