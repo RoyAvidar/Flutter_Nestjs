@@ -14,6 +14,16 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //connection to the server.
+    // final HttpLink link = HttpLink(uri: "http://10.0.2.2:4000/");
+
+    // ValueNotifier<GraphQLClient> client =
+    //     ValueNotifier(GraphQLClient(cache: InMemoryCache(), link: link));
+    //return GraphQLProvider(
+    // client: client,
+    //  home: ...,
+    // )
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

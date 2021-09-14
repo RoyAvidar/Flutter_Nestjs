@@ -24,11 +24,11 @@ class Auth with ChangeNotifier {
 //     return nu
 //   }
 
-//   Future<void> singup(String email, String password) async {
+//   Future<void> singup(String userName, String password) async {
 
 //   }
 
-//   Future<void> login(String email, String password) async {
+//   Future<void> login(String userName, String password) async {
 
 //   }
 
