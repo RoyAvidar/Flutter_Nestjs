@@ -289,6 +289,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
               IconButton(
                 onPressed: _saveForm,
                 icon: Icon(Icons.save),
+                color: Colors.green,
               ),
             ],
           ),

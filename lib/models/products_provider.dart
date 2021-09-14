@@ -11,7 +11,7 @@ class ProductsProvider with ChangeNotifier {
       imageUrl:
           'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
       categoryName: 'Sandwich',
-      // isFavorite: true,
+      isFavorite: true,
     ),
     Product(
       id: 'c2',
