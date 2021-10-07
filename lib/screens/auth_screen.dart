@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
+const loginGraphQl = """
+  mutation {
+    login(userName: "roy", userPassword: "1234")
+  }
+""";
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -22,7 +27,7 @@ class _AuthScreenState extends State<AuthScreen> {
             obscureText: true,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'Name',
+              labelText: 'User Name',
             ),
           ),
           TextField(
@@ -39,6 +44,14 @@ class _AuthScreenState extends State<AuthScreen> {
               onPrimary: Colors.black,
             ),
             child: Text('Login'),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              primary: Colors.blue,
+              onPrimary: Colors.black,
+            ),
+            child: Text('Sign Up'),
           )
         ],
       ),

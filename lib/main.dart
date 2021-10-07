@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.lightBlue[200],
           fontFamily: 'Lato',
         ),
-        home: OverviewScreen(),
+        home: AuthScreen(),
         routes: Routes().routers,
       ),
     );
