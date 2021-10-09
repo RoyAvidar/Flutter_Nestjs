@@ -20,7 +20,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('Shop'),
             leading: Icon(Icons.shop),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('/');
+              Navigator.of(context).pushReplacementNamed('/overView');
             },
           ),
           Divider(),

@@ -1,3 +1,5 @@
+import 'package:flutter_main/screens/overview_screen.dart';
+
 import '../screens/single_product_screen.dart';
 import '../screens/cart_screen.dart';
 import '../screens/auth_screen.dart';
@@ -13,5 +15,6 @@ class Routes {
     OrdersScreen.routeName: (ctx) => OrdersScreen(),
     AdminProductsScreen.routeName: (ctx) => AdminProductsScreen(),
     EditProductScreen.routeName: (ctx) => EditProductScreen(),
+    OverviewScreen.routeName: (ctx) => OverviewScreen()
   };
 }

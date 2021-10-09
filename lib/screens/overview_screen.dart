@@ -19,7 +19,7 @@ const List<Tab> tabs = <Tab>[
 ];
 
 class OverviewScreen extends StatefulWidget {
-  const OverviewScreen({Key? key}) : super(key: key);
+  static final routeName = '/overView';
 
   @override
   _OverviewScreenState createState() => _OverviewScreenState();
