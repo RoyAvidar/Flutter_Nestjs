@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
 import '../providers/orders.dart';
-import '../screens/overview_screen.dart';
 import '../widgets/router.dart';
 import 'models/products_provider.dart';
 
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
         title: 'Lunchies',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          accentColor: Colors.lightBlue[200],
+          accentColor: Colors.lightBlue,
           fontFamily: 'Lato',
         ),
         home: AuthScreen(),

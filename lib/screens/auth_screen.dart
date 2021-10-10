@@ -36,7 +36,20 @@ class _AuthScreenState extends State<AuthScreen> {
   TextEditingController userPassController = TextEditingController();
   TextEditingController validatePassController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
-  var authMode = true;
+  // var authMode = true;
+  AuthMode _authMode = AuthMode.Login;
+
+  void _switchAuthMode() {
+    if (_authMode == AuthMode.Login) {
+      setState(() {
+        _authMode = AuthMode.Signup;
+      });
+    } else {
+      setState(() {
+        _authMode = AuthMode.Login;
+      });
+    }
+  }
 
   login() async {
     String userName = userNameController.text;
@@ -113,6 +126,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 controller: userNameController,
               ),
+              Divider(
+                height: 16,
+              ),
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -121,50 +137,67 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 controller: userPassController,
               ),
-              !authMode
-                  ? Column(
-                      children: [
-                        TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Validate Password',
-                          ),
-                          controller: validatePassController,
-                        ),
-                        TextField(
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'User Phone',
-                          ),
-                          controller: userPhoneController,
-                        ),
-                      ],
-                    )
-                  : Container(),
-              ElevatedButton(
-                onPressed: login,
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  onPrimary: Colors.black,
-                ),
-                child: Text('Login'),
+              Divider(
+                height: 16,
               ),
-              ElevatedButton(
-                onPressed: !authMode
-                    ? signUp
-                    : () => {
-                          setState(() {
-                            authMode = !authMode;
-                          })
-                        },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  onPrimary: Colors.black,
+              if (_authMode == AuthMode.Signup)
+                Column(
+                  children: [
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Validate Password',
+                      ),
+                      controller: validatePassController,
+                    ),
+                    Divider(
+                      height: 16,
+                    ),
+                    TextField(
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'User Phone',
+                      ),
+                      controller: userPhoneController,
+                    ),
+                    Divider(
+                      height: 16,
+                    ),
+                  ],
+                )
+              else
+                Container(),
+              Divider(
+                height: 10,
+              ),
+              TextButton(
+                onPressed: _switchAuthMode,
+                child: const Text('Register'),
+                style: TextButton.styleFrom(primary: Colors.black),
+              ),
+              if (_authMode == AuthMode.Login)
+                ElevatedButton(
+                  onPressed: login,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    onPrimary: Colors.black,
+                  ),
+                  child: Text('Login'),
                 ),
-                child: Text('Sign Up'),
-              )
+              Divider(
+                height: 10,
+              ),
+              if (_authMode == AuthMode.Signup)
+                ElevatedButton(
+                  onPressed: signUp,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    onPrimary: Colors.black,
+                  ),
+                  child: Text('Sign Up'),
+                )
             ],
           ),
         ),

@@ -39,6 +39,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
           if (!tabController.indexIsChanging) {
             // Your code goes here.
             // To get index of current tab use tabController.index
+            // var tab = tabController.index;
           }
         });
         return Scaffold(
@@ -79,14 +80,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
               LunchScreen(),
               FavoriteScreen(),
             ],
-            // children: tabs.map((Tab tab) {
-            //   return Center(
-            //     child: Text(
-            //       tab.text! + ' Tab',
-            //       style: Theme.of(context).textTheme.headline5,
-            //     ),
-            //   );
-            // }).toList(),
           ),
         );
       }),
