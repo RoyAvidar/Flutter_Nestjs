@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const loginGraphQl = """
   
@@ -67,8 +68,10 @@ class _AuthScreenState extends State<AuthScreen> {
     if (result.hasException) {
       print(result.exception);
     } else {
-      // add a provider that takes this token.
+      // add the token to the Shared Preferences so we can use it globaly.
+      final prefs = await SharedPreferences.getInstance();
       final token = result.data!['login'];
+      prefs.setString('token', token);
       Navigator.of(context).pushNamed(OverviewScreen.routeName);
     }
   }
@@ -126,7 +129,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 controller: userNameController,
               ),
-              Divider(
+              SizedBox(
                 height: 16,
               ),
               TextField(
@@ -137,7 +140,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 controller: userPassController,
               ),
-              Divider(
+              SizedBox(
                 height: 16,
               ),
               if (_authMode == AuthMode.Signup)
@@ -151,7 +154,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       controller: validatePassController,
                     ),
-                    Divider(
+                    SizedBox(
                       height: 16,
                     ),
                     TextField(
@@ -162,21 +165,13 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       controller: userPhoneController,
                     ),
-                    Divider(
+                    SizedBox(
                       height: 16,
                     ),
                   ],
                 )
               else
                 Container(),
-              Divider(
-                height: 10,
-              ),
-              TextButton(
-                onPressed: _switchAuthMode,
-                child: const Text('Register'),
-                style: TextButton.styleFrom(primary: Colors.black),
-              ),
               if (_authMode == AuthMode.Login)
                 ElevatedButton(
                   onPressed: login,
@@ -197,7 +192,17 @@ class _AuthScreenState extends State<AuthScreen> {
                     onPrimary: Colors.black,
                   ),
                   child: Text('Sign Up'),
-                )
+                ),
+              Divider(
+                height: 10,
+              ),
+              TextButton(
+                onPressed: _switchAuthMode,
+                child: const Text('Register'),
+                style: TextButton.styleFrom(
+                  primary: Theme.of(context).primaryColor,
+                ),
+              ),
             ],
           ),
         ),

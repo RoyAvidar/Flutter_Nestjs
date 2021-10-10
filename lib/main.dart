@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -15,27 +16,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => ProductsProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => CartProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => OrdersProvider(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Lunchies',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.lightBlue,
-          fontFamily: 'Lato',
-        ),
-        home: AuthScreen(),
-        routes: Routes().routers,
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider(
+            create: (ctx) => AuthProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (ctx) => ProductsProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (ctx) => CartProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (ctx) => OrdersProvider(),
+          ),
+        ],
+        child: Consumer<AuthProvider>(
+          builder: (ctx, authData, child) => MaterialApp(
+            title: 'Lunchies',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              accentColor: Colors.lightBlue,
+              fontFamily: 'Lato',
+            ),
+            home: AuthScreen(),
+            routes: Routes().routers,
+          ),
+        ));
   }
 }
