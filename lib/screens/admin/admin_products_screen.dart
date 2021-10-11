@@ -14,6 +14,7 @@ class AdminProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<ProductsProvider>(context);
+    final products = await productsData.items;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hello Admin'),
@@ -33,13 +34,13 @@ class AdminProductsScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(10),
         child: ListView.builder(
-          itemCount: productsData.items.length,
+          itemCount: products.length,
           itemBuilder: (_, i) => Column(
             children: [
               AdminProductItem(
-                productsData.items[i].id!,
-                productsData.items[i].name!,
-                productsData.items[i].imageUrl!,
+                products[i].id!,
+                products[i].name!,
+                products[i].imageUrl!,
               ),
               Divider(),
             ],

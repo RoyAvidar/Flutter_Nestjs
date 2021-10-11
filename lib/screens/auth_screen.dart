@@ -5,10 +5,8 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const loginGraphQl = """
-  
     mutation login(\$userName: String!, \$userPassword: String!) {
       login(userName: \$userName, userPassword: \$userPassword)
-    
   }
 """;
 

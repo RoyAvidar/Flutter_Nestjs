@@ -1,50 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/config/gql_client.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'product.dart';
 
-class ProductsProvider with ChangeNotifier {
-  List<Product> _items = [
-    Product(
-      id: 'c1',
-      name: 'Test',
-      description: 'This is a test',
-      price: 9.99,
-      imageUrl:
-          'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
-      categoryName: 'Sandwich',
-      isFavorite: true,
-    ),
-    Product(
-      id: 'c2',
-      name: 'Test2',
-      description: 'This is a test2',
-      price: 8.99,
-      imageUrl:
-          'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
-      categoryName: 'Salad',
-    ),
-    Product(
-      id: 'c3',
-      name: 'Test3',
-      description: 'This is a test3',
-      price: 7.99,
-      imageUrl:
-          'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
-      categoryName: 'Lunch',
-    ),
-    Product(
-      id: 'c4',
-      name: 'Test4',
-      description: 'This is a test4',
-      price: 6.99,
-      imageUrl:
-          'https://ichef.bbci.co.uk/news/976/cpsprodpb/14C52/production/_92847058_c3c1256f-1f69-45fe-ade5-a1822e3d9b9c.jpg',
-      categoryName: 'Sandwich',
-    ),
-  ];
+const productsGraphql = """
+  query {
+    products {
+      productId,
+      productName,
+      productPrice,
+      productDesc,
+      imageUrl,
+      category {
+        categoryName
+      }
+    }
+}
+""";
 
-  List<Product> get items {
-    return [..._items];
+const createProductGraphql = """
+  mutation createProduct(\$createProductData: CreateProductData!) {
+    createProduct(createProductData: \$createProductData) {
+      productName
+      productPrice
+      productDesc
+      imageUrl
+      categoryId
+    }
   }
+""";
+
+class ProductsProvider with ChangeNotifier {
+  List<Product> _items = [];
+
+  Future<List<Product>> get items async {
+    QueryOptions queryOptions = QueryOptions(document: gql(productsGraphql));
+    QueryResult result = await GraphQLConfig.client.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception.toString());
+    }
+    final productsList = result.data?['products'];
+    _items.addAll(productsList);
+    return _items;
+  }
+
+  // List<Product> get items {
+  //   return _items;
+  // }
 
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
