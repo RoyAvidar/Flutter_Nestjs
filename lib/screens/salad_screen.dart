@@ -15,9 +15,17 @@ class _SaladScreenState extends State<SaladScreen> {
   List<Product> products = [];
 
   Future<List<Product>> getProds() async {
-    final prods = await Provider.of<ProductsProvider>(context).items;
+    final prods =
+        await Provider.of<ProductsProvider>(context, listen: false).items;
     products = prods;
     return products;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getProds();
   }
 
   @override

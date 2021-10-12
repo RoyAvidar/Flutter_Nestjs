@@ -20,12 +20,6 @@ class _ProductGridState extends State<ProductGrid> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    this.getProds();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.all(25),
