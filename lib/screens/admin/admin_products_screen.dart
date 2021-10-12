@@ -17,10 +17,11 @@ class AdminProductsScreen extends StatefulWidget {
 }
 
 class _AdminProductsScreenState extends State<AdminProductsScreen> {
-  @override
-  Future<List<Product>> initState() async {
-    super.initState();
-    final products = await Provider.of<ProductsProvider>(context).items;
+  List<Product> products = [];
+
+  Future<List<Product>> getProds() async {
+    final prods = await Provider.of<ProductsProvider>(context).items;
+    products = prods;
     return products;
   }
 
@@ -44,19 +45,19 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
       //can use consumer here, insted of provider.
       body: Padding(
         padding: EdgeInsets.all(10),
-        // child: ListView.builder(
-        //   itemCount: products.length,
-        //   itemBuilder: (_, i) => Column(
-        //     children: [
-        //       AdminProductItem(
-        //         products[i].id!,
-        //         products[i].name!,
-        //         products[i].imageUrl!,
-        //       ),
-        //       Divider(),
-        //     ],
-        //   ),
-        // ),
+        child: ListView.builder(
+          itemCount: products.length,
+          itemBuilder: (_, i) => Column(
+            children: [
+              AdminProductItem(
+                products[i].id!,
+                products[i].name!,
+                products[i].imageUrl!,
+              ),
+              Divider(),
+            ],
+          ),
+        ),
       ),
     );
   }
