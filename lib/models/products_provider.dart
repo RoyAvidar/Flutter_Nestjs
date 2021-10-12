@@ -39,9 +39,8 @@ class ProductsProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception.toString());
     }
-    print(result.data?['products']);
     _items.addAll(result.data?['products']);
-    print(_items);
+    print(_items.length);
     notifyListeners();
     return _items;
   }
