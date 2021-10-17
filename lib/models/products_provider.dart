@@ -40,6 +40,7 @@ class ProductsProvider with ChangeNotifier {
       print(result.exception.toString());
     }
     (result.data?['products'] as List).map((prod) => _items.add(prod));
+    print(_items);
     notifyListeners();
     return _items;
   }
