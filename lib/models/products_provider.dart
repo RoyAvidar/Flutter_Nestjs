@@ -21,13 +21,12 @@ const productsGraphql = """
 """;
 
 const createProductGraphql = """
-  mutation createProduct(\$createProductData: CreateProductData!) {
-    createProduct(createProductData: \$createProductData) {
+  mutation createProduct(\$createProductInput: CreateProductInput!) {
+    createProduct(createProductInput: \$createProductInput) {
       productName
       productPrice
       productDesc
       imageUrl
-      categoryId
     }
   }
 """;
@@ -65,7 +64,7 @@ class ProductsProvider with ChangeNotifier {
     MutationOptions queryOptions = MutationOptions(
         document: gql(createProductGraphql),
         variables: <String, dynamic>{
-          "createProductData": {
+          "createProductInput": {
             "productName": productName,
             "productPrice": productPrice,
             "productDesc": productDescription,
