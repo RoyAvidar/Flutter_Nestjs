@@ -42,8 +42,7 @@ class _SaladScreenState extends State<SaladScreen> {
       itemBuilder: (ctx, i) => ChangeNotifierProvider(
         // will return a single product as it stored in the products_provider class.
         create: (c) => products[i],
-        child:
-            products[i].categoryName == 'Salad' ? ProductItem() : Container(),
+        child: products[i].categoryId == 1 ? ProductItem() : Container(),
       ),
     );
   }

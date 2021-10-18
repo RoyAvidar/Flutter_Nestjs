@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -53,18 +55,29 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
-    final newProduct = Product(
-      id: DateTime.now().toString(),
-      name: product.name,
-      price: product.price,
-      description: product.description,
-      categoryName: product.categoryName,
-      imageUrl: product.imageUrl,
-    );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct);
-    notifyListeners();
+  void addProduct(Product product) async {
+    String? productName = product.name;
+    double? productPrice = product.price;
+    String? productDescription = product.description;
+    String? productImageUrl = product.imageUrl;
+    int? productCategory = product.categoryId;
+
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(createProductGraphql),
+        variables: <String, dynamic>{
+          "createProductData": {
+            "productName": productName,
+            "productPrice": productPrice,
+            "productDesc": productDescription,
+            "imageUrl": productImageUrl,
+            "categoryId": productCategory
+          }
+        });
+
+    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
   }
 
   void updateProduct(String id, Product newProduct) {

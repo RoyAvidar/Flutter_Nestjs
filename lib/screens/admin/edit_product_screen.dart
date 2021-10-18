@@ -24,7 +24,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     description: '',
     price: 0,
     imageUrl: '',
-    categoryName: '',
+    categoryId: 0,
   );
   var _initValues = {
     'title': '',
@@ -78,7 +78,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           'title': _editedProduct.name!,
           'description': _editedProduct.description!,
           'price': _editedProduct.price!.toString(),
-          'category': _editedProduct.categoryName!,
+          'category': _editedProduct.categoryId!.toString(),
           // 'imageUrl': _editedProduct.imageUrl!
           'imageUrl': '',
         };
@@ -130,7 +130,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: _editedProduct.price,
                     description: _editedProduct.description,
                     imageUrl: _editedProduct.imageUrl,
-                    categoryName: _editedProduct.categoryName,
+                    categoryId: _editedProduct.categoryId,
                   );
                 },
               ),
@@ -160,7 +160,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: double.parse(value!),
                     description: _editedProduct.description,
                     imageUrl: _editedProduct.imageUrl,
-                    categoryName: _editedProduct.categoryName,
+                    categoryId: _editedProduct.categoryId,
                   );
                 },
               ),
@@ -184,11 +184,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: _editedProduct.price,
                     description: value,
                     imageUrl: _editedProduct.imageUrl,
-                    categoryName: _editedProduct.categoryName,
+                    categoryId: _editedProduct.categoryId,
                   );
                 },
               ),
-              DropdownButton<String>(
+              DropdownButton<int>(
                 icon: const Icon(Icons.arrow_downward),
                 iconSize: 20,
                 elevation: 16,
@@ -205,15 +205,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: _editedProduct.price,
                     description: _editedProduct.description,
                     imageUrl: _editedProduct.imageUrl,
-                    categoryName: value,
+                    categoryId: value,
                   );
                   setState(() {});
                 },
-                items: <String>['Sandwich', 'Salad', 'Lunch']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
+                items: <int>[1, 2, 3].map<DropdownMenuItem<int>>((int value) {
+                  return DropdownMenuItem<int>(
                     value: value,
-                    child: Text(value),
+                    child: Text(value.toString()),
                   );
                 }).toList(),
               ),
@@ -275,7 +274,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           price: _editedProduct.price,
                           description: _editedProduct.description,
                           imageUrl: value,
-                          categoryName: _editedProduct.categoryName,
+                          categoryId: _editedProduct.categoryId,
                         );
                       },
                       onFieldSubmitted: (_) {

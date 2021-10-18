@@ -41,8 +41,7 @@ class _LunchScreenState extends State<LunchScreen> {
       itemBuilder: (ctx, i) => ChangeNotifierProvider(
         // will return a single product as it stored in the products_provider class.
         create: (c) => products[i],
-        child:
-            products[i].categoryName == 'Lunch' ? ProductItem() : Container(),
+        child: products[i].categoryId == 2 ? ProductItem() : Container(),
       ),
     );
   }

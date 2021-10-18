@@ -35,7 +35,6 @@ class _AuthScreenState extends State<AuthScreen> {
   TextEditingController userPassController = TextEditingController();
   TextEditingController validatePassController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
-  // var authMode = true;
   AuthMode _authMode = AuthMode.Login;
 
   void _switchAuthMode() {
