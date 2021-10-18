@@ -31,6 +31,25 @@ const createProductGraphql = """
   }
 """;
 
+const updateProductGraphql = """
+  mutation updateProduct(\$prodId: prodId!, \$updateProductData: UpdateProductData!) {
+    updateProduct(updateProductData: \$updateProductData) {
+      productName
+      productPrice
+      productDesc
+      imageUrl
+    }
+  }
+""";
+
+const deleteProductGraphql = """
+  mutation deleteProduct(\$deleteProductData: DeleteProductInput!) {
+    deleteProduct(deleteProductData: \$deleteProductData) {
+      productId
+    }
+  }
+""";
+
 class ProductsProvider with ChangeNotifier {
   List<Product> _items = [];
 
@@ -79,16 +98,49 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, Product newProduct) {
+  void updateProduct(String id, Product newProduct) async {
+    String? productName = newProduct.name;
+    double? productPrice = newProduct.price;
+    String? productDescription = newProduct.description;
+    String? productImageUrl = newProduct.imageUrl;
+    int? productCategory = newProduct.categoryId;
+
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      _items[prodIndex] = newProduct;
+      MutationOptions queryOptions = MutationOptions(
+          document: gql(updateProductGraphql),
+          variables: <String, dynamic>{
+            "updateProductData": {
+              "productName": productName,
+              "productPrice": productPrice,
+              "productDesc": productDescription,
+              "imageUrl": productImageUrl,
+              "categoryId": productCategory
+            }
+          });
+      QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+      if (result.hasException) {
+        print(result.exception);
+      }
       notifyListeners();
     }
   }
 
-  void deleteProduct(String id) {
-    _items.removeWhere((prod) => prod.id == id);
+  Future<bool> deleteProduct(String id) async {
+    // final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(deleteProductGraphql),
+        variables: <String, dynamic>{
+          "deleteProductData": {"productId": id}
+        });
+    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+
+    //go over the _items and see if its the right product.
+    if (result.data?['id']) {
+      // some code...
+      return true;
+    }
     notifyListeners();
+    return false;
   }
 }
