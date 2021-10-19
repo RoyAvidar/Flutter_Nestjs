@@ -1,25 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/models/order.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/app_drawer.dart';
 import '../providers/orders.dart' show OrdersProvider;
 import '../widgets/order_item.dart';
 
-class OrdersScreen extends StatelessWidget {
-  const OrdersScreen({Key? key}) : super(key: key);
+class OrdersScreen extends StatefulWidget {
   static const routeName = '/orders';
 
   @override
+  State<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
+  List<Order> orders = [];
+
+  Future<List<Order>> getOrders() async {
+    final ord =
+        await Provider.of<OrdersProvider>(context, listen: false).getOrders;
+    orders = ord;
+    return orders;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getOrders();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final orders = Provider.of<OrdersProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Order'),
       ),
       drawer: AppDrawer(),
       body: ListView.builder(
-        itemBuilder: (ctx, i) => OrderItem(orders.getOrders[i]),
-        itemCount: orders.getOrders.length,
+        padding: const EdgeInsets.all(12),
+        itemCount: orders.length,
+        itemBuilder: (ctx, i) => ChangeNotifierProvider(
+          create: (c) => orders[i],
+          child: OrderItem(orders[i]),
+        ),
       ),
     );
   }

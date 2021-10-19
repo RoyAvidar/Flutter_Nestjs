@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/cart.dart';
 
-class Order {
+class Order with ChangeNotifier {
   final String? id;
   final double? totalAmount;
   final List<CartItem>? products;
