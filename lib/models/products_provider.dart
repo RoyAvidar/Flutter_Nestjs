@@ -136,11 +136,11 @@ class ProductsProvider with ChangeNotifier {
     QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
 
     //go over the _items and see if its the right product.
-    if (result.data?['id']) {
+    if (result.data?['id'] == id) {
       // some code...
-      return true;
+      return false;
     }
     notifyListeners();
-    return false;
+    return true;
   }
 }
