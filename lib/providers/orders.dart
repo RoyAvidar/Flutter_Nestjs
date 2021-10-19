@@ -21,7 +21,13 @@ const ordersGraphql = """
 """;
 
 const createOrderGraphql = """
-  
+  mutation {
+    createOrder(\$createOrderData: CreateOrderData!) {
+      createOrder(createOrderData: \$createOrderData) {
+        orderId
+      }
+    }
+  }
 """;
 
 class OrdersProvider with ChangeNotifier {
