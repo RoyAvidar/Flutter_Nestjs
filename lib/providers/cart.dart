@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const getCartGraphql = """
   query {
@@ -39,8 +41,10 @@ class CartItem {
 class CartProvider with ChangeNotifier {
   Map<String, CartItem>? _items = {};
 
-  String getUser() {
-    return "";
+  Future<String> getUser() async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    return token!;
   }
 
   void createCart(int userId, int totalPrice) async {
@@ -116,10 +120,11 @@ class CartProvider with ChangeNotifier {
       _items!.update(
           productId,
           (cartItem) => CartItem(
-              id: cartItem.id,
-              title: cartItem.title,
-              quantity: cartItem.quantity! - 1,
-              price: cartItem.price));
+                id: cartItem.id,
+                title: cartItem.title,
+                quantity: cartItem.quantity! - 1,
+                price: cartItem.price,
+              ));
     } else {
       _items!.remove(productId);
     }

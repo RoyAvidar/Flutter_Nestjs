@@ -59,12 +59,11 @@ class CartScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Provider.of<OrdersProvider>(context, listen: false).addOrder(
-                cart.items.values.toList(),
-                cart.totalAmount,
-                cart.getUser(),
-              );
-              cart.clearCart();
+              // Provider.of<OrdersProvider>(context, listen: false).addOrder(
+              //   cart.items.values.toList(),
+              //   cart.totalAmount,
+              // );
+              // cart.clearCart();
             },
             style: buttonStyle,
             child: Text('Order Now'),
