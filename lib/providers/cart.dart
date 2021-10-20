@@ -1,4 +1,26 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_main/config/gql_client.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+const getCartGraphql = """
+  query {
+    getcart(\$cartId: cartId) {
+      user {
+        userId
+      }
+    }
+  }
+""";
+
+const createCartGraphql = """
+  mutation {
+    createCart(\$createCartData: CreateCartData!) {
+      createCart(createCartData: \$createCartData) {
+        cartId
+      }
+    }
+  }
+""";
 
 class CartItem {
   final String? id;
@@ -16,6 +38,25 @@ class CartItem {
 
 class CartProvider with ChangeNotifier {
   Map<String, CartItem>? _items = {};
+
+  String getUser() {
+    return "";
+  }
+
+  void createCart(int userId, int totalPrice) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(createCartGraphql),
+        variables: <String, dynamic>{
+          "createCartData": {
+            "userId": userId,
+            "totalPrice": totalPrice,
+          }
+        });
+    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+  }
 
   Map<String, CartItem> get items {
     return {...?_items};

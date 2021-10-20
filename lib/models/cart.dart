@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/cart.dart';
 
-class Order with ChangeNotifier {
-  final String? id;
-  final double? totalAmount;
+class Cart with ChangeNotifier {
+  final int? cartId;
   final List<CartItem>? products;
-  final DateTime? dateTime;
   final String? userId;
+  final int? totalPrice;
 
-  Order({
-    @required this.id,
-    @required this.totalAmount,
+  Cart({
+    @required this.cartId,
     @required this.products,
-    @required this.dateTime,
     @required this.userId,
+    @required this.totalPrice,
   });
 }

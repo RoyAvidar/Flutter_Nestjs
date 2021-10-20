@@ -62,6 +62,7 @@ class CartScreen extends StatelessWidget {
               Provider.of<OrdersProvider>(context, listen: false).addOrder(
                 cart.items.values.toList(),
                 cart.totalAmount,
+                cart.getUser(),
               );
               cart.clearCart();
             },

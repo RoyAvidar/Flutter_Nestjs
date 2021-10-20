@@ -46,16 +46,21 @@ class OrdersProvider with ChangeNotifier {
   }
 
   //add all the content of the cart into one order.
-  void addOrder(List<CartItem> cartProducts, double total) {
-    _orders.insert(
-      0,
-      Order(
-        id: DateTime.now().toString(),
-        totalAmount: total,
-        dateTime: DateTime.now(),
-        products: cartProducts,
-      ),
-    );
+  void addOrder(
+      List<CartItem> cartProducts, double total, String userId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(createOrderGraphql),
+        variables: <String, dynamic>{
+          "createOrderData": {
+            "orderPrice": total,
+            "userId": userId,
+          }
+        });
+
+    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
     notifyListeners();
   }
 
