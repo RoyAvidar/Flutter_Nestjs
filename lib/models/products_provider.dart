@@ -59,6 +59,7 @@ class ProductsProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception.toString());
     }
+    print(result.data?['products']);
     (result.data?['products'] as List).map((prod) => _items.add(prod));
     print(_items);
     notifyListeners();

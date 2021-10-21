@@ -33,12 +33,13 @@ const createOrderGraphql = """
 class OrdersProvider with ChangeNotifier {
   List<Order> _orders = [];
 
-  Future<List<Order>> get getOrders async {
+  Future<List<Order>> get getAllOrders async {
     QueryOptions queryOptions = QueryOptions(document: gql(ordersGraphql));
     QueryResult result = await GraphQLConfig.client.query(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }
+    print(result.data?['orders']);
     (result.data?['orders'] as List).map((order) => _orders.add(order));
     print(_orders);
     notifyListeners();

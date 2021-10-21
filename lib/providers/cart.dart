@@ -24,6 +24,14 @@ const createCartGraphql = """
   }
 """;
 
+const cleanCartGraphql = """
+  mutation {
+    cleanCart(\$cartId: CartId!) {
+      cleanCart(cartId: \$cartId)
+    }
+  }
+""";
+
 class CartItem {
   final String? id;
   final String? title;
@@ -41,7 +49,7 @@ class CartItem {
 class CartProvider with ChangeNotifier {
   Map<String, CartItem>? _items = {};
 
-  Future<String> getUser() async {
+  Future<String> getToken() async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString('token');
     return token!;
@@ -131,8 +139,17 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void clearCart() {
-    _items = {};
+  Object clearCart(int cartId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(cleanCartGraphql),
+        variables: <String, dynamic>{
+          "cartId": cartId,
+        });
+    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
     notifyListeners();
+    return result;
   }
 }
