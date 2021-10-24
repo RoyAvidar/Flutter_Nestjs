@@ -57,11 +57,9 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
         padding: EdgeInsets.all(10),
         child: ListView.builder(
           itemCount: products.length,
-          itemBuilder: (_, i) => Column(
-            children: [
-              AdminProductItem(),
-              Divider(),
-            ],
+          itemBuilder: (ctx, i) => ChangeNotifierProvider(
+            create: (c) => products[i],
+            child: AdminProductItem(),
           ),
         ),
       ),

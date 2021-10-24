@@ -29,7 +29,7 @@ class Product with ChangeNotifier {
       : id = json['productId'].toString(),
         name = json['productName'],
         description = json['productDesc'],
-        price = json['price'],
+        price = double.parse(json['productPrice'].toString()),
         imageUrl = json['imageUrl'],
         categoryId = int.parse(json['category']['categoryId']),
         isFavorite = false;
