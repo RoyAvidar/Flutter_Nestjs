@@ -15,4 +15,11 @@ class Order with ChangeNotifier {
     @required this.dateTime,
     @required this.userId,
   });
+
+  Order.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        totalAmount = json['totalAmount'],
+        products = json['products'],
+        dateTime = json['dateTime'],
+        userId = json['userId'];
 }

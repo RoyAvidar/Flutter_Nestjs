@@ -39,8 +39,9 @@ class OrdersProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
-    print(result.data?['orders']);
-    (result.data?['orders'] as List).map((order) => _orders.add(order));
+    // (result.data?['orders'] as List).map((order) => _orders.add(order));
+    _orders = (result.data?['orders'].map<Order>((ord) => Order.fromJson(ord)))
+        .toList();
     print(_orders);
     notifyListeners();
     return _orders;
