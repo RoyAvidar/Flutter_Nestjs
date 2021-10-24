@@ -26,9 +26,9 @@ class Product with ChangeNotifier {
   }
 
   Product.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        description = json['description'],
+      : id = json['productId'].toString(),
+        name = json['productName'],
+        description = json['productDesc'],
         price = json['price'],
         imageUrl = json['imageUrl'],
         categoryId = int.parse(json['category']['categoryId']),

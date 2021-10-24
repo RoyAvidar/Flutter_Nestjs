@@ -22,7 +22,9 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
   Future<List<Product>> getProds() async {
     final prods =
         await Provider.of<ProductsProvider>(context, listen: false).items;
-    products.addAll(prods);
+    setState(() {
+      products = prods;
+    });
     return products;
   }
 
@@ -57,11 +59,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
           itemCount: products.length,
           itemBuilder: (_, i) => Column(
             children: [
-              AdminProductItem(
-                products[i].id!,
-                products[i].name!,
-                products[i].imageUrl!,
-              ),
+              AdminProductItem(),
               Divider(),
             ],
           ),
