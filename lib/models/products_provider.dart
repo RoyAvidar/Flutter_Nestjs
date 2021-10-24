@@ -14,7 +14,7 @@ const productsGraphql = """
       productDesc,
       imageUrl,
       category {
-        categoryName
+        categoryId
       }
     }
 }
@@ -59,9 +59,8 @@ class ProductsProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception.toString());
     }
-    print(result.data?['products']);
-    (result.data?['products'] as List).map((prod) => _items.add(prod));
-    print(_items);
+    _items = (result.data?['products'].map<Product>((p) => Product.fromJson(p)))
+        .toList();
     notifyListeners();
     return _items;
   }

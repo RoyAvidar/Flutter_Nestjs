@@ -17,7 +17,9 @@ class _SaladScreenState extends State<SaladScreen> {
   Future<List<Product>> getProds() async {
     final prods =
         await Provider.of<ProductsProvider>(context, listen: false).items;
-    products = prods;
+    setState(() {
+      products = prods;
+    });
     return products;
   }
 

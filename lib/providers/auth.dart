@@ -12,6 +12,8 @@ class AuthProvider with ChangeNotifier {
   // DateTime _expiryDate;
   // String _userId;
 
+  // AuthProvider(this._token, this._expiryDate);
+
   Future<bool> get isAuth async {
     final prefs = await SharedPreferences.getInstance();
     final _token = prefs.getString('token');
@@ -21,7 +23,10 @@ class AuthProvider with ChangeNotifier {
   Future<String> get token async {
     final prefs = await SharedPreferences.getInstance();
     final _token = prefs.getString('token');
+    // if (_expiryDate != null && _expiryDate.isAfter(DateTime.now())) {
     return _token!;
+    // }
+    // return null;
   }
 
 //   Future<void> _authenticate(
