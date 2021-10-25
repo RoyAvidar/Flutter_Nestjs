@@ -20,6 +20,21 @@ const ordersGraphql = """
 }
 """;
 
+const userOrdersGraphql = """
+  query {
+    getUserOrder(\$userId: userId!) {
+      getUserOrder(userId: \$userId) {
+        orderId,
+        orderPrice,
+        createdAt,
+        products {
+          productId
+        }
+      }
+    }
+  }
+""";
+
 const createOrderGraphql = """
   mutation {
     createOrder(\$createOrderData: CreateOrderData!) {
@@ -39,7 +54,6 @@ class OrdersProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
-    // (result.data?['orders'] as List).map((order) => _orders.add(order));
     _orders = (result.data?['orders'].map<Order>((ord) => Order.fromJson(ord)))
         .toList();
     print(_orders);
