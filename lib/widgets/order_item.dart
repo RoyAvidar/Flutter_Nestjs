@@ -4,11 +4,9 @@ import 'package:intl/intl.dart';
 
 import 'dart:math';
 
+import 'package:provider/provider.dart';
+
 class OrderItem extends StatefulWidget {
-  final Order order;
-
-  OrderItem(this.order);
-
   @override
   _OrderItemState createState() => _OrderItemState();
 }
@@ -18,15 +16,19 @@ class _OrderItemState extends State<OrderItem> {
 
   @override
   Widget build(BuildContext context) {
+    final order = Provider.of<Order>(
+      context,
+      listen: false,
+    );
     return Card(
       margin: EdgeInsets.all(10),
       child: Column(
         children: [
           ListTile(
-            title: Text('Total:  \$${widget.order.totalAmount}'),
-            subtitle: Text(
-              DateFormat('dd/MM/yyyy hh:mm').format(widget.order.dateTime!),
-            ),
+            title: Text('Total:  \$${order.totalAmount}'),
+            subtitle: Text(""
+                // DateFormat('dd/MM/yyyy hh:mm').format(order.dateTime!),
+                ),
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () {
@@ -39,10 +41,10 @@ class _OrderItemState extends State<OrderItem> {
           if (_expanded)
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              height: min(widget.order.products!.length * 20 + 50, 100),
+              height: min(order.products!.length * 20 + 50, 100),
               //can be a ListView.builder ..
               child: ListView(
-                children: widget.order.products!
+                children: order.products!
                     .map(
                       (prod) => Column(
                         children: [

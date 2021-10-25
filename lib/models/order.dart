@@ -19,7 +19,9 @@ class Order with ChangeNotifier {
   Order.fromJson(Map<String, dynamic> json)
       : id = json['orderId'].toString(),
         totalAmount = double.parse(json['orderPrice'].toString()),
-        products = json['products'],
+        products = json['products']
+            .map<CartItem>((pord) => CartItem.fromJson(pord))
+            .toList(),
         dateTime = json['createdAt'],
         userId = json['user']['userId'].toString();
 }

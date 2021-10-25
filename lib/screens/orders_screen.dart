@@ -19,7 +19,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
   Future<List<Order>> getOrders() async {
     final ord =
         await Provider.of<OrdersProvider>(context, listen: false).getAllOrders;
-    orders = ord;
+    setState(() {
+      orders = ord;
+    });
     return orders;
   }
 
@@ -34,7 +36,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Order'),
+        title: Text('Orders'),
       ),
       drawer: AppDrawer(),
       body: ListView.builder(
@@ -42,7 +44,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
         itemCount: orders.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider(
           create: (c) => orders[i],
-          child: OrderItem(orders[i]),
+          child: orders[i] != null ? OrderItem() : Container(),
         ),
       ),
     );
