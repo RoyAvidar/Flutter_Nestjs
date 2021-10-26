@@ -10,6 +10,7 @@ const ordersGraphql = """
   orders {
     orderId,
     orderPrice,
+    createdAt,
     products {
       productId
     },
@@ -56,7 +57,7 @@ class OrdersProvider with ChangeNotifier {
     }
     _orders = (result.data?['orders'].map<Order>((ord) => Order.fromJson(ord)))
         .toList();
-    print(_orders);
+    print(_orders[0].dateTime);
     notifyListeners();
     return _orders;
   }

@@ -26,9 +26,9 @@ class _OrderItemState extends State<OrderItem> {
         children: [
           ListTile(
             title: Text('Total:  \$${order.totalAmount}'),
-            subtitle: Text(""
-                // DateFormat('dd/MM/yyyy hh:mm').format(order.dateTime!),
-                ),
+            subtitle: Text(
+              DateFormat('dd/MM/yyyy hh:mm').format(order.dateTime!),
+            ),
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () {
