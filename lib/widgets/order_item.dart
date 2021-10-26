@@ -42,38 +42,53 @@ class _OrderItemState extends State<OrderItem> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               height: min(order.products!.length * 20 + 50, 100),
-              //can be a ListView.builder ..
-              child: ListView(
-                children: order.products!
-                    .map(
-                      (prod) => Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                prod.title!,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '${prod.quantity}x \$${prod.price}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                ),
-                              )
-                            ],
-                          ),
-                          // Text('something'),
-                          Divider(),
-                        ],
-                      ),
+              // can be a ListView.builder
+              child: ListView.builder(
+                itemCount: order.products!.length,
+                itemBuilder: (ctx, i) => Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          order.products![i].id!,
+                        ),
+                      ],
                     )
-                    .toList(),
+                  ],
+                ),
+                // child: ListView(
+                //   children: order.products!
+                //       .map(
+                //         (prod) => Column(
+                //           children: [
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 Text(
+                //                   prod.title!,
+                //                   style: TextStyle(
+                //                     fontSize: 18,
+                //                     fontWeight: FontWeight.bold,
+                //                   ),
+                //                 ),
+                //                 Text(
+                //                   '${prod.quantity}x \$${prod.price}',
+                //                   style: TextStyle(
+                //                     fontSize: 16,
+                //                     color: Colors.grey,
+                //                   ),
+                //                 )
+                //               ],
+                //             ),
+                //             Divider(),
+                //           ],
+                //         ),
+                //       )
+                //       .toList(),
+                // ),
               ),
+              // ],
             ),
         ],
       ),
