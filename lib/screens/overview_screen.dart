@@ -9,7 +9,6 @@ import '../screens/lunch_screen.dart';
 import '../screens/cart_screen.dart';
 import '../providers/cart.dart';
 import '../widgets/badge.dart';
-// import 'package:flutter_main/widgets/product_grid.dart';
 
 const List<Tab> tabs = <Tab>[
   Tab(text: 'Sandwich'),
@@ -46,10 +45,10 @@ class _OverviewScreenState extends State<OverviewScreen> {
           appBar: AppBar(
             title: const Text('Lunchies'),
             bottom: TabBar(
-              indicatorWeight: 1,
-              indicatorSize: TabBarIndicatorSize.label,
+              indicatorWeight: 2.5,
+              indicatorSize: TabBarIndicatorSize.tab,
               indicator: BoxDecoration(
-                borderRadius: BorderRadius.horizontal(), // Creates border
+                borderRadius: BorderRadius.circular(2), // Creates border
                 color: Theme.of(context).accentColor,
               ),
               tabs: tabs,

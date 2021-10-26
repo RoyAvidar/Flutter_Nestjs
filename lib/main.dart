@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
               accentColor: Colors.lightBlue,
+              appBarTheme: AppBarTheme(color: Colors.black54),
               fontFamily: 'Lato',
             ),
             home: AuthScreen(),

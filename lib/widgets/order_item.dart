@@ -51,44 +51,13 @@ class _OrderItemState extends State<OrderItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          order.products![i].id!,
+                          "Id: ${order.products![i].id!}",
                         ),
                       ],
                     )
                   ],
                 ),
-                // child: ListView(
-                //   children: order.products!
-                //       .map(
-                //         (prod) => Column(
-                //           children: [
-                //             Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 Text(
-                //                   prod.title!,
-                //                   style: TextStyle(
-                //                     fontSize: 18,
-                //                     fontWeight: FontWeight.bold,
-                //                   ),
-                //                 ),
-                //                 Text(
-                //                   '${prod.quantity}x \$${prod.price}',
-                //                   style: TextStyle(
-                //                     fontSize: 16,
-                //                     color: Colors.grey,
-                //                   ),
-                //                 )
-                //               ],
-                //             ),
-                //             Divider(),
-                //           ],
-                //         ),
-                //       )
-                //       .toList(),
-                // ),
               ),
-              // ],
             ),
         ],
       ),
