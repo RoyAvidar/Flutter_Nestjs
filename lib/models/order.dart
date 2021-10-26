@@ -22,6 +22,6 @@ class Order with ChangeNotifier {
         products = json['products']
             .map<CartItem>((pord) => CartItem.fromJson(pord))
             .toList(),
-        dateTime = json['createdAt'],
+        dateTime = DateTime.parse(json['createdAt']),
         userId = json['user']['userId'].toString();
 }
