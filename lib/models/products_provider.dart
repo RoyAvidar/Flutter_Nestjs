@@ -23,10 +23,14 @@ const productsGraphql = """
 const createProductGraphql = """
   mutation createProduct(\$createProductInput: CreateProductInput!) {
     createProduct(createProductInput: \$createProductInput) {
-      productName
-      productPrice
-      productDesc
-      imageUrl
+      productId,
+      productName,
+      productPrice,
+      productDesc,
+      imageUrl,
+      category {
+        categoryId
+      }
     }
   }
 """;
@@ -34,10 +38,14 @@ const createProductGraphql = """
 const updateProductGraphql = """
   mutation updateProduct(\$prodId: prodId!, \$updateProductData: UpdateProductData!) {
     updateProduct(updateProductData: \$updateProductData) {
-      productName
-      productPrice
-      productDesc
-      imageUrl
+      productId,
+      productName,
+      productPrice,
+      productDesc,
+      imageUrl,
+      category {
+        categoryId
+      }
     }
   }
 """;
