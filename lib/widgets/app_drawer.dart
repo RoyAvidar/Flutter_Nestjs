@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/screens/settings_screen.dart';
 
 import '../screens/orders_screen.dart';
 import '../screens/admin/admin_products_screen.dart';
@@ -39,6 +40,15 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(AdminProductsScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text('Settings'),
+            leading: Icon(Icons.settings),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(SettingsScreen.routeName);
             },
           ),
           Divider(),
