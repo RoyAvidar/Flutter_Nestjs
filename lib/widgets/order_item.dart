@@ -51,8 +51,21 @@ class _OrderItemState extends State<OrderItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Id: ${order.products![i].id!}",
+                          "Name:  ${order.products![i].title!}",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                        Text(
+                          '${order.products![i].quantity}x \$${order.products![i].price}',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
                       ],
                     )
                   ],

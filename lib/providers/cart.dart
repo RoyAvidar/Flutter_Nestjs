@@ -49,7 +49,7 @@ class CartItem {
       : id = json['productId'].toString(),
         title = json['productName'],
         quantity = 1,
-        price = json['productPrice'];
+        price = double.parse(json['productPrice'].toString());
 }
 
 class CartProvider with ChangeNotifier {

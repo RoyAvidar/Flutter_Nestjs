@@ -193,13 +193,22 @@ class _AuthScreenState extends State<AuthScreen> {
               Divider(
                 height: 10,
               ),
-              TextButton(
-                onPressed: _switchAuthMode,
-                child: const Text('Register'),
-                style: TextButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
+              if (_authMode == AuthMode.Login)
+                TextButton(
+                  onPressed: _switchAuthMode,
+                  child: Text('Sign Up'),
+                  style: TextButton.styleFrom(
+                    primary: Theme.of(context).primaryColor,
+                  ),
+                )
+              else
+                TextButton(
+                  onPressed: _switchAuthMode,
+                  child: Text('Login'),
+                  style: TextButton.styleFrom(
+                    primary: Theme.of(context).primaryColor,
+                  ),
                 ),
-              ),
             ],
           ),
         ),

@@ -36,10 +36,11 @@ class MyApp extends StatelessWidget {
             title: 'Lunchies',
             theme: ThemeData(
               primarySwatch: Colors.blue,
-              accentColor: Colors.lightBlue,
+              // accentColor: Colors.lightBlue,
               appBarTheme: AppBarTheme(color: Colors.black54),
               fontFamily: 'Lato',
             ),
+            //isAuth ? OverviewScreen() : AuthScreen();
             home: AuthScreen(),
             routes: Routes().routers,
           ),

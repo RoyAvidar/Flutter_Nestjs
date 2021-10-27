@@ -13,6 +13,9 @@ const ordersGraphql = """
     createdAt,
     products {
       productId,
+      productName,
+      productPrice,
+      productDesc
     },
     user {
       userId
@@ -75,7 +78,7 @@ class OrdersProvider with ChangeNotifier {
   //   return _orders;
   // }
 
-  //add all the content of the cart into one order.
+  //add all the content of the cart into the order.
   void addOrder(
       List<CartItem> cartProducts, double total, String userId) async {
     MutationOptions queryOptions = MutationOptions(
