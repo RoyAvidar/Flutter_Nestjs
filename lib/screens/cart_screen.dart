@@ -1,20 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/config/gql_client.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show CartProvider;
 import '../widgets/cart_item.dart';
-import '../providers/orders.dart';
 
-class CartScreen extends StatelessWidget {
+const submitCartGraphql = """
+  mutation {
+    submitCartToOrder(\$cartId: int!, \$createOrderInput: CreateOrderInput!) {
+      submitCartToOrder(cartId: \$cartId, createOrderInput: \$createOrderInput)
+    }
+  }
+""";
+
+class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
   static const routeName = '/Cart';
 
   @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  // submit() async {
+  //   final cartId = Provider.of<CartProvider>(context, listen: false).cartId;
+  //   MutationOptions queryOptions = MutationOptions(document: gql(submitCartGraphql), variables: <String, dynamic>{
+  //     "cartId": cartId,
+  //     "createOrderInput": {
+  //       "userId": ,
+  //       "orderPrice": ,
+  //     }
+  //   });
+
+  //   QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+  //   if (result.hasException) {
+  //     print(result.exception);
+  //   } else {
+  //     Navigator.of(context).pop();
+  //   }
+  // }
+
+  @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       textStyle: TextStyle(color: Theme.of(context).primaryColor),
     );
-    final cart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Cart'),
@@ -59,11 +91,7 @@ class CartScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              // Provider.of<OrdersProvider>(context, listen: false).addOrder(
-              //   cart.items.values.toList(),
-              //   cart.totalAmount,
-              // );
-              // cart.clearCart();
+              //submit();
             },
             style: buttonStyle,
             child: Text('Order Now'),

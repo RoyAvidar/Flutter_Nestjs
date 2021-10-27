@@ -36,6 +36,16 @@ class _AuthScreenState extends State<AuthScreen> {
   TextEditingController validatePassController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
   AuthMode _authMode = AuthMode.Login;
+  bool _validate = false;
+
+  @override
+  void dispose() {
+    userNameController.dispose();
+    userPassController.dispose();
+    validatePassController.dispose();
+    userPhoneController.dispose();
+    super.dispose();
+  }
 
   void _switchAuthMode() {
     if (_authMode == AuthMode.Login) {
@@ -123,6 +133,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'User Name',
+                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
                 ),
                 controller: userNameController,
               ),
@@ -134,6 +145,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
+                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
                 ),
                 controller: userPassController,
               ),
@@ -171,7 +183,15 @@ class _AuthScreenState extends State<AuthScreen> {
                 Container(),
               if (_authMode == AuthMode.Login)
                 ElevatedButton(
-                  onPressed: login,
+                  onPressed: () {
+                    setState(() {
+                      userNameController.text.isEmpty ||
+                              userPassController.text.isEmpty
+                          ? _validate = true
+                          : _validate = false;
+                    });
+                    login();
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,
                     onPrimary: Colors.black,

@@ -96,6 +96,7 @@ class ProductsProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
+    notifyListeners();
   }
 
   void updateProduct(String id, Product newProduct) async {

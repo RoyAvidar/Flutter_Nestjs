@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const getCartGraphql = """
@@ -54,6 +53,10 @@ class CartItem {
 
 class CartProvider with ChangeNotifier {
   Map<String, CartItem>? _items = {};
+
+  int get cartId {
+    return this.cartId;
+  }
 
   Future<String> getToken() async {
     final pref = await SharedPreferences.getInstance();
