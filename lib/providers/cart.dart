@@ -1,13 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_main/config/gql_client.dart';
+import 'package:flutter_main/models/cart.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const getCartGraphql = """
   query {
     getcart(\$cartId: cartId) {
-      user {
-        userId
+    cartId,
+    user {
+      userId
+    }
+     totalPrice
+     products {
+        productId,
+        productPrice,
+        productName,
+        productDesc,
+        imageUrl,
+			
       }
     }
   }
@@ -79,8 +90,20 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  Map<String, CartItem> get items {
-    return {...?_items};
+  Future<Map<String, CartItem>> getCartItems(int cartId) async {
+    QueryOptions queryOptions = QueryOptions(
+      document: gql(getCartGraphql),
+      variables: <String, dynamic>{"cartId": cartId},
+    );
+    QueryResult result = await GraphQLConfig.client.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    _items =
+        (result.data?['products'].map<Cart>((cart) => Cart.fromJson(cart)));
+    print(_items);
+    notifyListeners();
+    return _items;
   }
 
   //counts the amount of entries in the map.

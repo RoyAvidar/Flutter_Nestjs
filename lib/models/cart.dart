@@ -11,4 +11,11 @@ class Cart with ChangeNotifier {
     @required this.products,
     @required this.totalPrice,
   });
+
+  Cart.fromJson(Map<String, dynamic> json)
+      : cartId = json['cartId'],
+        totalPrice = json['totalPrice'],
+        products = json['products']
+            .map<CartItem>((pord) => CartItem.fromJson(pord))
+            .toList();
 }
