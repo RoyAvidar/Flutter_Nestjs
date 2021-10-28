@@ -32,7 +32,10 @@ const userOrdersGraphql = """
         orderPrice,
         createdAt,
         products {
-          productId
+          productId,
+          productName,
+          productPrice,
+          productDesc
         }
       }
     }
@@ -65,18 +68,18 @@ class OrdersProvider with ChangeNotifier {
     return _orders;
   }
 
-  // Future<List<Order>> getUserOrders(String userId) async {
-  //   QueryOptions queryOptions = QueryOptions(document: gql(userOrdersGraphql));
-  //   QueryResult result = await GraphQLConfig.client.query(queryOptions);
-  //   if (result.hasException) {
-  //     print(result.exception);
-  //   }
-  //   _orders = (result.data?['orders'].map<Order>((ord) => Order.fromJson(ord)))
-  //       .toList();
-  //   print(_orders);
-  //   notifyListeners();
-  //   return _orders;
-  // }
+  Future<List<Order>> getUserOrders(String userId) async {
+    QueryOptions queryOptions = QueryOptions(document: gql(userOrdersGraphql));
+    QueryResult result = await GraphQLConfig.client.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    _orders = (result.data?['orders'].map<Order>((ord) => Order.fromJson(ord)))
+        .toList();
+    print(_orders);
+    notifyListeners();
+    return _orders;
+  }
 
   //add all the content of the cart into the order.
   void addOrder(
