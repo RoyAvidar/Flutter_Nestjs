@@ -24,14 +24,10 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  getCart() async {
-    final cartId = Provider.of<CartProvider>(context).cartId;
-    final cart = Provider.of<CartProvider>(context).getCart(cartId);
-    return cart;
-  }
+  Map<String, CartItem> cart = {};
 
   submit() async {
-    final cartid = Provider.of<CartProvider>(context).cartId;
+    final cartid = Provider.of<CartProvider>(context, listen: false).cartId;
     final userId = Provider.of<User>(context).userId;
     MutationOptions queryOptions = MutationOptions(
         document: gql(submitCartGraphql),
@@ -52,7 +48,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = this.getCart();
     final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       textStyle: TextStyle(color: Theme.of(context).primaryColor),
     );
@@ -63,18 +58,18 @@ class _CartScreenState extends State<CartScreen> {
       body: Column(
         children: [
           //listView of cartItem's ,
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (ctx, i) => CartItem(
-                cart.values.toList()[i].id!,
-                cart.keys.toList()[i], // this key is the productId.
-                cart.cartItems.values.toList()[i].price!,
-                cart.cartItems.values.toList()[i].quantity!,
-                cart.cartItems.values.toList()[i].title!,
-              ),
-              itemCount: cart.cartItems.length,
-            ),
-          ),
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemBuilder: (ctx, i) => CartItem(
+          //       cart.values.toList()[i].id!,
+          //       cart.keys.toList()[i], // this key is the productId.
+          //       cart.cartItems.values.toList()[i].price!,
+          //       cart.cartItems.values.toList()[i].quantity!,
+          //       cart.cartItems.values.toList()[i].title!,
+          //     ),
+          //     itemCount: cart.cartItems.length,
+          //   ),
+          // ),
           Card(
             margin: EdgeInsets.all(15),
             child: Padding(
@@ -86,14 +81,14 @@ class _CartScreenState extends State<CartScreen> {
                     'Total',
                     style: TextStyle(fontSize: 15),
                   ),
-                  Chip(
-                    label: Text(
-                      '\$${cart.totalAmount.toStringAsFixed(2)}',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
+                  // Chip(
+                  //   label: Text(
+                  //     '\$${cart.totalAmount.toStringAsFixed(2)}',
+                  //     style: TextStyle(
+                  //       color: Theme.of(context).primaryColor,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

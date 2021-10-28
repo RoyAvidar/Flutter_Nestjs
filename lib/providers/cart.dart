@@ -42,6 +42,17 @@ const cleanCartGraphql = """
   }
 """;
 
+const addProductToCart = """
+  mutation {
+    addProductToCart(\$addToCartInput: AddToCartInput!) {
+      addProductToCart(addToCartInput: \$addToCartInput) {
+        cartId,
+        productId
+      }
+    }
+  }
+""";
+
 class CartItem {
   final String? id;
   final String? title;
@@ -120,30 +131,44 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
-  void addItem(String productId, double price, String title) {
-    if (_items!.containsKey(productId)) {
-      //change quantity...
-      _items!.update(
-        productId,
-        (cartItem) => CartItem(
-          id: cartItem.id,
-          title: cartItem.title,
-          price: cartItem.price,
-          quantity: cartItem.quantity! + 1,
-        ),
-      );
-    } else {
-      _items!.putIfAbsent(
-        productId,
-        () => CartItem(
-          id: DateTime.now().toString(),
-          title: title,
-          price: price,
-          quantity: 1,
-        ),
-      );
+  Future<bool> addItem(int productId, int cartId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(addProductToCart),
+        variables: <String, dynamic>{
+          "addToCartInput": {
+            "cartId": cartId,
+            "productId": productId,
+          }
+        });
+    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+      return false;
     }
     notifyListeners();
+    return true;
+    // if (_items!.containsKey(productId)) {
+    //   //change quantity...
+    //   _items!.update(
+    //     productId,
+    //     (cartItem) => CartItem(
+    //       id: cartItem.id,
+    //       title: cartItem.title,
+    //       price: cartItem.price,
+    //       quantity: cartItem.quantity! + 1,
+    //     ),
+    //   );
+    // } else {
+    //   _items!.putIfAbsent(
+    //     productId,
+    //     () => CartItem(
+    //       id: DateTime.now().toString(),
+    //       title: title,
+    //       price: price,
+    //       quantity: 1,
+    //     ),
+    //   );
+    // }
   }
 
   void removeItem(String productId) {
