@@ -90,7 +90,7 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, CartItem>> getCartItems(int cartId) async {
+  Future<Map<String, CartItem>> getCart(int cartId) async {
     QueryOptions queryOptions = QueryOptions(
       document: gql(getCartGraphql),
       variables: <String, dynamic>{"cartId": cartId},
@@ -103,7 +103,7 @@ class CartProvider with ChangeNotifier {
         (result.data?['products'].map<Cart>((cart) => Cart.fromJson(cart)));
     print(_items);
     notifyListeners();
-    return _items;
+    return _items!;
   }
 
   //counts the amount of entries in the map.

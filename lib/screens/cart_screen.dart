@@ -9,8 +9,8 @@ import '../widgets/cart_item.dart';
 
 const submitCartGraphql = """
   mutation {
-    submitCartToOrder(\$cartId: int!, \$createOrderInput: CreateOrderInput!) {
-      submitCartToOrder(cartId: \$cartId, createOrderInput: \$createOrderInput)
+    submitCartToOrder(\$createOrderInput: CreateOrderInput!) {
+      submitCartToOrder(createOrderInput: \$createOrderInput)
     }
   }
 """;
@@ -26,8 +26,8 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   getCart() async {
     final cartId = Provider.of<CartProvider>(context).cartId;
-    final cartItems = Provider.of<CartProvider>(context).getCartItems(cartId);
-    return cartItems;
+    final cart = Provider.of<CartProvider>(context).getCart(cartId);
+    return cart;
   }
 
   submit() async {
@@ -36,10 +36,9 @@ class _CartScreenState extends State<CartScreen> {
     MutationOptions queryOptions = MutationOptions(
         document: gql(submitCartGraphql),
         variables: <String, dynamic>{
-          "cartId": cartid,
           "createOrderInput": {
             "userId": userId,
-            "orderPrice": cartid,
+            "cartId": cartid,
           }
         });
 
@@ -101,7 +100,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              //submit();
+              submit();
             },
             style: buttonStyle,
             child: Text('Order Now'),
