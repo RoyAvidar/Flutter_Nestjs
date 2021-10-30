@@ -63,7 +63,7 @@ class ProductsProvider with ChangeNotifier {
 
   Future<List<Product>> get items async {
     QueryOptions queryOptions = QueryOptions(document: gql(productsGraphql));
-    QueryResult result = await GraphQLConfig.client.query(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
     if (result.hasException) {
       print(result.exception.toString());
     }

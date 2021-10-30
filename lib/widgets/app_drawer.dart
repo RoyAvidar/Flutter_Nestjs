@@ -1,11 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/screens/settings_screen.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../screens/orders_screen.dart';
 import '../screens/admin/admin_products_screen.dart';
 
-class AppDrawer extends StatelessWidget {
+const getUserGraphql = """
+  query {
+  getSingleUser {
+    userName,
+    userPhone,
+    isAdmin,
+  }
+}
+""";
+
+class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  bool isAdmin = false;
+
+  getUser() async {
+    QueryOptions queryOptions = QueryOptions(document: gql(getUserGraphql));
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    } else {
+      setState(() {
+        isAdmin = result.data?['getSingleUser'].isAdmin;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +72,16 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           Divider(),
-          ListTile(
-            title: Text('Admin'),
-            leading: Icon(Icons.edit),
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AdminProductsScreen.routeName);
-            },
-          ),
+          isAdmin
+              ? ListTile(
+                  title: Text('Admin'),
+                  leading: Icon(Icons.edit),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(AdminProductsScreen.routeName);
+                  },
+                )
+              : Container(),
           Divider(),
           ListTile(
             title: Text('Settings'),

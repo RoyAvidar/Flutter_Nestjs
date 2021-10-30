@@ -19,7 +19,7 @@ class GraphQLConfig {
     link: httpLink,
   );
 
-  static final GraphQLClient _authClient = GraphQLClient(
+  static final GraphQLClient authClient = GraphQLClient(
     cache: GraphQLCache(),
     defaultPolicies:
         DefaultPolicies(query: Policies(fetch: FetchPolicy.noCache)),
