@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
-import 'package:flutter_main/models/user.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -28,17 +27,15 @@ class _CartScreenState extends State<CartScreen> {
 
   submit() async {
     final cartid = Provider.of<CartProvider>(context, listen: false).cartId;
-    final userId = Provider.of<User>(context).userId;
     MutationOptions queryOptions = MutationOptions(
         document: gql(submitCartGraphql),
         variables: <String, dynamic>{
           "createOrderInput": {
-            "userId": userId,
             "cartId": cartid,
           }
         });
 
-    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
     } else {
@@ -57,7 +54,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: Column(
         children: [
-          //listView of cartItem's ,
+          // listView of cartItem's ,
           // Expanded(
           //   child: ListView.builder(
           //     itemBuilder: (ctx, i) => CartItem(

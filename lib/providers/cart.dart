@@ -26,12 +26,14 @@ const getCartGraphql = """
 
 const createCartGraphql = """
   mutation {
-    createCart(\$createCartData: CreateCartData!) {
-      createCart(createCartData: \$createCartData) {
-        cartId
-      }
+  createCart {
+    cartId,
+    totalPrice,
+		user {
+      userId
     }
   }
+}
 """;
 
 const cleanCartGraphql = """
@@ -86,16 +88,10 @@ class CartProvider with ChangeNotifier {
     return token!;
   }
 
-  void createCart(int userId, int totalPrice) async {
-    MutationOptions queryOptions = MutationOptions(
-        document: gql(createCartGraphql),
-        variables: <String, dynamic>{
-          "createCartData": {
-            "userId": userId,
-            "totalPrice": totalPrice,
-          }
-        });
-    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+  void createCart() async {
+    MutationOptions queryOptions =
+        MutationOptions(document: gql(createCartGraphql));
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }
@@ -106,7 +102,7 @@ class CartProvider with ChangeNotifier {
       document: gql(getCartGraphql),
       variables: <String, dynamic>{"cartId": cartId},
     );
-    QueryResult result = await GraphQLConfig.client.query(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }

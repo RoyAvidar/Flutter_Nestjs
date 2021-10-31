@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
               appBarTheme: AppBarTheme(color: Colors.black54),
               fontFamily: 'Lato',
             ),
+            darkTheme: ThemeData.dark(),
             //isAuth ? OverviewScreen() : AuthScreen();
             home: AuthScreen(),
             routes: Routes().routers,

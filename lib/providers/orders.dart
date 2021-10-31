@@ -25,21 +25,13 @@ const ordersGraphql = """
 """;
 
 const userOrdersGraphql = """
-  query {
-    getUserOrder(\$userId: userId!) {
-      getUserOrder(userId: \$userId) {
-        orderId,
-        orderPrice,
-        createdAt,
-        products {
-          productId,
-          productName,
-          productPrice,
-          productDesc
-        }
-      }
-    }
-  }
+ query {
+ getUserOrders {
+    orderId,
+    orderPrice,
+    createdAt,
+}
+}
 """;
 
 const createOrderGraphql = """
@@ -70,7 +62,7 @@ class OrdersProvider with ChangeNotifier {
 
   Future<List<Order>> getUserOrders(String userId) async {
     QueryOptions queryOptions = QueryOptions(document: gql(userOrdersGraphql));
-    QueryResult result = await GraphQLConfig.client.query(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }
