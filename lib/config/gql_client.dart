@@ -7,7 +7,7 @@ class GraphQLConfig {
   static final _authLink = AuthLink(getToken: () async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString("token");
-    return token;
+    return "Bearer $token";
   });
 
   static Link _link = _authLink.concat(httpLink);
