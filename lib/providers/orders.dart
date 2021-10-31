@@ -60,7 +60,7 @@ class OrdersProvider with ChangeNotifier {
     return _orders;
   }
 
-  Future<List<Order>> getUserOrders(String userId) async {
+  Future<List<Order>> getUserOrders() async {
     QueryOptions queryOptions = QueryOptions(document: gql(userOrdersGraphql));
     QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
     if (result.hasException) {
