@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
-import 'package:flutter_main/widgets/cart_item.dart';
+import 'package:flutter_main/widgets/cart_item.dart' as CartWidget;
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show CartProvider;
+import '../providers/cart.dart' show CartItem;
 
 const submitCartGraphql = """
   mutation {
@@ -30,7 +31,7 @@ class _CartScreenState extends State<CartScreen> {
     final semiCart =
         await Provider.of<CartProvider>(context, listen: false).getCart(cartId);
     setState(() {
-      // cart = semiCart;
+      cart = semiCart;
     });
     return cart;
   }
@@ -44,7 +45,6 @@ class _CartScreenState extends State<CartScreen> {
             "cartId": cartid,
           }
         });
-
     QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
@@ -72,18 +72,18 @@ class _CartScreenState extends State<CartScreen> {
       body: Column(
         children: [
           // listView of cartItem's ,
-          // Expanded(
-          //   child: ListView.builder(
-          //     itemBuilder: (ctx, i) => CartItem(
-          //       cart.values.toList()[i].id!,
-          //       cart.keys.toList()[i], // this key is the productId.
-          //       cart.cartItems.values.toList()[i].price!,
-          //       cart.cartItems.values.toList()[i].quantity!,
-          //       cart.cartItems.values.toList()[i].title!,
-          //     ),
-          //     itemCount: cart.cartItems.length,
-          //   ),
-          // ),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (ctx, i) => CartWidget.CartItem(
+                cart.values.toList()[i].id!,
+                cart.keys.toList()[i], // this key is the productId.
+                cart.values.toList()[i].price!,
+                cart.values.toList()[i].quantity!,
+                cart.values.toList()[i].title!,
+              ),
+              itemCount: cart.length,
+            ),
+          ),
           Card(
             margin: EdgeInsets.all(15),
             child: Padding(

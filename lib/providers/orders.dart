@@ -30,6 +30,12 @@ const userOrdersGraphql = """
     orderId,
     orderPrice,
     createdAt,
+    products {
+      productId,
+      productName,
+      productPrice,
+      productDesc
+    },
 }
 }
 """;
@@ -55,19 +61,19 @@ class OrdersProvider with ChangeNotifier {
     }
     _orders = (result.data?['orders'].map<Order>((ord) => Order.fromJson(ord)))
         .toList();
-    print(_orders);
+    // print(_orders);
     notifyListeners();
     return _orders;
   }
 
-  Future<List<Order>> getUserOrders() async {
+  Future<List<Order>> get getUserOrders async {
     QueryOptions queryOptions = QueryOptions(document: gql(userOrdersGraphql));
     QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }
-    _orders = (result.data?['orders'].map<Order>((ord) => Order.fromJson(ord)))
-        .toList();
+    _orders = (result.data?['getUserOrders']
+        .map<Order>((ord) => Order.fromJson(ord))).toList();
     print(_orders);
     notifyListeners();
     return _orders;

@@ -18,7 +18,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   Future<List<Order>> getOrders() async {
     final ord =
-        await Provider.of<OrdersProvider>(context, listen: false).getAllOrders;
+        await Provider.of<OrdersProvider>(context, listen: false).getUserOrders;
     setState(() {
       orders = ord;
     });

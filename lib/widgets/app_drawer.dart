@@ -33,7 +33,7 @@ class _AppDrawerState extends State<AppDrawer> {
       print(result.exception);
     } else {
       setState(() {
-        isAdmin = result.data?['getSingleUser'].isAdmin;
+        isAdmin = result.data?['getSingleUser']['isAdmin'];
       });
     }
   }

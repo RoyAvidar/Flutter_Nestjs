@@ -6,14 +6,14 @@ class Order with ChangeNotifier {
   final double? totalAmount;
   final List<CartItem>? products;
   final DateTime? dateTime;
-  final String? userId;
+  // final String? userId;
 
   Order({
     @required this.id,
     @required this.totalAmount,
     @required this.products,
     @required this.dateTime,
-    @required this.userId,
+    // this.userId,
   });
 
   Order.fromJson(Map<String, dynamic> json)
@@ -22,6 +22,6 @@ class Order with ChangeNotifier {
         products = json['products']
             .map<CartItem>((pord) => CartItem.fromJson(pord))
             .toList(),
-        dateTime = DateTime.parse(json['createdAt']),
-        userId = json['user']['userId'].toString();
+        dateTime = DateTime.parse(json['createdAt']);
+  // userId = json['user']['userId'].toString();
 }
