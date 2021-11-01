@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
-import 'package:flutter_main/widgets/cart_item.dart' as CartWidget;
+import 'package:flutter_main/widgets/cart_item.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show CartProvider;
-import '../providers/cart.dart' show CartItem;
 
 const submitCartGraphql = """
   mutation {
@@ -27,17 +26,18 @@ class _CartScreenState extends State<CartScreen> {
   Map<String, CartItem> cart = {};
 
   Future<Map<String, CartItem>> getCart() async {
-    final cartId = Provider.of<CartProvider>(context, listen: false).cartId;
+    final cartId = Provider.of<CartProvider>(context).cartId;
     final semiCart =
         await Provider.of<CartProvider>(context, listen: false).getCart(cartId);
     setState(() {
-      cart = semiCart;
+      // cart = semiCart;
+      print(semiCart);
     });
     return cart;
   }
 
   submit() async {
-    final cartid = Provider.of<CartProvider>(context, listen: false).cartId;
+    final cartid = Provider.of<CartProvider>(context).cartId;
     MutationOptions queryOptions = MutationOptions(
         document: gql(submitCartGraphql),
         variables: <String, dynamic>{
@@ -74,12 +74,12 @@ class _CartScreenState extends State<CartScreen> {
           // listView of cartItem's ,
           Expanded(
             child: ListView.builder(
-              itemBuilder: (ctx, i) => CartWidget.CartItem(
-                cart.values.toList()[i].id!,
+              itemBuilder: (ctx, i) => CartItem(
+                cart.values.toList()[i].id,
                 cart.keys.toList()[i], // this key is the productId.
-                cart.values.toList()[i].price!,
-                cart.values.toList()[i].quantity!,
-                cart.values.toList()[i].title!,
+                cart.values.toList()[i].price,
+                cart.values.toList()[i].quantity,
+                cart.values.toList()[i].title,
               ),
               itemCount: cart.length,
             ),

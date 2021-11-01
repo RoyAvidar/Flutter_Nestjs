@@ -2,15 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/models/cart.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const getCartGraphql = """
   query {
     getcart(\$cartId: cartId) {
     cartId,
-    user {
-      userId
-    }
      totalPrice
      products {
         productId,
@@ -82,12 +78,6 @@ class CartProvider with ChangeNotifier {
     return this.cartId;
   }
 
-  Future<String> getToken() async {
-    final pref = await SharedPreferences.getInstance();
-    final token = pref.getString('token');
-    return token!;
-  }
-
   void createCart() async {
     MutationOptions queryOptions =
         MutationOptions(document: gql(createCartGraphql));
@@ -108,7 +98,6 @@ class CartProvider with ChangeNotifier {
     }
     _items =
         (result.data?['products'].map<Cart>((cart) => Cart.fromJson(cart)));
-    print(_items);
     notifyListeners();
     return _items!;
   }

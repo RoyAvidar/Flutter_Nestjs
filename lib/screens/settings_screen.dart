@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
-  final bool isAdmin = true;
+  final bool isAdmin = false;
 
   @override
   Widget build(BuildContext context) {
+    final token = Provider.of<AuthProvider>(context).token;
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
