@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
-import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -98,6 +97,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Divider(
                 height: 25,
               ),
+              // Switch(value: isAdmin, onChanged: ),
+
               if (isAdmin)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
