@@ -23,16 +23,13 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  Map<String, CartItem> cart = {};
+  Map<String, CartItemWidget> cart = {};
 
-  Future<Map<String, CartItem>> getCart() async {
-    final cartId = Provider.of<CartProvider>(context).cartId;
-    final semiCart =
+  Future<Map<String, CartItemWidget>> getCart() async {
+    final cartId = Provider.of<CartProvider>(context, listen: false).cartId;
+    final items =
         await Provider.of<CartProvider>(context, listen: false).getCart(cartId);
-    setState(() {
-      // cart = semiCart;
-      print(semiCart);
-    });
+    setState(() {});
     return cart;
   }
 
@@ -74,7 +71,7 @@ class _CartScreenState extends State<CartScreen> {
           // listView of cartItem's ,
           Expanded(
             child: ListView.builder(
-              itemBuilder: (ctx, i) => CartItem(
+              itemBuilder: (ctx, i) => CartItemWidget(
                 cart.values.toList()[i].id,
                 cart.keys.toList()[i], // this key is the productId.
                 cart.values.toList()[i].price,

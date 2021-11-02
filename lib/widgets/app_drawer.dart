@@ -25,6 +25,7 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawerState extends State<AppDrawer> {
   bool isAdmin = false;
+  String userName = "";
 
   getUser() async {
     QueryOptions queryOptions = QueryOptions(document: gql(getUserGraphql));
@@ -34,6 +35,7 @@ class _AppDrawerState extends State<AppDrawer> {
     } else {
       setState(() {
         isAdmin = result.data?['getSingleUser']['isAdmin'];
+        userName = result.data?['getSingleUser']['userName'];
       });
     }
   }
@@ -51,7 +53,7 @@ class _AppDrawerState extends State<AppDrawer> {
       child: Column(
         children: [
           AppBar(
-            title: Text('Hello, User Name'),
+            title: Text('Hello, ${userName}'),
             automaticallyImplyLeading: false,
           ),
           Divider(),
