@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
-// import 'package:flutter_main/screens/splash_screen.dart';
+import 'package:flutter_main/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             ),
             darkTheme: ThemeData.dark(),
             //isAuth ? OverviewScreen() : AuthScreen();
-            home: AuthScreen(),
+            home: SplashScreen(),
             routes: Routes().routers,
           ),
         ));

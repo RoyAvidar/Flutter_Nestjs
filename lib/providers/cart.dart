@@ -5,7 +5,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 const getCartGraphql = """
   query {
-    getcart(\$cartId: cartId) {
+    getcart() {
     cartId,
      totalPrice
      products {
@@ -14,7 +14,6 @@ const getCartGraphql = """
         productName,
         productDesc,
         imageUrl,
-			
       }
     }
   }
@@ -87,10 +86,9 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, CartItem>> getCart(int cartId) async {
+  Future<Map<String, CartItem>> getCart() async {
     QueryOptions queryOptions = QueryOptions(
       document: gql(getCartGraphql),
-      variables: <String, dynamic>{"cartId": cartId},
     );
     QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
     if (result.hasException) {

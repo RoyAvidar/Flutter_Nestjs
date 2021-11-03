@@ -26,9 +26,8 @@ class _CartScreenState extends State<CartScreen> {
   Map<String, CartItemWidget> cart = {};
 
   Future<Map<String, CartItemWidget>> getCart() async {
-    final cartId = Provider.of<CartProvider>(context, listen: false).cartId;
     final items =
-        await Provider.of<CartProvider>(context, listen: false).getCart(cartId);
+        await Provider.of<CartProvider>(context, listen: false).getCart();
     setState(() {});
     return cart;
   }
