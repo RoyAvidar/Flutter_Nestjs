@@ -4,19 +4,20 @@ import 'package:flutter_main/models/cart.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 const getCartGraphql = """
-  query {
-    getcart() {
+query {
+  getCart {
     cartId,
-     totalPrice
-     products {
-        productId,
-        productPrice,
-        productName,
-        productDesc,
-        imageUrl,
-      }
+    totalPrice,
+    itemCount,
+    products {
+      productId,
+      productPrice,
+      productName,
+      productDesc,
+      imageUrl,
     }
   }
+}
 """;
 
 const createCartGraphql = """
@@ -71,7 +72,7 @@ class CartItem {
 }
 
 class CartProvider with ChangeNotifier {
-  Map<String, CartItem>? _items = {};
+  List<CartItem>? _items = [];
 
   int get cartId {
     return this.cartId;
@@ -86,7 +87,7 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, CartItem>> getCart() async {
+  Future<List<CartItem>> getCart() async {
     QueryOptions queryOptions = QueryOptions(
       document: gql(getCartGraphql),
     );
@@ -108,7 +109,7 @@ class CartProvider with ChangeNotifier {
   //counts the total price of the cartItems in the cart.
   double get totalAmount {
     var total = 0.0;
-    _items!.forEach((key, cartItem) {
+    _items!.forEach((cartItem) {
       total += cartItem.price! * cartItem.quantity!.toDouble();
     });
     return total;
@@ -160,24 +161,24 @@ class CartProvider with ChangeNotifier {
   }
 
   //single quantity of the product.
-  void removeSingleItem(String productId) {
-    if (!_items!.containsKey(productId)) {
-      return;
-    }
-    if (_items![productId]!.quantity! > 1) {
-      _items!.update(
-          productId,
-          (cartItem) => CartItem(
-                id: cartItem.id,
-                title: cartItem.title,
-                quantity: cartItem.quantity! - 1,
-                price: cartItem.price,
-              ));
-    } else {
-      _items!.remove(productId);
-    }
-    notifyListeners();
-  }
+  // void removeSingleItem(String productId) {
+  //   if (!_items!.containsKey(productId)) {
+  //     return;
+  //   }
+  //   if (_items![productId]!.quantity! > 1) {
+  //     _items!.update(
+  //         productId,
+  //         (cartItem) => CartItem(
+  //               id: cartItem.id,
+  //               title: cartItem.title,
+  //               quantity: cartItem.quantity! - 1,
+  //               price: cartItem.price,
+  //             ));
+  //   } else {
+  //     _items!.remove(productId);
+  //   }
+  //   notifyListeners();
+  // }
 
   Object clearCart(int cartId) async {
     MutationOptions queryOptions = MutationOptions(

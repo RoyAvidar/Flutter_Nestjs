@@ -18,9 +18,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<String> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final _token = prefs.getString('token');
+    final expiresIn = prefs.getString('expiresIn');
     if (_token!.isEmpty) {
       return token;
-    } else {
+    }
+    // if (expiresIn.isAfter(token.expiryDate)) {
+    //   return false;
+    // }
+    else {
       setState(() {
         token = "Bearer $_token";
       });
@@ -31,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _navHome() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
     print(token);
-    if (token != null) {
+    if (token == null) {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -50,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _getToken();
+    _getToken();
     _navHome();
   }
 

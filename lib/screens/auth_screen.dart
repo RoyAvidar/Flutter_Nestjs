@@ -37,6 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
   TextEditingController userPhoneController = TextEditingController();
   AuthMode _authMode = AuthMode.Login;
   bool _validate = false;
+  DateTime _tokenExpiry = DateTime.now();
 
   @override
   void dispose() {
@@ -79,6 +80,8 @@ class _AuthScreenState extends State<AuthScreen> {
       final prefs = await SharedPreferences.getInstance();
       final token = result.data!['login'];
       prefs.setString('token', token);
+      // get the expiry date of token and set it in prefs.
+      prefs.setString('expiresIn', _tokenExpiry.toString());
       Navigator.of(context).pushNamed(OverviewScreen.routeName);
     }
   }
