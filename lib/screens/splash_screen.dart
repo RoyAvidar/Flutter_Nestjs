@@ -26,8 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
   var token;
   var expireDate;
 
-  Future<int> _getExpireDate(String token) async {
-    final token = await this.token;
+  Future<int> _getExpireDate() async {
+    final token = await this._getToken();
     QueryOptions queryOptions =
         QueryOptions(document: gql(getExpireDateGraphql), variables: {
       'token': token,
@@ -52,14 +52,14 @@ class _SplashScreenState extends State<SplashScreen> {
       setState(() {
         token = "Bearer $_token";
       });
-      // print(token);
+      print(token);
       return token;
     }
   }
 
   _navHome() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
-    if (expireDate != null) {
+    if (token != null) {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -79,7 +79,6 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     _getToken();
-    _getExpireDate(token);
     _navHome();
   }
 
