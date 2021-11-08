@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/product.dart';
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../models/products_provider.dart';
+// import '../models/products_provider.dart';
 import '../widgets/product_item.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -14,8 +15,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   List<Product> products = [];
 
   Future<List<Product>> getProds() async {
-    final prods =
-        await Provider.of<ProductsProvider>(context, listen: false).items;
+    final prods = await Provider.of<UserProvider>(context, listen: false)
+        .getUserProducts();
     setState(() {
       products = prods;
     });
@@ -43,7 +44,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       itemBuilder: (ctx, i) => ChangeNotifierProvider(
         // will return a single product as it stored in the products_provider class.
         create: (c) => products[i],
-        child: products[i].isFavorite == true ? ProductItem() : Container(),
+        child: ProductItem(),
       ),
     );
   }

@@ -8,7 +8,7 @@ class User with ChangeNotifier {
   final String? userPassword;
   final String? userPhone;
   final bool? isAdmin;
-  final Product? products;
+  final List<Product>? products;
   final Order? orders;
 
   User({

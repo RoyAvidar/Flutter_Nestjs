@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
+import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/screens/settings_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/orders_screen.dart';
 import '../screens/admin/admin_products_screen.dart';
@@ -98,6 +100,7 @@ class _AppDrawerState extends State<AppDrawer> {
             title: Text('Logout'),
             leading: Icon(Icons.logout),
             onTap: () {
+              Provider.of<AuthProvider>(context, listen: false).logout();
               Navigator.of(context).pushReplacementNamed('/auth');
             },
           ),

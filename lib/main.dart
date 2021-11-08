@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/auth.dart';
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:flutter_main/screens/splash_screen.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (ctx) => OrdersProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (ctx) => UserProvider(),
           ),
         ],
         child: Consumer<AuthProvider>(
