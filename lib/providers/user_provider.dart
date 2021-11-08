@@ -5,16 +5,17 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 const getUserGraphql = """
   query {
-  getSingleUser {
-    products {
-      productId
+    getUserProducts {
+      productId,
       productName,
       productPrice,
       productDesc,
-      imageUrl,
+      imageUrl
+      category {
+        categoryId
+      }
     }
   }
-}
 """;
 
 class UserProvider with ChangeNotifier {
@@ -26,9 +27,10 @@ class UserProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
-    _prods = (result.data?["getSingleUser"]["products"]
-        .map<Product>((prod) => Product.fromJson(prod)));
-    print(_prods);
+    // print(result.data?["getUserProducts"]);
+    // _prods = result.data?["getUserProducts"];
+    _prods = (result.data?["getUserProducts"]
+        .map<Product>((prod) => Product.fromJson(prod))).toList();
     notifyListeners();
     return _prods;
   }

@@ -8,7 +8,6 @@ class Product with ChangeNotifier {
   final double? price;
   final String? imageUrl;
   final int? categoryId;
-  bool isFavorite;
 
   Product({
     @required this.id,
@@ -17,13 +16,12 @@ class Product with ChangeNotifier {
     @required this.price,
     @required this.imageUrl,
     @required this.categoryId,
-    this.isFavorite = false,
   });
 
-  void toggleFavorite() {
-    isFavorite = !isFavorite;
-    notifyListeners();
-  }
+  // void toggleFavorite() {
+  //   isFavorite = !isFavorite;
+  //   notifyListeners();
+  // }
 
   Product.fromJson(Map<String, dynamic> json)
       : id = json['productId'].toString(),
@@ -31,6 +29,5 @@ class Product with ChangeNotifier {
         description = json['productDesc'],
         price = double.parse(json['productPrice'].toString()),
         imageUrl = json['imageUrl'],
-        categoryId = int.parse(json['category']['categoryId']),
-        isFavorite = false;
+        categoryId = int.parse(json['category']['categoryId']);
 }

@@ -125,7 +125,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
-                    isFavorite: _editedProduct.isFavorite,
                     name: value,
                     price: _editedProduct.price,
                     description: _editedProduct.description,
@@ -155,7 +154,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
-                    isFavorite: _editedProduct.isFavorite,
                     name: _editedProduct.name,
                     price: double.parse(value!),
                     description: _editedProduct.description,
@@ -179,7 +177,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
-                    isFavorite: _editedProduct.isFavorite,
                     name: _editedProduct.name,
                     price: _editedProduct.price,
                     description: value,
@@ -200,7 +197,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onChanged: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
-                    isFavorite: _editedProduct.isFavorite,
                     name: _editedProduct.name,
                     price: _editedProduct.price,
                     description: _editedProduct.description,
@@ -269,7 +265,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       onSaved: (value) {
                         _editedProduct = Product(
                           id: _editedProduct.id,
-                          isFavorite: _editedProduct.isFavorite,
                           name: _editedProduct.name,
                           price: _editedProduct.price,
                           description: _editedProduct.description,
