@@ -8,10 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:graphql_flutter/graphql_flutter.dart';
 
 const getExpireDateGraphql = """
-  query {
-    getExpireDate(token: \$token) {
-      getExpireDate
-    }
+  query getExpireDate(\$token: String!) {
+    getExpireDate(token: \$token) 
   }
 """;
 
@@ -27,20 +25,32 @@ class _SplashScreenState extends State<SplashScreen> {
   var expireDate;
 
   Future<int> _getExpireDate() async {
-    final token = await this._getToken();
-    QueryOptions queryOptions =
-        QueryOptions(document: gql(getExpireDateGraphql), variables: {
-      'token': token,
-    });
-    QueryResult result = await GraphQLConfig.client.query(queryOptions);
-    if (result.hasException) {
-      print(result.exception);
+    final prefers = await SharedPreferences.getInstance();
+    final _token = prefers.getString('token');
+
+    if (_token!.isEmpty) {
+      return token;
+    } else {
+      setState(() {
+        token = _token;
+      });
+      QueryOptions queryOptions = QueryOptions(
+          document: gql(getExpireDateGraphql),
+          variables: <String, dynamic>{
+            'token': token,
+          });
+      QueryResult result = await GraphQLConfig.client.query(queryOptions);
+      if (result.hasException) {
+        print(result.exception);
+      }
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        expireDate = result.data?['getExpireDate'];
+        prefs.setInt('expireDate', expireDate);
+        print(expireDate);
+      });
+      return expireDate;
     }
-    final prefs = await SharedPreferences.getInstance();
-    final expireDate = result.data?['getExpireDate'];
-    prefs.setInt('expireDate', expireDate);
-    print(expireDate);
-    return expireDate;
   }
 
   Future<String> _getToken() async {
@@ -52,14 +62,13 @@ class _SplashScreenState extends State<SplashScreen> {
       setState(() {
         token = "Bearer $_token";
       });
-      print(token);
       return token;
     }
   }
 
   _navHome() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
-    if (token != null) {
+    if (token != null && expireDate != null) {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -79,6 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     _getToken();
+    _getExpireDate();
     _navHome();
   }
 

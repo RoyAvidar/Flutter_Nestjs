@@ -18,4 +18,10 @@ class AuthProvider with ChangeNotifier {
     // }
     // return null;
   }
+
+  Future<bool> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isLogout = await prefs.clear();
+    return isLogout;
+  }
 }
