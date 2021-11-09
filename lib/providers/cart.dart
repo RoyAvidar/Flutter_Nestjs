@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/models/cart.dart';
-import 'package:flutter_main/models/product.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 const getCartGraphql = """
@@ -96,7 +95,6 @@ class CartProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
-    print(result.data?["getCart"]);
     final cartData = (result.data?["getCart"]);
     final cart = new Cart(
         cartId: cartData["cartId"],

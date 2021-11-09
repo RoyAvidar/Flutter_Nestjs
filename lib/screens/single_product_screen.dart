@@ -25,6 +25,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
           totalPrice: cartData.totalPrice,
           itemCount: cartData.itemCount);
     });
+    // print(cart);
     return cart;
   }
 
@@ -70,7 +71,8 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
             ElevatedButton(
               onPressed: () {
                 print(cart);
-                // cart.addItem(cart., int.parse(loadedProduct.id!));
+                // Provider.of<CartProvider>(context, listen: false)
+                //     .addItem(int.parse(productId), cartid);
               },
               child: Text('Add To Cart'),
             )

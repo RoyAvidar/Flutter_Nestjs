@@ -74,7 +74,6 @@ class OrdersProvider with ChangeNotifier {
     }
     _orders = (result.data?['getUserOrders']
         .map<Order>((ord) => Order.fromJson(ord))).toList();
-    print(_orders);
     notifyListeners();
     return _orders;
   }
