@@ -54,17 +54,6 @@ class ProductItem extends StatelessWidget {
                 );
               },
             ),
-            // trailing: IconButton(
-            //   icon: Icon(
-            //     product.isFavorite
-            //         ? Icons.favorite
-            //         : Icons.favorite_border_outlined,
-            //   ),
-            //   onPressed: () {
-            //     product.toggleFavorite();
-            //   },
-            //   color: Theme.of(context).accentColor,
-            // ),
             backgroundColor: Colors.black54,
             title: Text(
               product.name.toString(),

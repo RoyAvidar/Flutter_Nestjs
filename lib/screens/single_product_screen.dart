@@ -1,11 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/models/cart.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
 import '../models/products_provider.dart';
 
-class SingleProductScreen extends StatelessWidget {
+class SingleProductScreen extends StatefulWidget {
   static const routeName = '/singleProduct';
+
+  @override
+  State<SingleProductScreen> createState() => _SingleProductScreenState();
+}
+
+class _SingleProductScreenState extends State<SingleProductScreen> {
+  var cart;
+
+  Future<Cart> getCart() async {
+    final cartData =
+        await Provider.of<CartProvider>(context, listen: false).getCart();
+    setState(() {
+      cart = new Cart(
+          cartId: cartData.cartId,
+          products: cartData.products,
+          totalPrice: cartData.totalPrice,
+          itemCount: cartData.itemCount);
+    });
+    return cart;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getCart();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +42,6 @@ class SingleProductScreen extends StatelessWidget {
       context,
       listen: false,
     ).findById(productId);
-    final cart = Provider.of<CartProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedProduct.name.toString()),
@@ -42,7 +69,8 @@ class SingleProductScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                cart.addItem(cart.cartId, int.parse(loadedProduct.id!));
+                print(cart);
+                // cart.addItem(cart., int.parse(loadedProduct.id!));
               },
               child: Text('Add To Cart'),
             )
