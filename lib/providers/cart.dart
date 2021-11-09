@@ -20,6 +20,12 @@ query {
 }
 """;
 
+const getCartIDGraphql = """
+  query {
+  getCartId
+}
+""";
+
 const createCartGraphql = """
   mutation {
   createCart {
@@ -76,6 +82,16 @@ class CartProvider with ChangeNotifier {
 
   int get cartId {
     return this.cartId;
+  }
+
+  Future<int> getCartId() async {
+    QueryOptions queryOptions = QueryOptions(document: gql(getCartIDGraphql));
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final cartId = result.data?['getCartId'];
+    return cartId;
   }
 
   void createCart() async {

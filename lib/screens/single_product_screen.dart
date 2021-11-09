@@ -15,29 +15,31 @@ class SingleProductScreen extends StatefulWidget {
 class _SingleProductScreenState extends State<SingleProductScreen> {
   var cart;
 
-  Future<Cart> getCart() async {
-    final cartData =
-        await Provider.of<CartProvider>(context, listen: false).getCart();
-    setState(() {
-      cart = new Cart(
-          cartId: cartData.cartId,
-          products: cartData.products,
-          totalPrice: cartData.totalPrice,
-          itemCount: cartData.itemCount);
-    });
-    // print(cart);
-    return cart;
-  }
+  // Future<Cart> getCart() async {
+  //   final cartData =
+  //       await Provider.of<CartProvider>(context, listen: false).getCart();
+  //   setState(() {
+  //     cart = new Cart(
+  //         cartId: cartData.cartId,
+  //         products: cartData.products,
+  //         totalPrice: cartData.totalPrice,
+  //         itemCount: cartData.itemCount);
+  //   });
+  //   // print(cart);
+  //   return cart;
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    this.getCart();
+    // this.getCart();
   }
 
   @override
   Widget build(BuildContext context) {
+    final cartId =
+        Provider.of<CartProvider>(context, listen: false).getCartId();
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final loadedProduct = Provider.of<ProductsProvider>(
       context,
@@ -72,7 +74,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               onPressed: () {
                 print(cart);
                 // Provider.of<CartProvider>(context, listen: false)
-                //     .addItem(int.parse(productId), cartid);
+                //     .addItem(int.parse(productId), cartId);
               },
               child: Text('Add To Cart'),
             )
