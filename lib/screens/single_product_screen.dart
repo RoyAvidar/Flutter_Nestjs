@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_main/models/cart.dart';
+import 'package:flutter_main/models/product.dart';
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
@@ -13,33 +14,58 @@ class SingleProductScreen extends StatefulWidget {
 }
 
 class _SingleProductScreenState extends State<SingleProductScreen> {
+  bool favStatus = false;
   var cart;
+  int cartId = 0;
+  List<Product> userProds = [];
 
-  // Future<Cart> getCart() async {
-  //   final cartData =
-  //       await Provider.of<CartProvider>(context, listen: false).getCart();
-  //   setState(() {
-  //     cart = new Cart(
-  //         cartId: cartData.cartId,
-  //         products: cartData.products,
-  //         totalPrice: cartData.totalPrice,
-  //         itemCount: cartData.itemCount);
-  //   });
-  //   // print(cart);
-  //   return cart;
-  // }
+  Future<int> getCartId() async {
+    cartId =
+        await Provider.of<CartProvider>(context, listen: false).getCartId();
+    if (cartId == 0) {
+      throw new Exception("cartId was not found.");
+    }
+    return cartId;
+  }
+
+  Future<List<Product>> getUserProds() async {
+    final result = await Provider.of<UserProvider>(context, listen: false)
+        .getUserProducts();
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    setState(() {
+      userProds = result;
+      userProds.forEach((p) {
+        if (p.id == productId) {
+          favStatus = true;
+        } else {
+          favStatus = false;
+        }
+      });
+    });
+    print(userProds);
+    return userProds;
+  }
+
+  void addProductToFav(String prodId) async {
+    await Provider.of<UserProvider>(context, listen: false)
+        .addProductToFav(prodId);
+  }
+
+  void removeProductFromFav(String prodId) async {
+    await Provider.of<UserProvider>(context, listen: false)
+        .removeProductFromFav(prodId);
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // this.getCart();
+    this.getCartId();
+    this.getUserProds();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cartId =
-        Provider.of<CartProvider>(context, listen: false).getCartId();
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final loadedProduct = Provider.of<ProductsProvider>(
       context,
@@ -72,12 +98,48 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                print(cart);
-                // Provider.of<CartProvider>(context, listen: false)
-                //     .addItem(int.parse(productId), cartId);
+                Provider.of<CartProvider>(context, listen: false)
+                    .addItem(int.parse(productId), cartId);
               },
               child: Text('Add To Cart'),
-            )
+            ),
+            SizedBox(height: 10),
+            IconButton(
+              onPressed: () => {
+                favStatus
+                    ? setState(() {
+                        favStatus = !favStatus;
+                        removeProductFromFav(productId);
+                      })
+                    : setState(() {
+                        favStatus = !favStatus;
+                        addProductToFav(productId);
+                      })
+              },
+              icon: favStatus
+                  ? Icon(Icons.favorite)
+                  : Icon(Icons.favorite_border),
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     favStatus
+            //         ? ElevatedButton(
+            //             onPressed: () {
+            //               Provider.of<UserProvider>(context, listen: false)
+            //                   .removeProductFromFav(productId);
+            //             },
+            //             child: Text('Remove From Favorites'),
+            //           )
+            //         : ElevatedButton(
+            //             onPressed: () {
+            //               Provider.of<UserProvider>(context, listen: false)
+            //                   .addProductToFav(productId);
+            //             },
+            //             child: Text('Add To Favorites'),
+            //           )
+            //   ],
+            // ),
           ],
         ),
       ),

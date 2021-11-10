@@ -18,6 +18,20 @@ const getUserGraphql = """
   }
 """;
 
+const addProductToUserGraphql = """
+  mutation 
+    addProductToUser(\$prodId: String!) {
+      addProductToUser(prodId: \$prodId)
+}
+""";
+
+const removeProductFromUser = """
+  mutation 
+    removeProductFromUser(\$productId: String!) {
+      removeProductFromUser(productId: \$productId)
+}
+""";
+
 class UserProvider with ChangeNotifier {
   List<Product> _prods = [];
 
@@ -33,5 +47,33 @@ class UserProvider with ChangeNotifier {
         .map<Product>((prod) => Product.fromJson(prod))).toList();
     notifyListeners();
     return _prods;
+  }
+
+  Future<bool> addProductToFav(String productId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(addProductToUserGraphql),
+        variables: <String, dynamic>{
+          "prodId": productId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["addProductToUser"];
+    return resultData;
+  }
+
+  Future<bool> removeProductFromFav(String productId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(removeProductFromUser),
+        variables: <String, dynamic>{
+          "productId": productId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["removeProductFromUser"];
+    return resultData;
   }
 }

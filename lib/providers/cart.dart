@@ -27,7 +27,7 @@ const getCartIDGraphql = """
 """;
 
 const createCartGraphql = """
-  mutation {
+  mutation 
   createCart {
     cartId,
     totalPrice,
@@ -35,26 +35,23 @@ const createCartGraphql = """
       userId
     }
   }
-}
 """;
 
 const cleanCartGraphql = """
-  mutation {
+  mutation 
     cleanCart(\$cartId: CartId!) {
       cleanCart(cartId: \$cartId)
     }
-  }
 """;
 
 const addProductToCart = """
-  mutation {
+  mutation 
     addProductToCart(\$addToCartInput: AddToCartInput!) {
       addProductToCart(addToCartInput: \$addToCartInput) {
         cartId,
         productId
       }
     }
-  }
 """;
 
 class CartItem {

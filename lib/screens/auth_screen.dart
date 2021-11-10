@@ -79,7 +79,7 @@ class _AuthScreenState extends State<AuthScreen> {
       final prefs = await SharedPreferences.getInstance();
       final token = result.data!['login'];
       prefs.setString('token', token);
-      Navigator.of(context).pushNamed(OverviewScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(OverviewScreen.routeName);
     }
   }
 
