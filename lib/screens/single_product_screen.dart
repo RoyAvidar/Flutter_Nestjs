@@ -25,6 +25,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     if (cartId == 0) {
       throw new Exception("cartId was not found.");
     }
+    print(cartId);
     return cartId;
   }
 
@@ -42,7 +43,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
         }
       });
     });
-    print(userProds);
     return userProds;
   }
 
@@ -120,26 +120,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                   ? Icon(Icons.favorite)
                   : Icon(Icons.favorite_border),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: [
-            //     favStatus
-            //         ? ElevatedButton(
-            //             onPressed: () {
-            //               Provider.of<UserProvider>(context, listen: false)
-            //                   .removeProductFromFav(productId);
-            //             },
-            //             child: Text('Remove From Favorites'),
-            //           )
-            //         : ElevatedButton(
-            //             onPressed: () {
-            //               Provider.of<UserProvider>(context, listen: false)
-            //                   .addProductToFav(productId);
-            //             },
-            //             child: Text('Add To Favorites'),
-            //           )
-            //   ],
-            // ),
           ],
         ),
       ),

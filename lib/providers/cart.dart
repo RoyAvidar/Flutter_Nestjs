@@ -47,10 +47,7 @@ const cleanCartGraphql = """
 const addProductToCart = """
   mutation 
     addProductToCart(\$addToCartInput: AddToCartInput!) {
-      addProductToCart(addToCartInput: \$addToCartInput) {
-        cartId,
-        productId
-      }
+      addProductToCart(addToCartInput: \$addToCartInput) 
     }
 """;
 
@@ -76,10 +73,6 @@ class CartItem {
 
 class CartProvider with ChangeNotifier {
   List<CartItem>? _items = [];
-
-  int get cartId {
-    return this.cartId;
-  }
 
   Future<int> getCartId() async {
     QueryOptions queryOptions = QueryOptions(document: gql(getCartIDGraphql));
@@ -178,26 +171,6 @@ class CartProvider with ChangeNotifier {
     _items!.remove(productId);
     notifyListeners();
   }
-
-  //single quantity of the product.
-  // void removeSingleItem(String productId) {
-  //   if (!_items!.containsKey(productId)) {
-  //     return;
-  //   }
-  //   if (_items![productId]!.quantity! > 1) {
-  //     _items!.update(
-  //         productId,
-  //         (cartItem) => CartItem(
-  //               id: cartItem.id,
-  //               title: cartItem.title,
-  //               quantity: cartItem.quantity! - 1,
-  //               price: cartItem.price,
-  //             ));
-  //   } else {
-  //     _items!.remove(productId);
-  //   }
-  //   notifyListeners();
-  // }
 
   Object clearCart(int cartId) async {
     MutationOptions queryOptions = MutationOptions(

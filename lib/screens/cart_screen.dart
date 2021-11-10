@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
+import 'package:flutter_main/models/cart.dart';
 import 'package:flutter_main/widgets/cart_item.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -23,17 +24,20 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  Map<String, CartItemWidget> cart = {};
+  var cart;
 
-  Future<Map<String, CartItemWidget>> getCart() async {
-    final items =
+  Future<Cart> getCart() async {
+    final cartData =
         await Provider.of<CartProvider>(context, listen: false).getCart();
-    setState(() {});
+    setState(() {
+      cart = cartData;
+    });
     return cart;
   }
 
   submit() async {
-    final cartid = Provider.of<CartProvider>(context).cartId;
+    final cartid =
+        Provider.of<CartProvider>(context, listen: false).getCartId();
     MutationOptions queryOptions = MutationOptions(
         document: gql(submitCartGraphql),
         variables: <String, dynamic>{
