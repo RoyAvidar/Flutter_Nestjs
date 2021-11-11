@@ -136,7 +136,7 @@ class CartProvider with ChangeNotifier {
             "productId": productId,
           }
         });
-    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
       return false;

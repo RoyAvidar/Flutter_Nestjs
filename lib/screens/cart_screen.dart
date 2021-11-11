@@ -30,7 +30,12 @@ class _CartScreenState extends State<CartScreen> {
     final cartData =
         await Provider.of<CartProvider>(context, listen: false).getCart();
     setState(() {
-      cart = cartData;
+      cart = new Cart(
+        cartId: cartData.cartId,
+        products: cartData.products,
+        totalPrice: cartData.totalPrice,
+        itemCount: cartData.itemCount,
+      );
     });
     return cart;
   }
