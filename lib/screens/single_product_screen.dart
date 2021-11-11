@@ -110,7 +110,8 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                     action: SnackBarAction(
                       label: 'UNDO',
                       onPressed: () {
-                        // cart.removeSingleItem(product.id!);
+                        Provider.of<CartProvider>(context, listen: false)
+                            .removeItem(int.parse(productId), cartId);
                       },
                     ),
                   ),

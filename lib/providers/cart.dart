@@ -51,6 +51,13 @@ const addProductToCart = """
     }
 """;
 
+const removeProductFromCart = """
+  mutation 
+    removeProductFromCart(\$productId: ProductId! , \$cartId: CartId!) {
+      removeProductFromCart(productId: \$productId, cartId: \$cartId) 
+    }
+""";
+
 class CartItem {
   final String? id;
   final String? title;
@@ -167,9 +174,16 @@ class CartProvider with ChangeNotifier {
     // }
   }
 
-  void removeItem(String productId) {
-    _items!.remove(productId);
+  Future<bool> removeItem(int productId, int cartId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(removeProductFromCart),
+        variables: <String, dynamic>{"productId": productId, "cartId": cartId});
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
     notifyListeners();
+    return true;
   }
 
   Object clearCart(int cartId) async {
