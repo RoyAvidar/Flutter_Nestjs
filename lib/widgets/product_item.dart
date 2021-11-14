@@ -70,7 +70,8 @@ class _ProductItemState extends State<ProductItem> {
                     action: SnackBarAction(
                       label: 'UNDO',
                       onPressed: () {
-                        // cart.removeSingleItem(product.id!);
+                        Provider.of<CartProvider>(context, listen: false)
+                            .removeItem(int.parse(product.id!), cartId);
                       },
                     ),
                   ),

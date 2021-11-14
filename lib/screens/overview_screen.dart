@@ -25,6 +25,23 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
+  var itemCount = 0;
+
+  Future<int> getItemCount() async {
+    final count = await Provider.of<CartProvider>(context).itemCount();
+    setState(() {
+      itemCount = count;
+    });
+    return itemCount;
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    this.getItemCount();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -58,7 +75,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
               Consumer<CartProvider>(
                 builder: (context, cart, ch) => Badge(
                   child: ch,
-                  value: cart.itemCount.toString(),
+                  value: itemCount.toString(),
                 ),
                 child: IconButton(
                   icon: Icon(

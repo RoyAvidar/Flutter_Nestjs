@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import '../providers/cart.dart' show CartProvider;
 
 const submitCartGraphql = """
-  mutation {
+  mutation 
     submitCartToOrder(\$createOrderInput: CreateOrderInput!) {
       submitCartToOrder(createOrderInput: \$createOrderInput)
     }
-  }
+  
 """;
 
 class CartScreen extends StatefulWidget {
@@ -30,19 +30,21 @@ class _CartScreenState extends State<CartScreen> {
     final cartData =
         await Provider.of<CartProvider>(context, listen: false).getCart();
     setState(() {
-      cart = new Cart(
-        cartId: cartData.cartId,
-        products: cartData.products,
-        totalPrice: cartData.totalPrice,
-        itemCount: cartData.itemCount,
-      );
+      // cart = new Cart(
+      //   cartId: cartData.cartId,
+      //   products: cartData.products,
+      //   totalPrice: cartData.totalPrice,
+      //   itemCount: cartData.itemCount,
+      // );
+      cart = cartData;
     });
+    print(cart.products.length);
     return cart;
   }
 
   submit() async {
     final cartid =
-        Provider.of<CartProvider>(context, listen: false).getCartId();
+        await Provider.of<CartProvider>(context, listen: false).getCartId();
     MutationOptions queryOptions = MutationOptions(
         document: gql(submitCartGraphql),
         variables: <String, dynamic>{
@@ -79,14 +81,14 @@ class _CartScreenState extends State<CartScreen> {
           // listView of cartItem's ,
           Expanded(
             child: ListView.builder(
-              itemBuilder: (ctx, i) => CartItemWidget(
-                cart.values.toList()[i].id,
-                cart.keys.toList()[i], // this key is the productId.
-                cart.values.toList()[i].price,
-                cart.values.toList()[i].quantity,
-                cart.values.toList()[i].title,
-              ),
-              itemCount: cart.length,
+              itemCount: cart.products.length,
+              itemBuilder: (ctx, i) => Container(
+                  // cart.values.toList()[i].id,
+                  // cart.keys.toList()[i], // this key is the productId.
+                  // cart.values.toList()[i].price,
+                  // cart.values.toList()[i].quantity,
+                  // cart.values.toList()[i].title,
+                  ),
             ),
           ),
           Card(
@@ -100,14 +102,15 @@ class _CartScreenState extends State<CartScreen> {
                     'Total',
                     style: TextStyle(fontSize: 15),
                   ),
-                  // Chip(
-                  //   label: Text(
-                  //     '\$${cart.totalAmount.toStringAsFixed(2)}',
-                  //     style: TextStyle(
-                  //       color: Theme.of(context).primaryColor,
-                  //     ),
-                  //   ),
-                  // ),
+                  Chip(
+                    label: Text(
+                      // '\$${cart.totalAmount.toStringAsFixed(2)}',
+                      "${cart}",
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

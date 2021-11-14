@@ -26,6 +26,12 @@ const getCartIDGraphql = """
 }
 """;
 
+const getItemCountGraphql = """
+  query {
+  getItemCount
+}
+""";
+
 const createCartGraphql = """
   mutation 
   createCart {
@@ -53,7 +59,7 @@ const addProductToCart = """
 
 const removeProductFromCart = """
   mutation 
-    removeProductFromCart(\$productId: ProductId! , \$cartId: CartId!) {
+    removeProductFromCart(\$productId: Float! , \$cartId: Float!) {
       removeProductFromCart(productId: \$productId, cartId: \$cartId) 
     }
 """;
@@ -120,9 +126,18 @@ class CartProvider with ChangeNotifier {
     return cart;
   }
 
-  //counts the amount of entries in the map.
-  int get itemCount {
-    return _items!.length;
+  //counts the amount of entries in the cart.
+  Future<int> itemCount() async {
+    QueryOptions queryOptions = QueryOptions(
+      document: gql(getItemCountGraphql),
+    );
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final count = result.data?["getItemCount"];
+    notifyListeners();
+    return count;
   }
 
   //counts the total price of the cartItems in the cart.
