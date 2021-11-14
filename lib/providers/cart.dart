@@ -115,13 +115,7 @@ class CartProvider with ChangeNotifier {
       print(result.exception);
     }
     final cartData = (result.data?["getCart"]);
-    final cart = new Cart(
-        cartId: cartData["cartId"],
-        products: cartData["products"]
-            .map<CartItem>((p) => CartItem.fromJson(p))
-            .toList(),
-        totalPrice: cartData["totalPrice"],
-        itemCount: cartData["itemCount"]);
+    final cart = new Cart.fromJson(cartData);
     notifyListeners();
     return cart;
   }

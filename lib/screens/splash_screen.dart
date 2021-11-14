@@ -47,7 +47,6 @@ class _SplashScreenState extends State<SplashScreen> {
       setState(() {
         expireDate = result.data?['getExpireDate'];
         prefs.setInt('expireDate', expireDate);
-        print(expireDate);
       });
       return expireDate;
     }

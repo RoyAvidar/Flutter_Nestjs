@@ -30,15 +30,8 @@ class _CartScreenState extends State<CartScreen> {
     final cartData =
         await Provider.of<CartProvider>(context, listen: false).getCart();
     setState(() {
-      // cart = new Cart(
-      //   cartId: cartData.cartId,
-      //   products: cartData.products,
-      //   totalPrice: cartData.totalPrice,
-      //   itemCount: cartData.itemCount,
-      // );
       cart = cartData;
     });
-    print(cart.products.length);
     return cart;
   }
 
@@ -105,7 +98,7 @@ class _CartScreenState extends State<CartScreen> {
                   Chip(
                     label: Text(
                       // '\$${cart.totalAmount.toStringAsFixed(2)}',
-                      "${cart}",
+                      "${cart.totalPrice}",
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                       ),
