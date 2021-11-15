@@ -73,13 +73,14 @@ class CartItem {
   CartItem({
     @required this.id,
     @required this.title,
-    @required this.quantity,
+    this.quantity,
     @required this.price,
   });
 
   CartItem.fromJson(Map<String, dynamic> json)
       : id = json['productId'].toString(),
         title = json['productName'],
+        //quantity = json['quantity']
         quantity = 1,
         price = double.parse(json['productPrice'].toString());
 }

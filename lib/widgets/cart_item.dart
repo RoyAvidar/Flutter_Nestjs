@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
 
-class CartItemWidget extends StatelessWidget {
+class CartItemWidget extends StatefulWidget {
   final String id;
   final String productId;
   final String title;
@@ -19,11 +19,32 @@ class CartItemWidget extends StatelessWidget {
   );
 
   @override
+  State<CartItemWidget> createState() => _CartItemWidgetState();
+}
+
+class _CartItemWidgetState extends State<CartItemWidget> {
+  int? cartId;
+
+  getCartId() async {
+    final Id =
+        await Provider.of<CartProvider>(context, listen: false).getCartId();
+    setState(() {
+      cartId = Id;
+    });
+    return cartId;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getCartId();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cartId =
-        Provider.of<CartProvider>(context, listen: false).getCartId();
     return Dismissible(
-      key: ValueKey(id),
+      key: ValueKey(widget.id),
       background: Container(
         color: Theme.of(context).errorColor,
         child: Icon(Icons.delete),
@@ -60,8 +81,8 @@ class CartItemWidget extends StatelessWidget {
         );
       },
       onDismissed: (direction) {
-        // Provider.of<CartProvider>(context, listen: false)
-        //     .removeItem(int.parse(productId), cartId);
+        Provider.of<CartProvider>(context, listen: false)
+            .removeItem(int.parse(widget.productId), cartId!);
       },
       child: Card(
         margin: EdgeInsets.symmetric(
@@ -75,17 +96,17 @@ class CartItemWidget extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(5),
                 child: FittedBox(
-                  child: Text('\$$price'),
+                  child: Text('\$${widget.price}'),
                 ),
               ),
             ),
-            title: Text('$title'),
-            subtitle: Text('Total: \$${(price * quantity)}'),
+            title: Text('${widget.title}'),
+            subtitle: Text('Total: \$${(widget.price * widget.quantity)}'),
             // trailing: IconButton(
             //   icon: Icon(Icons.add),
             //   onPressed: () {},
             // ),
-            trailing: Text('x $quantity'),
+            trailing: Text('x ${widget.quantity}'),
           ),
         ),
       ),

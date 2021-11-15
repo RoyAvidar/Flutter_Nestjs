@@ -24,13 +24,15 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  var cart;
+  var isLoading = true;
+  Cart? cart;
 
-  Future<Cart> getCart() async {
+  Future<Cart?> getCart() async {
     final cartData =
         await Provider.of<CartProvider>(context, listen: false).getCart();
     setState(() {
       cart = cartData;
+      isLoading = false;
     });
     return cart;
   }
@@ -69,54 +71,56 @@ class _CartScreenState extends State<CartScreen> {
       appBar: AppBar(
         title: Text('Your Cart'),
       ),
-      body: Column(
-        children: [
-          // listView of cartItem's ,
-          Expanded(
-            child: ListView.builder(
-              itemCount: cart.products.length,
-              itemBuilder: (ctx, i) => Container(
-                  // cart.values.toList()[i].id,
-                  // cart.keys.toList()[i], // this key is the productId.
-                  // cart.values.toList()[i].price,
-                  // cart.values.toList()[i].quantity,
-                  // cart.values.toList()[i].title,
-                  ),
-            ),
-          ),
-          Card(
-            margin: EdgeInsets.all(15),
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Total',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  Chip(
-                    label: Text(
-                      // '\$${cart.totalAmount.toStringAsFixed(2)}',
-                      "${cart.totalPrice}",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
+      body: isLoading
+          ? Container()
+          : Column(
+              children: [
+                // listView of cartItem's ,
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cart!.products!.length,
+                    itemBuilder: (ctx, i) => CartItemWidget(
+                      DateTime.now().toString(),
+                      cart!.products![i].id!,
+                      cart!.products![i].price!,
+                      cart!.products![i].quantity!,
+                      cart!.products![i].title!,
                     ),
                   ),
-                ],
-              ),
+                ),
+                Card(
+                  margin: EdgeInsets.all(15),
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Total',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        Chip(
+                          label: Text(
+                            // '\$${cart.totalAmount.toStringAsFixed(2)}',
+                            "${cart!.totalPrice}",
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    submit();
+                  },
+                  style: buttonStyle,
+                  child: Text('Order Now'),
+                ),
+              ],
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              submit();
-            },
-            style: buttonStyle,
-            child: Text('Order Now'),
-          ),
-        ],
-      ),
     );
   }
 }

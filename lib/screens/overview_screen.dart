@@ -7,8 +7,6 @@ import '../screens/salad_screen.dart';
 import '../screens/sandwich_screen.dart';
 import '../screens/lunch_screen.dart';
 import '../screens/cart_screen.dart';
-import '../providers/cart.dart';
-import '../widgets/badge.dart';
 
 const List<Tab> tabs = <Tab>[
   Tab(text: 'Sandwich'),
@@ -25,22 +23,22 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
-  var itemCount = 0;
+  // var itemCount = 0;
 
-  Future<int> getItemCount() async {
-    final count = await Provider.of<CartProvider>(context).itemCount();
-    setState(() {
-      itemCount = count;
-    });
-    return itemCount;
-  }
+  // Future<int> getItemCount() async {
+  //   final count = await Provider.of<CartProvider>(context).itemCount();
+  //   setState(() {
+  //     itemCount = count;
+  //   });
+  //   return itemCount;
+  // }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    this.getItemCount();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  //   this.getItemCount();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
           if (!tabController.indexIsChanging) {
             // Your code goes here.
             // To get index of current tab use tabController.index
-            // var tab = tabController.index;
+            // var ind = tabController.index;
           }
         });
         return Scaffold(
@@ -72,20 +70,20 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             actions: [
               //consumer only rebuilds a part of a widget.
-              Consumer<CartProvider>(
-                builder: (context, cart, ch) => Badge(
-                  child: ch,
-                  value: itemCount.toString(),
+              // Consumer<CartProvider>(
+              //   builder: (context, cart, ch) => Badge(
+              //     child: ch,
+              //     value: itemCount.toString(),
+              //   ),
+              IconButton(
+                icon: Icon(
+                  Icons.shopping_bag,
                 ),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.shopping_bag,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(CartScreen.routeName);
-                  },
-                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(CartScreen.routeName);
+                },
               ),
+              // ),
             ],
           ),
           drawer: AppDrawer(),
