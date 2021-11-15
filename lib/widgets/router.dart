@@ -1,3 +1,6 @@
+import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
+import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
+import 'package:flutter_main/screens/admin/admin_user_screen.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:flutter_main/screens/settings_screen.dart';
 
@@ -15,6 +18,9 @@ class Routes {
     CartScreen.routeName: (ctx) => CartScreen(),
     OrdersScreen.routeName: (ctx) => OrdersScreen(),
     AdminProductsScreen.routeName: (ctx) => AdminProductsScreen(),
+    AdminCategoryScreen.routeName: (ctx) => AdminCategoryScreen(),
+    AdminOrderScreen.routeName: (ctx) => AdminOrderScreen(),
+    AdminUserScreen.routeName: (ctx) => AdminUserScreen(),
     EditProductScreen.routeName: (ctx) => EditProductScreen(),
     OverviewScreen.routeName: (ctx) => OverviewScreen(),
     SettingsScreen.routeName: (ctx) => SettingsScreen()

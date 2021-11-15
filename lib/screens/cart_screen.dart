@@ -72,7 +72,7 @@ class _CartScreenState extends State<CartScreen> {
         title: Text('Your Cart'),
       ),
       body: isLoading
-          ? Container()
+          ? CircularProgressIndicator()
           : Column(
               children: [
                 // listView of cartItem's ,
