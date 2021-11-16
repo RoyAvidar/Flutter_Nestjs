@@ -1,9 +1,34 @@
 import "package:flutter/material.dart";
+import 'package:flutter_main/models/user.dart';
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
+import 'package:provider/provider.dart';
 
-class AdminUserScreen extends StatelessWidget {
+class AdminUserScreen extends StatefulWidget {
   const AdminUserScreen({Key? key}) : super(key: key);
   static const routeName = '/admin-user';
+
+  @override
+  State<AdminUserScreen> createState() => _AdminUserScreenState();
+}
+
+class _AdminUserScreenState extends State<AdminUserScreen> {
+  List<User> users = [];
+
+  Future<List<User>> getUsers() async {
+    final usersData = await Provider.of<UserProvider>(context).getUsers();
+    setState(() {
+      users = usersData;
+    });
+    return users;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getUsers();
+  }
 
   @override
   Widget build(BuildContext context) {

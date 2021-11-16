@@ -173,7 +173,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       obscureText: false,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'User Phone',
+                        labelText: 'Phone Number',
                       ),
                       controller: userPhoneController,
                     ),

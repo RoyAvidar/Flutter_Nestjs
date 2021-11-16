@@ -41,6 +41,7 @@ class _AdminCategoryScreenState extends State<AdminCategoryScreen> {
       drawer: AppDrawer(),
       body: Column(
         children: [
+          Text("Categories"),
           Expanded(
               child: ListView.builder(
             itemCount: categories.length,
