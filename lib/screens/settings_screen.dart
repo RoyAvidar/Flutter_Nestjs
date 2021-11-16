@@ -94,28 +94,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-              Divider(
-                height: 25,
-              ),
-              // Switch(value: isAdmin, onChanged: ),
-
-              if (isAdmin)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text("get all products"),
-                    Divider(
-                      height: 25,
-                    ),
-                    //List of users that isAdmin = ture and the ability to change it.
-                    Text("get all users"),
-                    Divider(
-                      height: 25,
-                    ),
-                    //regular user should only get hes own orders.
-                    Text("get all orders")
-                  ],
-                ),
             ],
           ),
         ),

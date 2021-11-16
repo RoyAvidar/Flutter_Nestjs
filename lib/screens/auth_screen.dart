@@ -59,10 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
-  login() async {
-    String userName = userNameController.text;
-    String userPassword = userPassController.text;
-
+  _login(String userName, String userPassword) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(loginGraphQl),
         variables: <String, dynamic>{
@@ -109,8 +106,14 @@ class _AuthScreenState extends State<AuthScreen> {
     if (result.hasException) {
       print(result.exception);
     } else {
-      Navigator.of(context).pushNamed(OverviewScreen.routeName);
+      _login(userName, userPassword);
     }
+  }
+
+  login() async {
+    String userName = userNameController.text;
+    String userPassword = userPassController.text;
+    _login(userName, userPassword);
   }
 
   @override

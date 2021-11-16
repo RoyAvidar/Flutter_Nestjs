@@ -44,7 +44,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
       itemBuilder: (ctx, i) => ChangeNotifierProvider(
         // will return a single product as it stored in the products_provider class.
         create: (c) => products[i],
-        child: products[i].categoryId == 3 ? ProductItem() : Container(),
+        child: products[i].categoryId == 1 ? ProductItem() : Container(),
       ),
     );
   }
