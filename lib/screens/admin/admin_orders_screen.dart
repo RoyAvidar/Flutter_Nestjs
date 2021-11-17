@@ -42,7 +42,17 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
       drawer: AppDrawer(),
       body: Column(
         children: [
-          Text("All Orders"),
+          Text(
+            "All Orders",
+            style: TextStyle(
+              fontSize: 15,
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Divider(
+            height: 10,
+          ),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(12),

@@ -54,7 +54,8 @@ class UserProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
-    _users = result.data?["users"];
+    _users =
+        (result.data?["users"].map<User>((u) => User.fromJson(u))).toList();
     notifyListeners();
     return _users;
   }

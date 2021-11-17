@@ -19,7 +19,8 @@ const ordersGraphql = """
     },
     user {
       userId,
-      userName
+      userName,
+      userPhone,
     }
   }
 }

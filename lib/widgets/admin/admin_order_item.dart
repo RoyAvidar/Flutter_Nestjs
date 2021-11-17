@@ -48,28 +48,65 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
                 itemCount: order.products!.length,
                 itemBuilder: (ctx, i) => Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Name:  ${order.products![i].title!}",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Name:  ${order.products![i].title!}",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '${order.products![i].quantity}x \$${order.products![i].price}',
+                            ),
+                          ],
                         ),
-                        Text(
-                          '${order.products![i].quantity}x \$${order.products![i].price}',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Divider(
+                          height: 5,
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "User Name: ",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${order.user!.userName}",
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "User Phone: ",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              " ${order.user!.userPhone}",
+                            ),
+                          ],
+                        )
                       ],
                     ),
-                    Text("${order.user!.userName}"),
                   ],
                 ),
               ),

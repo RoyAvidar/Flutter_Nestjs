@@ -41,7 +41,17 @@ class _AdminCategoryScreenState extends State<AdminCategoryScreen> {
       drawer: AppDrawer(),
       body: Column(
         children: [
-          Text("Categories"),
+          Text(
+            "Categories",
+            style: TextStyle(
+              fontSize: 15,
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Divider(
+            height: 10,
+          ),
           Expanded(
               child: ListView.builder(
             itemCount: categories.length,

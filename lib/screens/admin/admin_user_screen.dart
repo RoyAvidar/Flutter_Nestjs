@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/models/user.dart';
 import 'package:flutter_main/providers/user_provider.dart';
+import 'package:flutter_main/widgets/admin/admin_user_item.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -14,11 +15,14 @@ class AdminUserScreen extends StatefulWidget {
 
 class _AdminUserScreenState extends State<AdminUserScreen> {
   List<User> users = [];
+  var isLoading = true;
 
   Future<List<User>> getUsers() async {
-    final usersData = await Provider.of<UserProvider>(context).getUsers();
+    final usersData =
+        await Provider.of<UserProvider>(context, listen: false).getUsers();
     setState(() {
       users = usersData;
+      isLoading = false;
     });
     return users;
   }
@@ -39,7 +43,14 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
       drawer: AppDrawer(),
       body: Column(
         children: [
-          Text("All Users"),
+          Text(
+            "All Users",
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(12),
@@ -47,7 +58,7 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
               itemBuilder: (ctx, i) => ChangeNotifierProvider(
                 create: (c) => users[i],
                 child: Container(
-                  child: Text("elad"),
+                  child: AdminUserItem(),
                 ),
               ),
             ),
