@@ -1,17 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_main/models/order.dart';
-import 'package:intl/intl.dart';
-
 import 'dart:math';
 
+import "package:flutter/material.dart";
+import 'package:flutter_main/models/order.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class OrderItem extends StatefulWidget {
+class AdminOrderItem extends StatefulWidget {
+  const AdminOrderItem({Key? key}) : super(key: key);
+
   @override
-  _OrderItemState createState() => _OrderItemState();
+  _AdminOrderItemState createState() => _AdminOrderItemState();
 }
 
-class _OrderItemState extends State<OrderItem> {
+class _AdminOrderItemState extends State<AdminOrderItem> {
   var _expanded = false;
 
   @override
@@ -68,6 +69,7 @@ class _OrderItemState extends State<OrderItem> {
                         ),
                       ],
                     ),
+                    Text("${order.user!.userName}"),
                   ],
                 ),
               ),

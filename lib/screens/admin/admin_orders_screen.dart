@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/order.dart';
 import 'package:flutter_main/providers/orders.dart';
+import 'package:flutter_main/widgets/admin/admin_order_item.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
 import 'package:flutter_main/widgets/order_item.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,7 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
               itemCount: orders.length,
               itemBuilder: (ctx, i) => ChangeNotifierProvider(
                 create: (c) => orders[i],
-                child: OrderItem(),
+                child: AdminOrderItem(),
               ),
             ),
           ),

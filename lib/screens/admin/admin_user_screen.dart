@@ -37,8 +37,22 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
         title: Text("Hello Admin"),
       ),
       drawer: AppDrawer(),
-      body: Container(
-        child: Text("All Users"),
+      body: Column(
+        children: [
+          Text("All Users"),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(12),
+              itemCount: users.length,
+              itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                create: (c) => users[i],
+                child: Container(
+                  child: Text("elad"),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

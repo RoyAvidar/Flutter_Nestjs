@@ -18,7 +18,8 @@ const ordersGraphql = """
       productDesc
     },
     user {
-      userId
+      userId,
+      userName
     }
   }
 }
@@ -59,9 +60,9 @@ class OrdersProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
-    _orders = (result.data?['orders'].map<Order>((ord) => Order.fromJson(ord)))
-        .toList();
-    // print(_orders);
+    _orders = (result.data?['orders']
+        .map<Order>((ord) => Order.fromJsonWithUser(ord))).toList();
+    // print(result.data?['orders']['user']);
     notifyListeners();
     return _orders;
   }

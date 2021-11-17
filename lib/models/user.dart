@@ -5,11 +5,11 @@ import 'package:flutter_main/models/product.dart';
 class User with ChangeNotifier {
   final int? userId;
   final String? userName;
-  final String? userPassword;
+  String? userPassword;
   final String? userPhone;
   final bool? isAdmin;
-  final List<Product>? products;
-  final Order? orders;
+  List<Product>? products;
+  Order? orders;
 
   User({
     @required this.userId,
@@ -20,4 +20,10 @@ class User with ChangeNotifier {
     @required this.products,
     @required this.orders,
   });
+
+  User.fromJson(Map<String, dynamic> json)
+      : userId = json['userId'],
+        userName = json['userName'],
+        userPhone = json['userPhone'],
+        isAdmin = json['isAdmin'];
 }

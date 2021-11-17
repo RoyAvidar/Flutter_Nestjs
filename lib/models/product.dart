@@ -18,11 +18,6 @@ class Product with ChangeNotifier {
     @required this.categoryId,
   });
 
-  // void toggleFavorite() {
-  //   isFavorite = !isFavorite;
-  //   notifyListeners();
-  // }
-
   Product.fromJson(Map<String, dynamic> json)
       : id = json['productId'].toString(),
         name = json['productName'],
