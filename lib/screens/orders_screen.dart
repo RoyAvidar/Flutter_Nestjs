@@ -44,7 +44,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
         itemCount: orders.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider(
           create: (c) => orders[i],
-          child: OrderItem(),
+          child: orders.isEmpty
+              ? Container(
+                  child: Text('No Orders Yet.'),
+                )
+              : OrderItem(),
         ),
       ),
     );

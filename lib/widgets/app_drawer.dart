@@ -4,7 +4,7 @@ import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
 import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
 import 'package:flutter_main/screens/admin/admin_user_screen.dart';
-import 'package:flutter_main/screens/settings_screen.dart';
+import 'package:flutter_main/screens/settings/settings_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 

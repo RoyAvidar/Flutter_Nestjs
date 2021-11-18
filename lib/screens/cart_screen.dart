@@ -15,6 +15,12 @@ const submitCartGraphql = """
   
 """;
 
+const cleanCart = """
+  mutation {
+  cleanCart(\$cartId: CartId!)
+}
+""";
+
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
   static const routeName = '/Cart';

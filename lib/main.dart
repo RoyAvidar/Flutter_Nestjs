@@ -4,7 +4,9 @@ import 'package:flutter_main/providers/category_provider.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
+import 'package:flutter_main/screens/settings/header_settings_screen.dart';
 import 'package:flutter_main/screens/splash_screen.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
@@ -12,13 +14,15 @@ import '../providers/orders.dart';
 import '../widgets/router.dart';
 import 'models/products_provider.dart';
 
-void main() {
+Future main() async {
+  await Settings.init(cacheProvider: SharePreferenceCache());
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // final isDarkMode = Settings.getValue<bool>(HeaderScreen.keyDarkMode, true);
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
@@ -41,18 +45,26 @@ class MyApp extends StatelessWidget {
           )
         ],
         child: Consumer<AuthProvider>(
-          builder: (ctx, authData, child) => MaterialApp(
-            title: 'Lunchies',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              // accentColor: Colors.lightBlue,
-              appBarTheme: AppBarTheme(color: Colors.black54),
-              fontFamily: 'Lato',
+          builder: (ctx, authData, child) => ValueChangeObserver<bool>(
+            cacheKey: HeaderScreen.keyDarkMode,
+            defaultValue: false,
+            builder: (_, isDarkMode, __) => MaterialApp(
+              title: 'Lunchies',
+              theme: isDarkMode
+                  ? ThemeData.dark().copyWith(
+                      primaryColor: Colors.teal,
+                      accentColor: Colors.white,
+                      scaffoldBackgroundColor: Color(0xFF170635),
+                      canvasColor: Color(0xFF170635),
+                    )
+                  : ThemeData.light().copyWith(
+                      primaryColor: Colors.blue,
+                      accentColor: Colors.lightBlue,
+                      appBarTheme: AppBarTheme(color: Colors.black54),
+                    ),
+              home: SplashScreen(),
+              routes: Routes().routers,
             ),
-            darkTheme: ThemeData.dark(),
-            //isAuth ? OverviewScreen() : AuthScreen();
-            home: SplashScreen(),
-            routes: Routes().routers,
           ),
         ));
   }
