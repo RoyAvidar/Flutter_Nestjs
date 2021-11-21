@@ -26,6 +26,13 @@ class HeaderScreen extends StatelessWidget {
       );
 
   Widget buildHeader() => Center(
-        child: Text("Settings"),
+        child: Text(
+          "Settings",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: Colors.lightGreen,
+          ),
+        ),
       );
 }

@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import 'package:flutter_main/screens/settings/info_screen.dart';
+import 'package:flutter_main/screens/settings/security_screen.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
 class AccoutScreen extends StatelessWidget {
@@ -16,23 +18,12 @@ class AccoutScreen extends StatelessWidget {
       ),
       child: SettingsScreen(
         children: [
-          buildPrivacy(context),
           buildSecurity(context),
           buildAccountInfo(context),
         ],
       ),
     );
   }
-
-  Widget buildPrivacy(BuildContext context) => SimpleSettingsTile(
-        title: "Privacy",
-        subtitle: "",
-        leading: Icon(
-          Icons.lock,
-          color: Colors.black,
-        ),
-        onTap: () {},
-      );
 
   Widget buildSecurity(BuildContext context) => SimpleSettingsTile(
         title: "Security",
@@ -41,7 +32,9 @@ class AccoutScreen extends StatelessWidget {
           Icons.security,
           color: Colors.black,
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushReplacementNamed(SecurityScreen.routeName);
+        },
       );
 
   Widget buildAccountInfo(BuildContext context) => SimpleSettingsTile(
@@ -51,6 +44,8 @@ class AccoutScreen extends StatelessWidget {
           Icons.info,
           color: Colors.black,
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushReplacementNamed(InfoScreen.routeName);
+        },
       );
 }

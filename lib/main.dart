@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
               title: 'Lunchies',
               theme: isDarkMode
                   ? ThemeData.dark().copyWith(
-                      primaryColor: Colors.teal,
+                      primaryColor: Colors.teal[200],
                       accentColor: Colors.white,
                       scaffoldBackgroundColor: Color(0xFF170635),
                       canvasColor: Color(0xFF170635),
