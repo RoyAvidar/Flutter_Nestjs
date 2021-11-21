@@ -11,10 +11,10 @@ class AccoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleSettingsTile(
       title: "Account Settings",
-      subtitle: "Privacy, Security, Language",
+      subtitle: "Privacy, Security",
       leading: Icon(
         Icons.person,
-        color: Colors.black,
+        color: Colors.grey,
       ),
       child: SettingsScreen(
         children: [
@@ -30,7 +30,7 @@ class AccoutScreen extends StatelessWidget {
         subtitle: "",
         leading: Icon(
           Icons.security,
-          color: Colors.black,
+          color: Colors.grey,
         ),
         onTap: () {
           Navigator.of(context).pushReplacementNamed(SecurityScreen.routeName);
@@ -42,7 +42,7 @@ class AccoutScreen extends StatelessWidget {
         subtitle: "",
         leading: Icon(
           Icons.info,
-          color: Colors.black,
+          color: Colors.grey,
         ),
         onTap: () {
           Navigator.of(context).pushReplacementNamed(InfoScreen.routeName);

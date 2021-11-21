@@ -44,6 +44,19 @@ const removeProductFromUser = """
 }
 """;
 
+const changePasswordGraphql = """
+  mutation
+    changePassword(\$userPassword: String!) {
+      changePassword(userPassword: \$userPassword)
+  }
+""";
+
+const deleteUserGraphql = """
+  mutation {
+    deleteUser
+  }
+""";
+
 class UserProvider with ChangeNotifier {
   List<Product> _prods = [];
   List<User> _users = [];
@@ -85,6 +98,7 @@ class UserProvider with ChangeNotifier {
       print(result.exception);
     }
     final resultData = result.data?["addProductToUser"];
+    notifyListeners();
     return resultData;
   }
 
@@ -99,6 +113,34 @@ class UserProvider with ChangeNotifier {
       print(result.exception);
     }
     final resultData = result.data?["removeProductFromUser"];
+    notifyListeners();
+    return resultData;
+  }
+
+  Future<bool> changePassword(String userPassword) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(changePasswordGraphql),
+        variables: <String, dynamic>{
+          "userPassword": userPassword,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["changePassword"];
+    notifyListeners();
+    return resultData;
+  }
+
+  Future<bool> deleteUser() async {
+    MutationOptions queryOptions =
+        MutationOptions(document: gql(deleteUserGraphql));
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["deleteuser"];
+    notifyListeners();
     return resultData;
   }
 }
