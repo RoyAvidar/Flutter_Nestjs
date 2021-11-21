@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/config/gql_client.dart';
+import 'package:flutter_main/screens/settings/edit_profile_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 const getUserGraphql = """
@@ -25,6 +26,7 @@ class _InfoScreenState extends State<InfoScreen> {
   bool isAdmin = false;
   String userName = "";
   String userPhone = "";
+  int userId = 0;
 
   getUser() async {
     QueryOptions queryOptions = QueryOptions(document: gql(getUserGraphql));
@@ -36,6 +38,7 @@ class _InfoScreenState extends State<InfoScreen> {
         isAdmin = result.data?['getSingleUser']['isAdmin'];
         userName = result.data?['getSingleUser']['userName'];
         userPhone = result.data?['getSingleUser']['userPhone'];
+        userId = result.data?['getSingleUser']['userId'];
       });
     }
   }
@@ -50,19 +53,35 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("${userName}'s Info"),
-        ),
-        body: ListView(
+      appBar: AppBar(
+        title: Text("${userName}'s Info"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              //Navigate to edit user screen.
+              Navigator.of(context).pushReplacementNamed(
+                EditProfileScreen.routeName,
+                arguments: userId,
+              );
+            },
+            icon: Icon(
+              Icons.settings,
+              color: Colors.green,
+            ),
+          )
+        ],
+      ),
+      body: Container(
+        padding: EdgeInsets.only(left: 16, top: 25, right: 15),
+        child: ListView(
           children: [
             ListTile(
               title: Text("User Name:"),
               subtitle: Text(
                 userName,
                 style: TextStyle(
-                  color: Colors.black87,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
             ),
@@ -71,9 +90,8 @@ class _InfoScreenState extends State<InfoScreen> {
               subtitle: Text(
                 userPhone,
                 style: TextStyle(
-                  color: Colors.black87,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
             ),
@@ -82,13 +100,14 @@ class _InfoScreenState extends State<InfoScreen> {
               subtitle: Text(
                 isAdmin.toString(),
                 style: TextStyle(
-                  color: Colors.black87,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -46,37 +46,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   onTap: () {
                     showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                              title: Text("Are You Sure?"),
-                              content: Text(
-                                  "You will not be able to restore this account!"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, "Oops"),
-                                  child: Text("Oops"),
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Text("Are You Sure?"),
+                        content: Text(
+                            "You will not be able to restore this account!"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, "Oops"),
+                            child: Text("Oops"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              deleteUser();
+                              Navigator.of(context)
+                                  .pushReplacementNamed(AuthScreen.routeName);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Account Deleted Successfuly!',
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  duration: Duration(seconds: 2),
                                 ),
-                                TextButton(
-                                    onPressed: () {
-                                      deleteUser();
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                              AuthScreen.routeName);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Account Deleted Successfuly!',
-                                            textAlign: TextAlign.left,
-                                          ),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    },
-                                    child: Text("HIT IT!"))
-                              ],
-                            ));
+                              );
+                            },
+                            child: Text("HIT IT!"),
+                          )
+                        ],
+                      ),
+                    );
                   },
                 ),
               ],
