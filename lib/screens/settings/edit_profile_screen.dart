@@ -15,6 +15,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
 
+  bool _validate = false;
   var isLoading = true;
   bool isAdmin = false;
   String userName = "";
@@ -71,40 +72,62 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: Text("Are You Sure?"),
-                          content:
-                              Text("This Procses will update your profile."),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, "Cancel"),
-                              child: Text("Cancel"),
+                      setState(() {
+                        userNameController.text.isEmpty ||
+                                userPhoneController.text.isEmpty
+                            ? _validate = true
+                            : _validate = false;
+                      });
+                      if (_validate) {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Please Provide a Value',
+                              textAlign: TextAlign.left,
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Provider.of<UserProvider>(context,
-                                        listen: false)
-                                    .updateUser(userNameController.text,
-                                        userPhoneController.text);
-                                Navigator.of(context)
-                                    .pushNamed(OverviewScreen.routeName);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Profile Updated Successfuly!',
-                                      textAlign: TextAlign.left,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      } else {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text("Are You Sure?"),
+                            content:
+                                Text("This Procses will update your profile."),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, "Cancel"),
+                                child: Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Provider.of<UserProvider>(context,
+                                          listen: false)
+                                      .updateUser(
+                                    userNameController.text,
+                                    userPhoneController.text,
+                                  );
+                                  Navigator.of(context).pushReplacementNamed(
+                                      OverviewScreen.routeName);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Profile Updated Successfuly!',
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      duration: Duration(seconds: 2),
                                     ),
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                              },
-                              child: Text("Agree"),
-                            ),
-                          ],
-                        ),
-                      );
+                                  );
+                                },
+                                child: Text("Agree"),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                     },
                     child: Text("Update"),
                     style: ButtonStyle(
@@ -143,6 +166,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       padding: const EdgeInsets.only(bottom: 35),
       child: TextField(
         decoration: InputDecoration(
+          errorText: _validate ? "Please Enter a Value" : null,
           contentPadding: EdgeInsets.only(bottom: 5),
           labelText: labelText,
           floatingLabelBehavior: FloatingLabelBehavior.always,

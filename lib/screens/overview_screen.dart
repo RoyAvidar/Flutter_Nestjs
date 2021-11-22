@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/screens/favorites_screen.dart';
-import 'package:provider/provider.dart';
 
 import '../widgets/app_drawer.dart';
 import '../screens/salad_screen.dart';
@@ -23,23 +22,6 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
-  // var itemCount = 0;
-
-  // Future<int> getItemCount() async {
-  //   final count = await Provider.of<CartProvider>(context).itemCount();
-  //   setState(() {
-  //     itemCount = count;
-  //   });
-  //   return itemCount;
-  // }
-
-  // @override
-  // void didChangeDependencies() {
-  //   // TODO: implement didChangeDependencies
-  //   super.didChangeDependencies();
-  //   this.getItemCount();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

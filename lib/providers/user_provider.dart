@@ -57,7 +57,7 @@ const removeProductFromUser = """
 
 const updateUserGraphql = """
   mutation
-    updateUser(\$updateUserData: UpdateUserData!) {
+    updateUser(\$updateUserData: UpdateUserInput!) {
       updateUser(updateUserData: \$updateUserData) {
         userId,
         userName,
@@ -91,7 +91,7 @@ class UserProvider with ChangeNotifier {
       print(result.exception);
     }
     final resultData = result.data?["getSingleUser"];
-    final user = new User.fromJson(resultData);
+    final user = User.fromJson(resultData);
     notifyListeners();
     return user;
   }
@@ -183,8 +183,10 @@ class UserProvider with ChangeNotifier {
     MutationOptions queryOptions = MutationOptions(
         document: gql(updateUserGraphql),
         variables: <String, dynamic>{
-          "userName": userName,
-          "userPhone": userPhone,
+          "updateUserData": {
+            "userName": userName,
+            "userPhone": userPhone,
+          },
         });
     QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
