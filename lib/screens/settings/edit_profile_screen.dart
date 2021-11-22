@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/user_provider.dart';
+import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -11,19 +12,40 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  var _initValues = {
-    'userName': '',
-    'userPhone': '',
-  };
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController userPhoneController = TextEditingController();
+
+  var isLoading = true;
+  bool isAdmin = false;
+  String userName = "";
+  String userPhone = "";
+  int userId = 0;
+
+  getUser() async {
+    final userData =
+        await Provider.of<UserProvider>(context, listen: false).getUser();
+    setState(() {
+      isAdmin = userData.isAdmin!;
+      userName = userData.userName!;
+      userPhone = userData.userPhone!;
+      userId = userData.userId!;
+      isLoading = false;
+    });
+  }
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    final userId = ModalRoute.of(context)!.settings.arguments;
-    if (userId != null) {
-      Provider.of<UserProvider>(context, listen: false);
-    }
-    super.didChangeDependencies();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getUser();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    userNameController.dispose();
+    userPhoneController.dispose();
+    super.dispose();
   }
 
   @override
@@ -40,20 +62,98 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           },
           child: ListView(
             children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "Full Name",
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  hintText: "userName",
-                  hintStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+              SizedBox(height: 35),
+              buildTextField("Full Name", userName, userNameController),
+              buildTextField("Phone Number", userPhone, userPhoneController),
+              SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: Text("Are You Sure?"),
+                          content:
+                              Text("This Procses will update your profile."),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, "Cancel"),
+                              child: Text("Cancel"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Provider.of<UserProvider>(context,
+                                        listen: false)
+                                    .updateUser(userNameController.text,
+                                        userPhoneController.text);
+                                Navigator.of(context)
+                                    .pushNamed(OverviewScreen.routeName);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Profile Updated Successfuly!',
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              },
+                              child: Text("Agree"),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Text("Update"),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 35),
+                      ),
+                      overlayColor: MaterialStateProperty.all(Colors.black),
+                      backgroundColor: MaterialStateProperty.all(Colors.green),
+                    ),
                   ),
-                ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Cancel"),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 35),
+                      ),
+                      overlayColor: MaterialStateProperty.all(Colors.black),
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                    ),
+                  ),
+                ],
               )
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildTextField(
+      String labelText, String placeHolder, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 35),
+      child: TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(bottom: 5),
+          labelText: labelText,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintText: placeHolder,
+          hintStyle: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+            color: Colors.white,
+          ),
+        ),
+        controller: controller,
       ),
     );
   }

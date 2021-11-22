@@ -16,6 +16,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
   TextEditingController userNewPassController = TextEditingController();
   TextEditingController userValidPassController = TextEditingController();
   bool _validate = false;
+  bool _showPassword = true;
 
   Future<bool> changePassword(String newPassword) async {
     await Provider.of<UserProvider>(context, listen: false)
@@ -83,11 +84,19 @@ class _SecurityScreenState extends State<SecurityScreen> {
                 height: 15,
               ),
               TextField(
-                obscureText: true,
+                obscureText: _showPassword,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Valid Password',
                   errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.remove_red_eye),
+                    onPressed: () {
+                      setState(() {
+                        _showPassword = !_showPassword;
+                      });
+                    },
+                  ),
                 ),
                 controller: userValidPassController,
               ),

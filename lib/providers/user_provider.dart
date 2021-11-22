@@ -4,7 +4,7 @@ import 'package:flutter_main/models/product.dart';
 import 'package:flutter_main/models/user.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-const getUserGraphql = """
+const getUserProdGraphql = """
   query {
     getUserProducts {
       productId,
@@ -17,6 +17,17 @@ const getUserGraphql = """
       }
     }
   }
+""";
+
+const getSingleUser = """
+  query {
+	getSingleUser {
+    userId,
+    userName,
+    userPhone,
+    isAdmin
+  }
+}
 """;
 
 const getAllUsers = """
@@ -44,6 +55,18 @@ const removeProductFromUser = """
 }
 """;
 
+const updateUserGraphql = """
+  mutation
+    updateUser(\$updateUserData: UpdateUserData!) {
+      updateUser(updateUserData: \$updateUserData) {
+        userId,
+        userName,
+        userPhone,
+        isAdmin
+      }
+    }
+""";
+
 const changePasswordGraphql = """
   mutation
     changePassword(\$userPassword: String!) {
@@ -61,6 +84,18 @@ class UserProvider with ChangeNotifier {
   List<Product> _prods = [];
   List<User> _users = [];
 
+  Future<User> getUser() async {
+    QueryOptions queryOptions = QueryOptions(document: gql(getSingleUser));
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["getSingleUser"];
+    final user = new User.fromJson(resultData);
+    notifyListeners();
+    return user;
+  }
+
   Future<List<User>> getUsers() async {
     QueryOptions queryOptions = QueryOptions(document: gql(getAllUsers));
     QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
@@ -74,7 +109,7 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<List<Product>> getUserProducts() async {
-    QueryOptions queryOptions = QueryOptions(document: gql(getUserGraphql));
+    QueryOptions queryOptions = QueryOptions(document: gql(getUserProdGraphql));
     QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
     if (result.hasException) {
       print(result.exception);
@@ -142,5 +177,22 @@ class UserProvider with ChangeNotifier {
     final resultData = result.data?["deleteuser"];
     notifyListeners();
     return resultData;
+  }
+
+  Future<User> updateUser(String userName, String userPhone) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(updateUserGraphql),
+        variables: <String, dynamic>{
+          "userName": userName,
+          "userPhone": userPhone,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["updateUser"];
+    final user = User.fromJson(resultData);
+    notifyListeners();
+    return user;
   }
 }

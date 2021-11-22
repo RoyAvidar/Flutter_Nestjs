@@ -1,18 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/config/gql_client.dart';
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/settings/edit_profile_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-
-const getUserGraphql = """
-  query {
-  getSingleUser {
-    userId,
-    userName,
-    userPhone,
-    isAdmin,
-  }
-}
-""";
+import 'package:provider/provider.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({Key? key}) : super(key: key);
@@ -23,24 +14,22 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
+  var isLoading = true;
   bool isAdmin = false;
   String userName = "";
   String userPhone = "";
   int userId = 0;
 
   getUser() async {
-    QueryOptions queryOptions = QueryOptions(document: gql(getUserGraphql));
-    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
-    if (result.hasException) {
-      print(result.exception);
-    } else {
-      setState(() {
-        isAdmin = result.data?['getSingleUser']['isAdmin'];
-        userName = result.data?['getSingleUser']['userName'];
-        userPhone = result.data?['getSingleUser']['userPhone'];
-        userId = result.data?['getSingleUser']['userId'];
-      });
-    }
+    final userData =
+        await Provider.of<UserProvider>(context, listen: false).getUser();
+    setState(() {
+      isAdmin = userData.isAdmin!;
+      userName = userData.userName!;
+      userPhone = userData.userPhone!;
+      userId = userData.userId!;
+      isLoading = false;
+    });
   }
 
   @override
@@ -59,10 +48,8 @@ class _InfoScreenState extends State<InfoScreen> {
           IconButton(
             onPressed: () {
               //Navigate to edit user screen.
-              Navigator.of(context).pushReplacementNamed(
-                EditProfileScreen.routeName,
-                arguments: userId,
-              );
+              Navigator.of(context)
+                  .pushReplacementNamed(EditProfileScreen.routeName);
             },
             icon: Icon(
               Icons.settings,
