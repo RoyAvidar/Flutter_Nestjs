@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/providers/user_provider.dart';
-import 'package:flutter_main/screens/overview_screen.dart';
+import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -94,8 +95,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                             title: Text("Are You Sure?"),
-                            content:
-                                Text("This Procses will update your profile."),
+                            content: Text(
+                              "This Procses will update your profile. You will have to Relog",
+                            ),
                             actions: [
                               TextButton(
                                 onPressed: () =>
@@ -110,8 +112,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     userNameController.text,
                                     userPhoneController.text,
                                   );
-                                  Navigator.of(context).pushReplacementNamed(
-                                      OverviewScreen.routeName);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
@@ -121,6 +121,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       duration: Duration(seconds: 2),
                                     ),
                                   );
+                                  Navigator.of(context).pop();
+                                  // Provider.of<AuthProvider>(context,
+                                  //         listen: false)
+                                  //     .logout();
+                                  // Navigator.of(context)
+                                  //     .pushReplacementNamed('/auth');
                                 },
                                 child: Text("Agree"),
                               ),
