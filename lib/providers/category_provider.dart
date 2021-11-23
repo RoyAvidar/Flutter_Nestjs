@@ -12,6 +12,13 @@ const categoriesGraphql = """
 }
 """;
 
+const updateCategoryGraphql = """
+  mutation 
+    updateCategory(\$updateCategoryInput: UpdateCategoryInput!) {
+      updateCategory(updateCategoryInput: \$updateCategoryInput)
+    }
+""";
+
 class CategoryProvider with ChangeNotifier {
   List<Category> _categories = [];
 
@@ -26,5 +33,20 @@ class CategoryProvider with ChangeNotifier {
     // print(_categories);
     notifyListeners();
     return _categories;
+  }
+
+  Future<bool> updateCategory(String categoryId, String categoryName) async {
+    MutationOptions queryoptions = MutationOptions(
+        document: gql(updateCategoryGraphql),
+        variables: <String, dynamic>{
+          "categoryId": categoryId,
+          "categoryName": categoryName,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryoptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final isUpdated = result.data?["updateCategory"];
+    return isUpdated;
   }
 }

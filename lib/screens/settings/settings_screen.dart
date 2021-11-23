@@ -24,9 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     // final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Settings"),
-      ),
+      appBar: AppBar(),
       drawer: AppDrawer(),
       body: SafeArea(
         child: ListView(

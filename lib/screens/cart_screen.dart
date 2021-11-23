@@ -136,9 +136,11 @@ class _CartScreenState extends State<CartScreen> {
                   height: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    cleanCart(cart!.cartId!);
-                  },
+                  onPressed: cart!.products!.isNotEmpty
+                      ? () {
+                          cleanCart(cart!.cartId!);
+                        }
+                      : null,
                   style: buttonStyle,
                   child: Text('Clear Cart'),
                 ),
