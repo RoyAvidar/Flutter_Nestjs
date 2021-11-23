@@ -52,9 +52,7 @@ const updateProductGraphql = """
 
 const deleteProductGraphql = """
   mutation deleteProduct(\$deleteProductData: DeleteProductInput!) {
-    deleteProduct(deleteProductData: \$deleteProductData) {
-      productId
-    }
+    deleteProduct(deleteProductData: \$deleteProductData) 
   }
 """;
 
@@ -81,7 +79,7 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) async {
+  Future<Product> addProduct(Product product) async {
     String? productName = product.name;
     double? productPrice = product.price;
     String? productDescription = product.description;
@@ -100,11 +98,14 @@ class ProductsProvider with ChangeNotifier {
           }
         });
 
-    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }
+    final resultData = result.data?["createProduct"];
+    final prod = Product.fromJson(resultData);
     notifyListeners();
+    return prod;
   }
 
   void updateProduct(String id, Product newProduct) async {
@@ -127,7 +128,7 @@ class ProductsProvider with ChangeNotifier {
               "categoryId": productCategory
             }
           });
-      QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+      QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
       if (result.hasException) {
         print(result.exception);
       }
@@ -142,14 +143,9 @@ class ProductsProvider with ChangeNotifier {
         variables: <String, dynamic>{
           "deleteProductData": {"productId": id}
         });
-    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
-
-    //go over the _items and see if its the right product.
-    if (result.data?['id'] == id) {
-      // some code...
-      return false;
-    }
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    final isDeleted = result.data?["deleteProduct"];
     notifyListeners();
-    return true;
+    return isDeleted;
   }
 }

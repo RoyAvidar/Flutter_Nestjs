@@ -49,6 +49,13 @@ class _AdminUserItemState extends State<AdminUserItem> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      Text("User ID: "),
+                      Text(user.userId.toString()),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
                       Text("Phone Number:"),
                       Text('${user.userPhone}'),
                     ],

@@ -122,11 +122,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                   );
                                   Navigator.of(context).pop();
-                                  // Provider.of<AuthProvider>(context,
-                                  //         listen: false)
-                                  //     .logout();
-                                  // Navigator.of(context)
-                                  //     .pushReplacementNamed('/auth');
                                 },
                                 child: Text("Agree"),
                               ),

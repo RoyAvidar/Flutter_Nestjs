@@ -55,6 +55,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
     } else {
       Provider.of<ProductsProvider>(context, listen: false)
           .addProduct(_editedProduct);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Product Added Successfuly!',
+            textAlign: TextAlign.left,
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
     Navigator.of(context).pop();
   }
