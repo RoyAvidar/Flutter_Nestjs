@@ -66,7 +66,7 @@ class _ProductItemState extends State<ProductItem> {
                       'Added Item To Cart!',
                       textAlign: TextAlign.left,
                     ),
-                    duration: Duration(seconds: 2),
+                    duration: Duration(seconds: 1),
                     action: SnackBarAction(
                       label: 'UNDO',
                       onPressed: () {

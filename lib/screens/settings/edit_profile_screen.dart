@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
+import 'package:flutter_main/screens/settings/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -96,7 +97,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           builder: (BuildContext context) => AlertDialog(
                             title: Text("Are You Sure?"),
                             content: Text(
-                              "This Procses will update your profile. You will have to Relog",
+                              "This Procses will update your profile.",
                             ),
                             actions: [
                               TextButton(
@@ -121,7 +122,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       duration: Duration(seconds: 2),
                                     ),
                                   );
-                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pushReplacementNamed(
+                                      SettingsScreen.routeName);
                                 },
                                 child: Text("Agree"),
                               ),
@@ -175,7 +177,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           hintStyle: TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 14,
-            color: Colors.white,
+            color: Colors.grey,
           ),
         ),
         controller: controller,

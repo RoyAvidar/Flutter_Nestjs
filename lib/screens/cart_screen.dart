@@ -43,6 +43,13 @@ class _CartScreenState extends State<CartScreen> {
     return cart;
   }
 
+  Future<bool> cleanCart(int cartId) async {
+    final result = await Provider.of<CartProvider>(context, listen: false)
+        .clearCart(cartId);
+    Navigator.of(context).pop();
+    return result;
+  }
+
   submit() async {
     final cartid =
         await Provider.of<CartProvider>(context, listen: false).getCartId();
@@ -124,6 +131,16 @@ class _CartScreenState extends State<CartScreen> {
                   },
                   style: buttonStyle,
                   child: Text('Order Now'),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    cleanCart(cart!.cartId!);
+                  },
+                  style: buttonStyle,
+                  child: Text('Clear Cart'),
                 ),
               ],
             ),

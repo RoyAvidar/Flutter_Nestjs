@@ -45,7 +45,7 @@ const createCartGraphql = """
 
 const cleanCartGraphql = """
   mutation 
-    cleanCart(\$cartId: CartId!) {
+    cleanCart(\$cartId: Float!) {
       cleanCart(cartId: \$cartId)
     }
 """;
@@ -196,17 +196,18 @@ class CartProvider with ChangeNotifier {
     return true;
   }
 
-  Object clearCart(int cartId) async {
+  Future<bool> clearCart(int cartId) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(cleanCartGraphql),
         variables: <String, dynamic>{
           "cartId": cartId,
         });
-    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }
+    final isClean = result.data?["cleanCart"];
     notifyListeners();
-    return result;
+    return isClean;
   }
 }
