@@ -42,7 +42,7 @@ class _AdminCategoryScreenState extends State<AdminCategoryScreen> {
       body: Column(
         children: [
           Text(
-            "Categories",
+            "Edit Categories",
             style: TextStyle(
               fontSize: 15,
               color: Theme.of(context).primaryColor,
@@ -53,12 +53,17 @@ class _AdminCategoryScreenState extends State<AdminCategoryScreen> {
             height: 10,
           ),
           Expanded(
-              child: ListView.builder(
-            itemCount: categories.length,
-            padding: EdgeInsets.all(12),
-            itemBuilder: (ctx, i) => ChangeNotifierProvider(
-              create: (c) => categories[i],
-              child: AdminCategoryItem(),
+              child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: ListView.builder(
+              itemCount: categories.length,
+              padding: EdgeInsets.all(12),
+              itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                create: (c) => categories[i],
+                child: AdminCategoryItem(),
+              ),
             ),
           ))
         ],

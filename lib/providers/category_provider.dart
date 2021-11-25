@@ -37,11 +37,14 @@ class CategoryProvider with ChangeNotifier {
 
   Future<bool> updateCategory(String categoryId, String categoryName) async {
     MutationOptions queryoptions = MutationOptions(
-        document: gql(updateCategoryGraphql),
-        variables: <String, dynamic>{
+      document: gql(updateCategoryGraphql),
+      variables: <String, dynamic>{
+        "updateCategoryInput": {
           "categoryId": categoryId,
           "categoryName": categoryName,
-        });
+        }
+      },
+    );
     QueryResult result = await GraphQLConfig.authClient.mutate(queryoptions);
     if (result.hasException) {
       print(result.exception);
