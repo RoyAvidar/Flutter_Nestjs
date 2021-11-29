@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:flutter/material.dart";
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/providers/user_provider.dart';
@@ -19,6 +21,7 @@ class _InfoScreenState extends State<InfoScreen> {
   String userName = "";
   String userPhone = "";
   int userId = 0;
+  late File _profileImage;
 
   getUser() async {
     final userData =
@@ -62,6 +65,62 @@ class _InfoScreenState extends State<InfoScreen> {
         padding: EdgeInsets.only(left: 16, top: 25, right: 15),
         child: ListView(
           children: [
+            Center(
+              child: Stack(
+                children: [
+                  Container(
+                    width: 130,
+                    height: 130,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 4,
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                          color: Colors.black.withOpacity(0.5),
+                          offset: Offset(15, 0),
+                        )
+                      ],
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          //should be the profileImageUrl of the user...
+                          "https://toppng.com/uploads/preview/mario-discord-emoji-super-mario-run-wink-11563646919o32jilcf2p.png",
+                        ),
+                      ),
+                    ),
+                    // child: _profileImage != null
+                    //     ? Image.file(_profileImage)
+                    //     : Text("No Image."),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          width: 1,
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                        ),
+                        color: Colors.green[300],
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.camera),
+                        color: Colors.white,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             ListTile(
               title: Text("User Name:"),
               subtitle: Text(
