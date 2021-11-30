@@ -6,6 +6,7 @@ import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/settings/edit_profile_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({Key? key}) : super(key: key);
@@ -33,6 +34,24 @@ class _InfoScreenState extends State<InfoScreen> {
       userId = userData.userId!;
       isLoading = false;
     });
+  }
+
+  Future<void> _takePicture() async {
+    final picker = ImagePicker();
+    final imageFile = await picker.pickImage(
+      source: ImageSource.camera,
+      maxHeight: 300,
+      maxWidth: 300,
+    );
+  }
+
+  Future<void> _getGalleryImage() async {
+    final picker = ImagePicker();
+    final imageFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 300,
+      maxWidth: 300,
+    );
   }
 
   @override
@@ -81,7 +100,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           spreadRadius: 2,
                           blurRadius: 10,
                           color: Colors.black.withOpacity(0.5),
-                          offset: Offset(15, 0),
+                          offset: Offset(0, 15),
                         )
                       ],
                       shape: BoxShape.circle,
@@ -114,7 +133,24 @@ class _InfoScreenState extends State<InfoScreen> {
                       child: IconButton(
                         icon: Icon(Icons.camera),
                         color: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: Text("Choose Your Destiny"),
+                              actions: [
+                                TextButton(
+                                  onPressed: _takePicture,
+                                  child: Text("Camera"),
+                                ),
+                                TextButton(
+                                  onPressed: _getGalleryImage,
+                                  child: Text("Gallery"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
