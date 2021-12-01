@@ -8,6 +8,12 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
+const uploadFileGraphQl = """
+  mutation uploadFile(\$file: Upload!) {
+    uploadFile(file: \$file)
+  }
+""";
+
 class InfoScreen extends StatefulWidget {
   const InfoScreen({Key? key}) : super(key: key);
   static const routeName = '/info';
@@ -22,7 +28,7 @@ class _InfoScreenState extends State<InfoScreen> {
   String userName = "";
   String userPhone = "";
   int userId = 0;
-  late File _profileImage;
+  var _profileImage;
 
   getUser() async {
     final userData =
@@ -36,22 +42,39 @@ class _InfoScreenState extends State<InfoScreen> {
     });
   }
 
-  Future<void> _takePicture() async {
-    final picker = ImagePicker();
-    final imageFile = await picker.pickImage(
-      source: ImageSource.camera,
-      maxHeight: 300,
-      maxWidth: 300,
-    );
+  Future<bool> _uploadFile(XFile profilePicture) async {
+    if (profilePicture.path.isNotEmpty) {
+      return false;
+    }
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(uploadFileGraphQl),
+        variables: <String, dynamic>{
+          "file": profilePicture,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    //set the result as the profile pic of the user via setState..
+    final isUploaded = result.data?["uploadFile"];
+    return isUploaded;
   }
 
-  Future<void> _getGalleryImage() async {
+  Future _takePicture() async {
+    var picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _profileImage = File(image!.path);
+    });
+  }
+
+  Future _getGalleryImage() async {
     final picker = ImagePicker();
-    final imageFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      maxHeight: 300,
-      maxWidth: 300,
-    );
+    final image = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _profileImage = File(image!.path);
+      print(_profileImage);
+    });
   }
 
   @override
@@ -87,75 +110,85 @@ class _InfoScreenState extends State<InfoScreen> {
             Center(
               child: Stack(
                 children: [
-                  Container(
-                    width: 130,
-                    height: 130,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 4,
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                          color: Colors.black.withOpacity(0.5),
-                          offset: Offset(0, 15),
-                        )
-                      ],
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          //should be the profileImageUrl of the user...
-                          "https://toppng.com/uploads/preview/mario-discord-emoji-super-mario-run-wink-11563646919o32jilcf2p.png",
-                        ),
-                      ),
+                  // Container(
+                  //   width: 130,
+                  //   height: 130,
+                  //   decoration: BoxDecoration(
+                  //     border: Border.all(
+                  //       width: 4,
+                  //       color: Theme.of(context).scaffoldBackgroundColor,
+                  //     ),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         spreadRadius: 2,
+                  //         blurRadius: 10,
+                  //         color: Colors.black.withOpacity(0.5),
+                  //         offset: Offset(0, 15),
+                  //       )
+                  //     ],
+                  //     shape: BoxShape.circle,
+                  //     image: DecorationImage(
+                  //       fit: BoxFit.cover,
+                  //       image: NetworkImage(
+                  //         Image.file(_profileImage).toString(),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  if (_profileImage != null)
+                    Flexible(
+                      flex: 9,
+                      child: Image.file(_profileImage),
+                    )
+                  else
+                    Flexible(
+                      flex: 9,
+                      child: Text("No Image Selected"),
                     ),
-                    // child: _profileImage != null
-                    //     ? Image.file(_profileImage)
-                    //     : Text("No Image."),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 1,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                        color: Colors.green[300],
-                      ),
-                      child: IconButton(
-                        icon: Icon(Icons.camera),
-                        color: Colors.white,
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: Text("Choose Your Destiny"),
-                              actions: [
-                                TextButton(
-                                  onPressed: _takePicture,
-                                  child: Text("Camera"),
-                                ),
-                                TextButton(
-                                  onPressed: _getGalleryImage,
-                                  child: Text("Gallery"),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: 0,
+                  //   right: 0,
+                  //   child: Container(
+                  //     height: 40,
+                  //     width: 40,
+                  //     decoration: BoxDecoration(
+                  //       shape: BoxShape.circle,
+                  //       border: Border.all(
+                  //         width: 1,
+                  //         color: Theme.of(context).scaffoldBackgroundColor,
+                  //       ),
+                  //       color: Colors.green[300],
+                  //     ),
+                  //     child: IconButton(
+                  //       icon: Icon(Icons.camera),
+                  //       color: Colors.white,
+                  //       onPressed: () {
+                  //         showDialog(
+                  //           context: context,
+                  //           builder: (BuildContext context) => AlertDialog(
+                  //             title: Text("Choose Your Destiny"),
+                  //             actions: [
+                  //               TextButton(
+                  //                 onPressed: _takePicture,
+                  //                 child: Text("Camera"),
+                  //               ),
+                  //               TextButton(
+                  //                 onPressed: _getGalleryImage,
+                  //                 child: Text("Gallery"),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         );
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
+            ),
+            IconButton(
+              onPressed: _getGalleryImage,
+              icon: Icon(Icons.photo_library),
             ),
             ListTile(
               title: Text("User Name:"),
