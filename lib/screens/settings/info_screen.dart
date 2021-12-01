@@ -28,7 +28,7 @@ class _InfoScreenState extends State<InfoScreen> {
   String userName = "";
   String userPhone = "";
   int userId = 0;
-  var _profileImage;
+  var _image;
 
   getUser() async {
     final userData =
@@ -42,10 +42,7 @@ class _InfoScreenState extends State<InfoScreen> {
     });
   }
 
-  Future<bool> _uploadFile(XFile profilePicture) async {
-    if (profilePicture.path.isNotEmpty) {
-      return false;
-    }
+  Future<bool> _uploadFile(File profilePicture) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(uploadFileGraphQl),
         variables: <String, dynamic>{
@@ -64,7 +61,7 @@ class _InfoScreenState extends State<InfoScreen> {
     var picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
     setState(() {
-      _profileImage = File(image!.path);
+      _image = File(image!.path);
     });
   }
 
@@ -72,8 +69,7 @@ class _InfoScreenState extends State<InfoScreen> {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
-      _profileImage = File(image!.path);
-      print(_profileImage);
+      _image = File(image!.path);
     });
   }
 
@@ -110,85 +106,70 @@ class _InfoScreenState extends State<InfoScreen> {
             Center(
               child: Stack(
                 children: [
-                  // Container(
-                  //   width: 130,
-                  //   height: 130,
-                  //   decoration: BoxDecoration(
-                  //     border: Border.all(
-                  //       width: 4,
-                  //       color: Theme.of(context).scaffoldBackgroundColor,
-                  //     ),
-                  //     boxShadow: [
-                  //       BoxShadow(
-                  //         spreadRadius: 2,
-                  //         blurRadius: 10,
-                  //         color: Colors.black.withOpacity(0.5),
-                  //         offset: Offset(0, 15),
-                  //       )
-                  //     ],
-                  //     shape: BoxShape.circle,
-                  //     image: DecorationImage(
-                  //       fit: BoxFit.cover,
-                  //       image: NetworkImage(
-                  //         Image.file(_profileImage).toString(),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  if (_profileImage != null)
-                    Flexible(
-                      flex: 9,
-                      child: Image.file(_profileImage),
-                    )
-                  else
-                    Flexible(
-                      flex: 9,
-                      child: Text("No Image Selected"),
+                  Container(
+                    width: 130,
+                    height: 130,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 4,
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                          color: Colors.black.withOpacity(0.5),
+                          offset: Offset(0, 15),
+                        )
+                      ],
+                      shape: BoxShape.circle,
                     ),
-                  // Positioned(
-                  //   bottom: 0,
-                  //   right: 0,
-                  //   child: Container(
-                  //     height: 40,
-                  //     width: 40,
-                  //     decoration: BoxDecoration(
-                  //       shape: BoxShape.circle,
-                  //       border: Border.all(
-                  //         width: 1,
-                  //         color: Theme.of(context).scaffoldBackgroundColor,
-                  //       ),
-                  //       color: Colors.green[300],
-                  //     ),
-                  //     child: IconButton(
-                  //       icon: Icon(Icons.camera),
-                  //       color: Colors.white,
-                  //       onPressed: () {
-                  //         showDialog(
-                  //           context: context,
-                  //           builder: (BuildContext context) => AlertDialog(
-                  //             title: Text("Choose Your Destiny"),
-                  //             actions: [
-                  //               TextButton(
-                  //                 onPressed: _takePicture,
-                  //                 child: Text("Camera"),
-                  //               ),
-                  //               TextButton(
-                  //                 onPressed: _getGalleryImage,
-                  //                 child: Text("Gallery"),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         );
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
+                    child: _image != null
+                        ? Image.file(_image)
+                        : Text("No Image Selected"),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          width: 1,
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                        ),
+                        color: Colors.green[300],
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.camera),
+                        color: Colors.white,
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: Text("Choose Your Image Through"),
+                              actions: [
+                                TextButton(
+                                  onPressed: _takePicture,
+                                  child: Text("Camera"),
+                                ),
+                                TextButton(
+                                  onPressed: _getGalleryImage,
+                                  child: Text("Gallery"),
+                                ),
+                              ],
+                            ),
+                          );
+                          print(_image);
+                          _uploadFile(_image);
+                        },
+                      ),
+                    ),
+                  )
                 ],
               ),
-            ),
-            IconButton(
-              onPressed: _getGalleryImage,
-              icon: Icon(Icons.photo_library),
             ),
             ListTile(
               title: Text("User Name:"),
