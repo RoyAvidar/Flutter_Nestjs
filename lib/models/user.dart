@@ -10,6 +10,7 @@ class User with ChangeNotifier {
   final bool? isAdmin;
   List<Product>? products;
   Order? orders;
+  String? userProfilePic;
 
   User({
     @required this.userId,
@@ -19,6 +20,7 @@ class User with ChangeNotifier {
     this.isAdmin,
     @required this.products,
     @required this.orders,
+    this.userProfilePic,
   });
 
   User.fromJson(Map<String, dynamic> json)

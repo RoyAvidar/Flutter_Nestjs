@@ -61,25 +61,21 @@ class _InfoScreenState extends State<InfoScreen> {
   Future _takePicture() async {
     var picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
-    setState(() async {
-      _image = new MultipartFile.fromBytes(
-        'file',
-        await image!.readAsBytes(),
-        filename: image.name,
-      );
-    });
+    _image = new MultipartFile.fromBytes(
+      'file',
+      await image!.readAsBytes(),
+      filename: image.name,
+    );
   }
 
   Future _getGalleryImage() async {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.gallery);
-    setState(() async {
-      _image = new MultipartFile.fromBytes(
-        'file',
-        await image!.readAsBytes(),
-        filename: image.name,
-      );
-    });
+    _image = new MultipartFile.fromBytes(
+      'file',
+      await image!.readAsBytes(),
+      filename: image.name,
+    );
   }
 
   @override
@@ -172,7 +168,6 @@ class _InfoScreenState extends State<InfoScreen> {
                             ),
                           );
                           // Navigator.of(context).pop();
-                          print(_image);
                           _uploadFile(_image);
                         },
                       ),
