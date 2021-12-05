@@ -5,6 +5,7 @@ import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/settings/edit_profile_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -42,7 +43,7 @@ class _InfoScreenState extends State<InfoScreen> {
     });
   }
 
-  Future<bool> _uploadFile(File profilePicture) async {
+  Future<bool> _uploadFile(MultipartFile profilePicture) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(uploadFileGraphQl),
         variables: <String, dynamic>{
@@ -60,16 +61,24 @@ class _InfoScreenState extends State<InfoScreen> {
   Future _takePicture() async {
     var picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = File(image!.path);
+    setState(() async {
+      _image = new MultipartFile.fromBytes(
+        'file',
+        await image!.readAsBytes(),
+        filename: image.name,
+      );
     });
   }
 
   Future _getGalleryImage() async {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = File(image!.path);
+    setState(() async {
+      _image = new MultipartFile.fromBytes(
+        'file',
+        await image!.readAsBytes(),
+        filename: image.name,
+      );
     });
   }
 
@@ -162,6 +171,7 @@ class _InfoScreenState extends State<InfoScreen> {
                               ],
                             ),
                           );
+                          // Navigator.of(context).pop();
                           print(_image);
                           _uploadFile(_image);
                         },
