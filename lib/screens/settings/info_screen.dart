@@ -39,6 +39,7 @@ class _InfoScreenState extends State<InfoScreen> {
       userName = userData.userName!;
       userPhone = userData.userPhone!;
       userId = userData.userId!;
+      _image = userData.userProfilePic;
       isLoading = false;
     });
   }
@@ -128,10 +129,14 @@ class _InfoScreenState extends State<InfoScreen> {
                         )
                       ],
                       shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage(_image),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    child: _image != null
-                        ? Image.file(_image)
-                        : Text("No Image Selected"),
+                    // child: _image != null
+                    //     ? Image.file(_image)
+                    //     : Text("No Image Selected"),
                   ),
                   Positioned(
                     bottom: 0,
@@ -167,7 +172,6 @@ class _InfoScreenState extends State<InfoScreen> {
                               ],
                             ),
                           );
-                          // Navigator.of(context).pop();
                           _uploadFile(_image);
                         },
                       ),

@@ -27,5 +27,6 @@ class User with ChangeNotifier {
       : userId = json['userId'],
         userName = json['userName'],
         userPhone = json['userPhone'],
+        userProfilePic = json['userProfilePic'],
         isAdmin = json['isAdmin'];
 }
