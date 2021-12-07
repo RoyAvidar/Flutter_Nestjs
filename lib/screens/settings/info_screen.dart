@@ -129,14 +129,18 @@ class _InfoScreenState extends State<InfoScreen> {
                         )
                       ],
                       shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(_image),
-                        fit: BoxFit.cover,
-                      ),
+                      image: _image == null || _image.toString().isEmpty
+                          ? DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg",
+                              ),
+                            )
+                          : DecorationImage(
+                              image: _image,
+                              fit: BoxFit.cover,
+                            ),
                     ),
-                    // child: _image != null
-                    //     ? Image.file(_image)
-                    //     : Text("No Image Selected"),
                   ),
                   Positioned(
                     bottom: 0,

@@ -22,48 +22,49 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // final isDarkMode = Settings.getValue<bool>(HeaderScreen.keyDarkMode, true);
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (ctx) => AuthProvider(),
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => ProductsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => OrdersProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => CategoryProvider(),
+        )
+      ],
+      child: Consumer<AuthProvider>(
+        builder: (ctx, authData, child) => ValueChangeObserver<bool>(
+          cacheKey: HeaderScreen.keyDarkMode,
+          defaultValue: false,
+          builder: (_, isDarkMode, __) => MaterialApp(
+            title: 'Lunchies',
+            theme: isDarkMode
+                ? ThemeData.dark().copyWith(
+                    primaryColor: Colors.teal[200],
+                    accentColor: Colors.red,
+                    scaffoldBackgroundColor: Color(0xFF170635),
+                    canvasColor: Color(0xFF170635),
+                  )
+                : ThemeData.light().copyWith(
+                    primaryColor: Colors.blue,
+                    accentColor: Colors.lightBlue,
+                    appBarTheme: AppBarTheme(color: Colors.black54),
+                  ),
+            home: SplashScreen(),
+            routes: Routes().routers,
           ),
-          ChangeNotifierProvider(
-            create: (ctx) => ProductsProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (ctx) => CartProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (ctx) => OrdersProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (ctx) => UserProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (ctx) => CategoryProvider(),
-          )
-        ],
-        child: Consumer<AuthProvider>(
-          builder: (ctx, authData, child) => ValueChangeObserver<bool>(
-            cacheKey: HeaderScreen.keyDarkMode,
-            defaultValue: false,
-            builder: (_, isDarkMode, __) => MaterialApp(
-              title: 'Lunchies',
-              theme: isDarkMode
-                  ? ThemeData.dark().copyWith(
-                      primaryColor: Colors.teal[200],
-                      accentColor: Colors.red,
-                      scaffoldBackgroundColor: Color(0xFF170635),
-                      canvasColor: Color(0xFF170635),
-                    )
-                  : ThemeData.light().copyWith(
-                      primaryColor: Colors.blue,
-                      accentColor: Colors.lightBlue,
-                      appBarTheme: AppBarTheme(color: Colors.black54),
-                    ),
-              home: SplashScreen(),
-              routes: Routes().routers,
-            ),
-          ),
-        ));
+        ),
+      ),
+    );
   }
 }
