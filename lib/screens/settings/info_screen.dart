@@ -137,7 +137,9 @@ class _InfoScreenState extends State<InfoScreen> {
                               ),
                             )
                           : DecorationImage(
-                              image: _image,
+                              image: NetworkImage(
+                                "http://10.0.2.2:8000/" + _image,
+                              ),
                               fit: BoxFit.cover,
                             ),
                     ),
