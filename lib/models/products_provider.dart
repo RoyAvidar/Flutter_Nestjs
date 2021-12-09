@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart';
 import 'product.dart';
 
 const productsGraphql = """
@@ -21,8 +22,8 @@ const productsGraphql = """
 """;
 
 const createProductGraphql = """
-  mutation createProduct(\$createProductInput: CreateProductInput!) {
-    createProduct(createProductInput: \$createProductInput) {
+  mutation createProduct(\$createProductInput: CreateProductInput!, \$file: Upload!) {
+    createProduct(createProductInput: \$createProductInput, file: \$file) {
       productId,
       productName,
       productPrice,
@@ -79,11 +80,11 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  Future<Product> addProduct(Product product) async {
+  Future<Product> addProduct(
+      Product product, MultipartFile productImageUrl) async {
     String? productName = product.name;
     double? productPrice = product.price;
     String? productDescription = product.description;
-    String? productImageUrl = product.imageUrl;
     int? productCategory = product.categoryId;
 
     MutationOptions queryOptions = MutationOptions(
@@ -93,9 +94,9 @@ class ProductsProvider with ChangeNotifier {
             "productName": productName,
             "productPrice": productPrice,
             "productDesc": productDescription,
-            "imageUrl": productImageUrl,
             "categoryId": productCategory
-          }
+          },
+          "file": productImageUrl,
         });
 
     QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
