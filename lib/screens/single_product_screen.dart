@@ -24,7 +24,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     if (cartId == 0) {
       throw new Exception("cartId was not found.");
     }
-    print(cartId);
     return cartId;
   }
 
@@ -81,7 +80,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               height: 250,
               width: double.infinity,
               child: Image.network(
-                loadedProduct.imageUrl!,
+                "http://10.0.2.2:8000/" + loadedProduct.imageUrl!,
                 fit: BoxFit.cover,
               ),
             ),

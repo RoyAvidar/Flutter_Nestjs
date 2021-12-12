@@ -46,7 +46,7 @@ class _ProductItemState extends State<ProductItem> {
         borderRadius: BorderRadius.circular(15),
         child: GridTile(
           child: Image.network(
-            product.imageUrl.toString(),
+            "http://10.0.2.2:8000/" + product.imageUrl.toString(),
             fit: BoxFit.cover,
           ),
           footer: GridTileBar(

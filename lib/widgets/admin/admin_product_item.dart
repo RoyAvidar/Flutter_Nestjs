@@ -16,7 +16,8 @@ class AdminProductItem extends StatelessWidget {
     return ListTile(
       title: Text(product.name!),
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(product.imageUrl!),
+        backgroundImage:
+            NetworkImage("http://10.0.2.2:8000/" + product.imageUrl!),
       ),
       trailing: Container(
         width: 100,
