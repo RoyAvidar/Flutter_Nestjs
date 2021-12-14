@@ -55,6 +55,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (_editedProduct.id != null) {
       Provider.of<ProductsProvider>(context, listen: false)
           .updateProduct(_editedProduct.id!, _editedProduct);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Product Edited Successfuly!',
+            textAlign: TextAlign.left,
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
     } else {
       Provider.of<ProductsProvider>(context, listen: false)
           .addProduct(_editedProduct, _image);

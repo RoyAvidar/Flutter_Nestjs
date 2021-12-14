@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
+import 'package:flutter_main/providers/cart.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const loginGraphQl = """
@@ -102,10 +104,11 @@ class _AuthScreenState extends State<AuthScreen> {
     if (userPassword != userValidatePass) {
       return Text("Please check your password");
     }
-
     if (result.hasException) {
       print(result.exception);
     } else {
+      //create a cart for the new user.
+      Provider.of<CartProvider>(context).createCart();
       _login(userName, userPassword);
     }
   }
