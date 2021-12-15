@@ -8,8 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:graphql_flutter/graphql_flutter.dart';
 
 const getExpireDateGraphql = """
-  query getExpireDate(\$token: String!) {
-    getExpireDate(token: \$token) 
+  query {
+    getExpireDate
   }
 """;
 
@@ -25,36 +25,24 @@ class _SplashScreenState extends State<SplashScreen> {
   var expireDate;
 
   Future<int> _getExpireDate() async {
-    final prefers = await SharedPreferences.getInstance();
-    final _token = prefers.getString('token');
-
-    if (_token!.isEmpty) {
-      return token;
-    } else {
-      setState(() {
-        token = _token;
-      });
-      QueryOptions queryOptions = QueryOptions(
-          document: gql(getExpireDateGraphql),
-          variables: <String, dynamic>{
-            'token': token,
-          });
-      QueryResult result = await GraphQLConfig.client.query(queryOptions);
-      if (result.hasException) {
-        print(result.exception);
-      }
-      final prefs = await SharedPreferences.getInstance();
-      setState(() {
-        expireDate = result.data?['getExpireDate'];
-        prefs.setInt('expireDate', expireDate);
-      });
-      return expireDate;
+    QueryOptions queryOptions =
+        QueryOptions(document: gql(getExpireDateGraphql));
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
     }
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      expireDate = result.data?['getExpireDate'];
+      prefs.setInt('expireDate', expireDate);
+    });
+    return expireDate;
   }
 
   Future<String> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final _token = prefs.getString('token');
+    print(_token);
     if (_token!.isEmpty) {
       return token;
     } else {
