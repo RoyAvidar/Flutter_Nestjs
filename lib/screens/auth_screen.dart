@@ -110,7 +110,7 @@ class _AuthScreenState extends State<AuthScreen> {
       print(result.exception);
     } else {
       //create a cart for the new user.
-      Provider.of<CartProvider>(context).createCart();
+      Provider.of<CartProvider>(context, listen: false).createCart();
       _login(userName, userPassword);
     }
   }
