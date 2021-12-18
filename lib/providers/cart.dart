@@ -98,13 +98,15 @@ class CartProvider with ChangeNotifier {
     return cartId;
   }
 
-  void createCart() async {
+  Future<Cart> createCart() async {
     MutationOptions queryOptions =
         MutationOptions(document: gql(createCartGraphql));
     QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }
+    final cart = result.data?["createCart"];
+    return cart;
   }
 
   Future<Cart> getCart() async {

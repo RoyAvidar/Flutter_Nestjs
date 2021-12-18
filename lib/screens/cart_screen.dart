@@ -36,11 +36,20 @@ class _CartScreenState extends State<CartScreen> {
   Future<Cart?> getCart() async {
     final cartData =
         await Provider.of<CartProvider>(context, listen: false).getCart();
-    setState(() {
-      cart = cartData;
-      isLoading = false;
-    });
-    return cart;
+    if (cartData != null) {
+      setState(() {
+        cart = cartData;
+        isLoading = false;
+      });
+      return cart;
+    } else {
+      final cartData = await Provider.of<CartProvider>(context).createCart();
+      setState(() {
+        cart = cartData;
+        isLoading = false;
+      });
+      return cart;
+    }
   }
 
   Future<bool> cleanCart(int cartId) async {
