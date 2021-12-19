@@ -36,20 +36,11 @@ class _CartScreenState extends State<CartScreen> {
   Future<Cart?> getCart() async {
     final cartData =
         await Provider.of<CartProvider>(context, listen: false).getCart();
-    if (cartData != null) {
-      setState(() {
-        cart = cartData;
-        isLoading = false;
-      });
-      return cart;
-    } else {
-      final cartData = await Provider.of<CartProvider>(context).createCart();
-      setState(() {
-        cart = cartData;
-        isLoading = false;
-      });
-      return cart;
-    }
+    setState(() {
+      cart = cartData;
+      isLoading = false;
+    });
+    return cart;
   }
 
   Future<bool> cleanCart(int cartId) async {
@@ -94,7 +85,7 @@ class _CartScreenState extends State<CartScreen> {
         title: Text('Your Cart'),
       ),
       body: isLoading
-          ? CircularProgressIndicator()
+          ? Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 // listView of cartItem's ,
@@ -135,9 +126,11 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    submit();
-                  },
+                  onPressed: cart!.products!.isNotEmpty
+                      ? () {
+                          submit();
+                        }
+                      : null,
                   style: buttonStyle,
                   child: Text('Order Now'),
                 ),

@@ -39,18 +39,20 @@ class _OrdersScreenState extends State<OrdersScreen> {
         title: Text('Orders'),
       ),
       drawer: AppDrawer(),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(12),
-        itemCount: orders.length,
-        itemBuilder: (ctx, i) => ChangeNotifierProvider(
-          create: (c) => orders[i],
-          child: orders.isEmpty
-              ? Container(
-                  child: Text('No Orders Yet.'),
-                )
-              : OrderItem(),
-        ),
-      ),
+      body: orders.isEmpty
+          ? Center(
+              child: Container(
+                child: Text('You Have No Orders Yet.'),
+              ),
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(12),
+              itemCount: orders.length,
+              itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                create: (c) => orders[i],
+                child: OrderItem(),
+              ),
+            ),
     );
   }
 }

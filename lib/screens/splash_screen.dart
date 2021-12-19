@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
             CircularProgressIndicator(),
             Container(
               child: Text(
-                "HAMANAMA",
+                "LOADING",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
