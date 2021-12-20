@@ -53,11 +53,10 @@ const createOrderGraphql = """
 """;
 
 const toggleIsReadyGraphql = """
-  mutation {
-    toggleIsReady(\$orderId: Int!) {
+  mutation 
+    toggleIsReady(\$orderId: Float!) {
       toggleIsReady(orderId: \$orderId)
     }
-  }
 """;
 
 class OrdersProvider with ChangeNotifier {

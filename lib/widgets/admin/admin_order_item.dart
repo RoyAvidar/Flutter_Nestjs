@@ -2,6 +2,7 @@ import 'dart:math';
 
 import "package:flutter/material.dart";
 import 'package:flutter_main/models/order.dart';
+import 'package:flutter_main/providers/orders.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ class AdminOrderItem extends StatefulWidget {
 
 class _AdminOrderItemState extends State<AdminOrderItem> {
   var _expanded = false;
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,41 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
       context,
       listen: false,
     );
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      if (isChecked) {
+        return Colors.green;
+      } else {
+        return Colors.red;
+      }
+    }
+
     return Card(
       margin: EdgeInsets.all(10),
       child: Column(
         children: [
+          Checkbox(
+            checkColor: Colors.white,
+            fillColor: MaterialStateProperty.resolveWith(getColor),
+            value: isChecked,
+            onChanged: (bool? value) {
+              setState(() {
+                isChecked = value!;
+                if (order.isReady == false) {
+                  Provider.of<OrdersProvider>(context, listen: false)
+                      .toggleIsReady(int.parse(order.id!));
+                  print('hj');
+                }
+              });
+            },
+          ),
           ListTile(
             title: Text('Total:  \$${order.totalAmount}'),
             subtitle: Text(
