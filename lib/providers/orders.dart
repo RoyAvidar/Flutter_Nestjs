@@ -52,6 +52,14 @@ const createOrderGraphql = """
   }
 """;
 
+const toggleIsReadyGraphql = """
+  mutation {
+    toggleIsReady(\$orderId: Int!) {
+      toggleIsReady(orderId: \$orderId)
+    }
+  }
+""";
+
 class OrdersProvider with ChangeNotifier {
   List<Order> _orders = [];
 
@@ -81,22 +89,35 @@ class OrdersProvider with ChangeNotifier {
   }
 
   //add all the content of the cart into the order.
-  void addOrder(
-      List<CartItem> cartProducts, double total, String userId) async {
+  void addOrder(int cartId) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(createOrderGraphql),
         variables: <String, dynamic>{
           "createOrderData": {
-            "orderPrice": total,
-            "userId": userId,
+            "cartId": cartId,
           }
         });
 
-    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }
     notifyListeners();
+  }
+
+  Future<bool> toggleIsReady(int orderId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(toggleIsReadyGraphql),
+        variables: <String, dynamic>{
+          "orderId": orderId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final isReady = result.data?["toggleIsReady"];
+    notifyListeners();
+    return isReady;
   }
 
   double get totalAmount {

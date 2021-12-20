@@ -8,6 +8,7 @@ class Order with ChangeNotifier {
   final List<CartItem>? products;
   final DateTime? dateTime;
   User? user;
+  bool? isReady;
 
   Order({
     @required this.id,
@@ -15,6 +16,7 @@ class Order with ChangeNotifier {
     @required this.products,
     @required this.dateTime,
     this.user,
+    @required this.isReady,
   });
 
   Order.fromJsonWithUser(Map<String, dynamic> json)
@@ -24,7 +26,8 @@ class Order with ChangeNotifier {
             .map<CartItem>((pord) => CartItem.fromJson(pord))
             .toList(),
         dateTime = DateTime.parse(json['createdAt']),
-        user = User.fromJson(json['user']);
+        user = User.fromJson(json['user']),
+        isReady = json['isReady'];
 
   Order.fromJson(Map<String, dynamic> json)
       : id = json['orderId'].toString(),
@@ -32,5 +35,6 @@ class Order with ChangeNotifier {
         products = json['products']
             .map<CartItem>((pord) => CartItem.fromJson(pord))
             .toList(),
-        dateTime = DateTime.parse(json['createdAt']);
+        dateTime = DateTime.parse(json['createdAt']),
+        isReady = json['isReady'];
 }
