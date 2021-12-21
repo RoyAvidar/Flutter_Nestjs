@@ -11,6 +11,7 @@ const ordersGraphql = """
     orderId,
     orderPrice,
     createdAt,
+    isReady,
     products {
       productId,
       productName,
@@ -32,6 +33,7 @@ const userOrdersGraphql = """
     orderId,
     orderPrice,
     createdAt,
+    isReady,
     products {
       productId,
       productName,

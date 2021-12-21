@@ -39,14 +39,13 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
             },
           ),
           controlAffinity: ListTileControlAffinity.leading,
-          value: isChecked,
+          value: order.isReady! ? true : isChecked,
           onChanged: (value) {
             setState(() {
               isChecked = value!;
-              if (order.isReady == false) {
-                Provider.of<OrdersProvider>(context, listen: false)
-                    .toggleIsReady(int.parse(order.id!));
-              }
+              Provider.of<OrdersProvider>(context, listen: false)
+                  .toggleIsReady(int.parse(order.id!));
+              print(order.isReady);
             });
           },
           activeColor: Colors.green,

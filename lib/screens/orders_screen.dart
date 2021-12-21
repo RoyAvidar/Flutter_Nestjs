@@ -52,13 +52,30 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 ),
               ),
             )
-          : ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: orders.length,
-              itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                create: (c) => orders[i],
-                child: OrderItem(),
-              ),
+          : Column(
+              children: [
+                Text(
+                  "My Orders",
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Divider(
+                  height: 10,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(12),
+                    itemCount: orders.length,
+                    itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                      create: (c) => orders[i],
+                      child: OrderItem(),
+                    ),
+                  ),
+                ),
+              ],
             ),
     );
   }

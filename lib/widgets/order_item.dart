@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/order.dart';
-import 'package:flutter_main/providers/orders.dart';
 import 'package:intl/intl.dart';
 
 import 'dart:math';
@@ -38,14 +37,10 @@ class _OrderItemState extends State<OrderItem> {
             },
           ),
           controlAffinity: ListTileControlAffinity.leading,
-          value: isChecked,
+          value: order.isReady! ? true : isChecked,
           onChanged: (bool? value) {
             setState(() {
               isChecked = value!;
-              if (order.isReady == true) {
-                Provider.of<OrdersProvider>(context, listen: false)
-                    .toggleIsReady(int.parse(order.id!));
-              }
             });
           },
           activeColor: Colors.green,

@@ -39,6 +39,14 @@ class _CartScreenState extends State<CartScreen> {
   Future<bool> cleanCart(int cartId) async {
     final result = await Provider.of<CartProvider>(context, listen: false)
         .clearCart(cartId);
+    setState(() {
+      cart = new Cart(
+        cartId: cartId,
+        products: [],
+        totalPrice: 0,
+        itemCount: 0,
+      );
+    });
     return result;
   }
 
