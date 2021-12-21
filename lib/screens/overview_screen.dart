@@ -33,9 +33,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
         final TabController tabController = DefaultTabController.of(context)!;
         tabController.addListener(() {
           if (!tabController.indexIsChanging) {
-            // Your code goes here.
             // To get index of current tab use tabController.index
-            // var ind = tabController.index;
+            var index = tabController.index;
+            // Your code goes here.
           }
         });
         return Scaffold(

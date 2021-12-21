@@ -40,7 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   subtitle: "",
                   leading: Icon(
                     Icons.delete,
-                    color: Colors.grey,
+                    color: Colors.red,
                   ),
                   onTap: () {
                     showDialog(

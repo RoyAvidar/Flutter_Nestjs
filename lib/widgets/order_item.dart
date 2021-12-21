@@ -38,11 +38,7 @@ class _OrderItemState extends State<OrderItem> {
           ),
           controlAffinity: ListTileControlAffinity.leading,
           value: order.isReady! ? true : isChecked,
-          onChanged: (bool? value) {
-            setState(() {
-              isChecked = value!;
-            });
-          },
+          onChanged: (value) {},
           activeColor: Colors.green,
           checkColor: Colors.white,
         ),

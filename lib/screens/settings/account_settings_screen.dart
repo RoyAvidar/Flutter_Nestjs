@@ -14,7 +14,7 @@ class AccoutScreen extends StatelessWidget {
       subtitle: "Privacy, Security",
       leading: Icon(
         Icons.person,
-        color: Colors.grey,
+        color: Colors.amber,
       ),
       child: SettingsScreen(
         children: [
@@ -30,7 +30,7 @@ class AccoutScreen extends StatelessWidget {
         subtitle: "",
         leading: Icon(
           Icons.security,
-          color: Colors.grey,
+          color: Colors.green,
         ),
         onTap: () {
           Navigator.of(context).pushReplacementNamed(SecurityScreen.routeName);
@@ -42,7 +42,7 @@ class AccoutScreen extends StatelessWidget {
         subtitle: "",
         leading: Icon(
           Icons.info,
-          color: Colors.grey,
+          color: Colors.green,
         ),
         onTap: () {
           Navigator.of(context).pushReplacementNamed(InfoScreen.routeName);

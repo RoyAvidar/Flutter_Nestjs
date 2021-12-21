@@ -73,69 +73,72 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
       appBar: AppBar(
         title: Text(loadedProduct.name.toString()),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 250,
-              width: double.infinity,
-              child: Image.network(
-                "http://10.0.2.2:8000/" + loadedProduct.imageUrl!,
-                fit: BoxFit.cover,
+      body: Hero(
+        tag: 'hero-rectangle',
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 250,
+                width: double.infinity,
+                child: Image.network(
+                  "http://10.0.2.2:8000/" + loadedProduct.imageUrl!,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              '\$${loadedProduct.price.toString()}',
-            ),
-            SizedBox(height: 10),
-            Text(
-              loadedProduct.description.toString(),
-              textAlign: TextAlign.center,
-              softWrap: true,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Provider.of<CartProvider>(context, listen: false)
-                    .addItem(int.parse(productId), cartId);
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Added Item To Cart!',
-                      textAlign: TextAlign.left,
+              SizedBox(height: 10),
+              Text(
+                '\$${loadedProduct.price.toString()}',
+              ),
+              SizedBox(height: 10),
+              Text(
+                loadedProduct.description.toString(),
+                textAlign: TextAlign.center,
+                softWrap: true,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Provider.of<CartProvider>(context, listen: false)
+                      .addItem(int.parse(productId), cartId);
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Added Item To Cart!',
+                        textAlign: TextAlign.left,
+                      ),
+                      duration: Duration(seconds: 2),
+                      action: SnackBarAction(
+                        label: 'UNDO',
+                        onPressed: () {
+                          Provider.of<CartProvider>(context, listen: false)
+                              .removeItem(int.parse(productId), cartId);
+                        },
+                      ),
                     ),
-                    duration: Duration(seconds: 2),
-                    action: SnackBarAction(
-                      label: 'UNDO',
-                      onPressed: () {
-                        Provider.of<CartProvider>(context, listen: false)
-                            .removeItem(int.parse(productId), cartId);
-                      },
-                    ),
-                  ),
-                );
-              },
-              child: Text('Add To Cart'),
-            ),
-            SizedBox(height: 10),
-            IconButton(
-              onPressed: () => {
-                favStatus
-                    ? setState(() {
-                        favStatus = !favStatus;
-                        removeProductFromFav(productId);
-                      })
-                    : setState(() {
-                        favStatus = !favStatus;
-                        addProductToFav(productId);
-                      })
-              },
-              icon: favStatus
-                  ? Icon(Icons.favorite)
-                  : Icon(Icons.favorite_border),
-            ),
-          ],
+                  );
+                },
+                child: Text('Add To Cart'),
+              ),
+              SizedBox(height: 10),
+              IconButton(
+                onPressed: () => {
+                  favStatus
+                      ? setState(() {
+                          favStatus = !favStatus;
+                          removeProductFromFav(productId);
+                        })
+                      : setState(() {
+                          favStatus = !favStatus;
+                          addProductToFav(productId);
+                        })
+                },
+                icon: favStatus
+                    ? Icon(Icons.favorite)
+                    : Icon(Icons.favorite_border),
+              ),
+            ],
+          ),
         ),
       ),
     );

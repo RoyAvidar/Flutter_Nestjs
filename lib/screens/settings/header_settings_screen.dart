@@ -17,7 +17,7 @@ class HeaderScreen extends StatelessWidget {
 
   Widget buildDarkMode() => SwitchSettingsTile(
         settingKey: keyDarkMode,
-        title: 'Dark Mode',
+        title: 'Change Theme',
         leading: Icon(
           Icons.dark_mode,
           color: Colors.amber,
@@ -31,7 +31,7 @@ class HeaderScreen extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
-            color: Colors.lightGreen,
+            color: Colors.teal[300],
           ),
         ),
       );
