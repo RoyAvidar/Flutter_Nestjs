@@ -8,14 +8,6 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show CartProvider;
 
-const submitCartGraphql = """
-  mutation 
-    submitCartToOrder(\$createOrderInput: CreateOrderInput!) {
-      submitCartToOrder(createOrderInput: \$createOrderInput)
-    }
-  
-""";
-
 const cleanCart = """
   mutation {
   cleanCart(\$cartId: CartId!)
@@ -47,7 +39,6 @@ class _CartScreenState extends State<CartScreen> {
   Future<bool> cleanCart(int cartId) async {
     final result = await Provider.of<CartProvider>(context, listen: false)
         .clearCart(cartId);
-    Navigator.of(context).pop();
     return result;
   }
 
@@ -55,7 +46,12 @@ class _CartScreenState extends State<CartScreen> {
     final cartId =
         await Provider.of<CartProvider>(context, listen: false).getCartId();
     Provider.of<OrdersProvider>(context, listen: false).addOrder(cartId);
-    Navigator.of(context).pop();
+    final isClean = await this.cleanCart(cartId);
+    if (isClean) {
+      Navigator.of(context).pop();
+    } else {
+      throw new Error();
+    }
   }
 
   @override

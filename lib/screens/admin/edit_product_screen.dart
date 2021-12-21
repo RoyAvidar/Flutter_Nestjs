@@ -16,8 +16,6 @@ class EditProductScreen extends StatefulWidget {
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
-  final _imageUrlController = TextEditingController();
-  final _imageUrlFocusNode = FocusNode();
   //allow me to interact with the state behind the Form widget.
   final _form = GlobalKey<FormState>();
   var _editedProduct = Product(
@@ -37,13 +35,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
   };
   var _isInit = true;
   var _image;
-
-  void _updateImageUrl() {
-    if (!_imageUrlFocusNode.hasFocus) {
-      //rebuild the screen to reflect updated value in imageUrlController.
-      setState(() {});
-    }
-  }
 
   void _saveForm() {
     final isValid = _form.currentState!.validate();
@@ -91,13 +82,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
     );
   }
 
-  //set up an initial listener.
-  @override
-  void initState() {
-    _imageUrlFocusNode.addListener(_updateImageUrl);
-    super.initState();
-  }
-
   //extract data from admin_product_item.
   @override
   void didChangeDependencies() {
@@ -111,22 +95,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
           'description': _editedProduct.description!,
           'price': _editedProduct.price!.toString(),
           'category': _editedProduct.categoryId!.toString(),
-          // 'imageUrl': _editedProduct.imageUrl!
-          'imageUrl': '',
+          'imageUrl': _editedProduct.imageUrl!
         };
-        _imageUrlController.text = _editedProduct.imageUrl!;
       }
     }
     _isInit = false;
     super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _imageUrlFocusNode.removeListener(_updateImageUrl);
-    _imageUrlController.dispose();
-    _imageUrlFocusNode.dispose();
-    super.dispose();
   }
 
   @override
@@ -140,7 +114,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
         child: Form(
           autovalidateMode: AutovalidateMode.always,
           key: _form,
-          //maybe column + singleChildScrollView insted to avoid data loss.
           child: ListView(
             children: [
               TextFormField(
@@ -244,72 +217,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   );
                 }).toList(),
               ),
-              // By adding onEditingComplete now and by calling setState() in there (even though it's empty), we force Flutter to update the screen.
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  // Container(
-                  //   width: 100,
-                  //   height: 100,
-                  //   margin: EdgeInsets.only(top: 8, right: 10),
-                  //   decoration: BoxDecoration(
-                  //     border: Border.all(
-                  //       width: 1,
-                  //       color: Colors.grey,
-                  //     ),
-                  //   ),
-                  //   child: _imageUrlController.text.isEmpty
-                  //       ? Text('Enter a URL')
-                  //       : FittedBox(
-                  //           child: Image.network(
-                  //             _imageUrlController.text,
-                  //             fit: BoxFit.cover,
-                  //           ),
-                  //         ),
-                  // ),
-                  // Expanded(
-                  //   child: TextFormField(
-                  //     decoration: InputDecoration(labelText: 'Image Url'),
-                  //     keyboardType: TextInputType.url,
-                  //     onEditingComplete: () {
-                  //       setState(() {});
-                  //       FocusScope.of(context).unfocus();
-                  //     },
-                  //     textInputAction: TextInputAction.done,
-                  //     controller: _imageUrlController,
-                  //     focusNode: _imageUrlFocusNode,
-                  //     validator: (value) {
-                  //       if (value!.isEmpty) {
-                  //         return 'Please provide a value.';
-                  //       }
-                  //       if (!value.startsWith('http') &&
-                  //           !value.startsWith('https')) {
-                  //         return 'Please enter a valid Url.';
-                  //       }
-                  //       if (!value.endsWith('.png') &&
-                  //           !value.endsWith('.jpeg') &&
-                  //           !value.endsWith('.jpg')) {
-                  //         return 'Please enter a valid Image URL.';
-                  //       } else {
-                  //         return null;
-                  //       }
-                  //     },
-                  //     onSaved: (value) {
-                  //       _editedProduct = Product(
-                  //         id: _editedProduct.id,
-                  //         name: _editedProduct.name,
-                  //         price: _editedProduct.price,
-                  //         description: _editedProduct.description,
-                  //         imageUrl: value,
-                  //         categoryId: _editedProduct.categoryId,
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
+                  Text("image"),
                   IconButton(
                     color: Colors.greenAccent[300],
                     onPressed: _takePicture,
-                    icon: Icon(Icons.image),
+                    icon: Icon(Icons.image_search),
                   ),
                 ],
               ),

@@ -43,13 +43,12 @@ const userOrdersGraphql = """
 """;
 
 const createOrderGraphql = """
-  mutation {
-    createOrder(\$createOrderData: CreateOrderData!) {
+  mutation 
+    createOrder(\$createOrderData: CreateOrderInput!) {
       createOrder(createOrderData: \$createOrderData) {
         orderId
       }
     }
-  }
 """;
 
 const toggleIsReadyGraphql = """

@@ -42,7 +42,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
       body: orders.isEmpty
           ? Center(
               child: Container(
-                child: Text('You Have No Orders Yet.'),
+                child: Text(
+                  'You Have No Orders Yet.',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).accentColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             )
           : ListView.builder(
