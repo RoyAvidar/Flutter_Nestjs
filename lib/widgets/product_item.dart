@@ -36,7 +36,7 @@ class _ProductItemState extends State<ProductItem> {
       listen: false,
     );
     return Hero(
-      tag: 'hero-rectangle',
+      tag: 'dash',
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
