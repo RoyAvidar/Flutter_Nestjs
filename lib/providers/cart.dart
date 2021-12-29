@@ -9,12 +9,13 @@ query {
     cartId,
     totalPrice,
     itemCount,
-    products {
-      productId,
-      productPrice,
-      productName,
-      productDesc,
-      imageUrl,
+    cartProducts {
+      product {
+				productId
+      	productPrice,
+      	productName,
+      }
+      quantity
     }
   }
 }
@@ -59,8 +60,8 @@ const addProductToCart = """
 
 const removeProductFromCart = """
   mutation 
-    removeProductFromCart(\$productId: Float! , \$cartId: Float!) {
-      removeProductFromCart(productId: \$productId, cartId: \$cartId) 
+    removeProductFromCart(\$removeFromCartInput: RemoveFromCartInput!) {
+      removeProductFromCart(removeFromCartInput: \$removeFromCartInput) 
     }
 """;
 
@@ -73,16 +74,15 @@ class CartItem {
   CartItem({
     @required this.id,
     @required this.title,
-    this.quantity,
+    @required this.quantity,
     @required this.price,
   });
 
   CartItem.fromJson(Map<String, dynamic> json)
-      : id = json['productId'].toString(),
-        title = json['productName'],
-        //quantity = json['quantity']
-        quantity = 1,
-        price = double.parse(json['productPrice'].toString());
+      : id = json['product']['productId'].toString(),
+        title = json['product']['productName'],
+        quantity = json['quantity'],
+        price = double.parse(json['product']['productPrice'].toString());
 }
 
 class CartProvider with ChangeNotifier {
@@ -138,13 +138,13 @@ class CartProvider with ChangeNotifier {
   }
 
   //counts the total price of the cartItems in the cart.
-  double get totalAmount {
-    var total = 0.0;
-    _items!.forEach((cartItem) {
-      total += cartItem.price! * cartItem.quantity!.toDouble();
-    });
-    return total;
-  }
+  // double get totalAmount {
+  //   var total = 0.0;
+  //   _items!.forEach((cartItem) {
+  //     total += cartItem.price! * cartItem.quantity!.toDouble();
+  //   });
+  //   return total;
+  // }
 
   Future<bool> addItem(int productId, int cartId) async {
     MutationOptions queryOptions = MutationOptions(
@@ -162,34 +162,17 @@ class CartProvider with ChangeNotifier {
     }
     notifyListeners();
     return true;
-    // if (_items!.containsKey(productId)) {
-    //   //change quantity...
-    //   _items!.update(
-    //     productId,
-    //     (cartItem) => CartItem(
-    //       id: cartItem.id,
-    //       title: cartItem.title,
-    //       price: cartItem.price,
-    //       quantity: cartItem.quantity! + 1,
-    //     ),
-    //   );
-    // } else {
-    //   _items!.putIfAbsent(
-    //     productId,
-    //     () => CartItem(
-    //       id: DateTime.now().toString(),
-    //       title: title,
-    //       price: price,
-    //       quantity: 1,
-    //     ),
-    //   );
-    // }
   }
 
   Future<bool> removeItem(int productId, int cartId) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(removeProductFromCart),
-        variables: <String, dynamic>{"productId": productId, "cartId": cartId});
+        variables: <String, dynamic>{
+          "removeFromCartInput": {
+            "cartId": cartId,
+            "productId": productId,
+          }
+        });
     QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);

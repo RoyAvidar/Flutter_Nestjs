@@ -18,7 +18,7 @@ class Cart with ChangeNotifier {
       : cartId = json['cartId'],
         totalPrice = json['totalPrice'],
         itemCount = json['itemCount'],
-        products = json['products']
+        products = json['cartProducts']
             .map<CartItem>((pord) => CartItem.fromJson(pord))
             .toList();
 }
