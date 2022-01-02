@@ -9,19 +9,22 @@ const ordersGraphql = """
   query {
   orders {
     orderId,
-    orderPrice,
     createdAt,
+    orderPrice,
     isReady,
-    products {
-      productId,
-      productName,
-      productPrice,
-      productDesc
-    },
     user {
       userId,
       userName,
-      userPhone,
+      userPhone
+    },
+    productOrder {
+      quantity,
+      product {
+        productId,
+        productName,
+        productPrice,
+        productDesc
+      }
     }
   }
 }
@@ -31,16 +34,19 @@ const userOrdersGraphql = """
  query {
  getUserOrders {
     orderId,
-    orderPrice,
     createdAt,
+    orderPrice,
     isReady,
-    products {
-      productId,
-      productName,
-      productPrice,
-      productDesc
-    },
-}
+    productOrder {
+      quantity,
+      product {
+        productId,
+        productName,
+        productPrice,
+        productDesc
+      }
+    }
+  }
 }
 """;
 
