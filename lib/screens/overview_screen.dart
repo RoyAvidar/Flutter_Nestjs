@@ -18,13 +18,37 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
+  List<Category> categories = [];
+
+  Future<List<Category>> getCategories() async {
+    final cat = await Provider.of<CategoryProvider>(context, listen: false)
+        .getCategories;
+    setState(() {
+      categories = cat;
+    });
+
+    return categories;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final categories =
-        ModalRoute.of(context)!.settings.arguments as List<Category>;
     List<Tab> tabs = categories
         .map((c) => Tab(
               text: c.name,
+              icon: c.id == "1"
+                  ? Icon(Icons.breakfast_dining_outlined)
+                  : c.id == "2"
+                      ? Icon(Icons.rice_bowl_outlined)
+                      : c.id == "3"
+                          ? Icon(Icons.lunch_dining_outlined)
+                          : null,
             ))
         .toList();
     tabs.add(

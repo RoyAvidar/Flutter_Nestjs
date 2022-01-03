@@ -24,17 +24,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   var token;
   var expireDate;
-  List<Category> categories = [];
-
-  Future<List<Category>> getCategories() async {
-    final cat = await Provider.of<CategoryProvider>(context, listen: false)
-        .getCategories;
-    setState(() {
-      categories = cat;
-    });
-
-    return categories;
-  }
 
   Future<int> _getExpireDate() async {
     QueryOptions queryOptions =
@@ -68,8 +57,11 @@ class _SplashScreenState extends State<SplashScreen> {
   _navHome() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
     if (token != null && expireDate != null) {
-      Navigator.of(context)
-          .pushNamed(OverviewScreen.routeName, arguments: categories);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OverviewScreen(),
+          ));
     } else {
       Navigator.pushReplacement(
           context,
@@ -86,7 +78,6 @@ class _SplashScreenState extends State<SplashScreen> {
     _getToken();
     _getExpireDate();
     _navHome();
-    getCategories();
   }
 
   @override
