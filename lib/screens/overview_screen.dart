@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/models/category.dart';
+import 'package:flutter_main/providers/category_provider.dart';
 import 'package:flutter_main/screens/favorites_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/app_drawer.dart';
 import '../screens/salad_screen.dart';
 import '../screens/sandwich_screen.dart';
 import '../screens/lunch_screen.dart';
 import '../screens/cart_screen.dart';
-
-const List<Tab> tabs = <Tab>[
-  Tab(text: 'Sandwich'),
-  Tab(text: 'Salad'),
-  Tab(text: 'Lunch'),
-  Tab(text: 'Favorites'),
-];
 
 class OverviewScreen extends StatefulWidget {
   static final routeName = '/overView';
@@ -24,6 +20,15 @@ class OverviewScreen extends StatefulWidget {
 class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
+    final categories =
+        ModalRoute.of(context)!.settings.arguments as List<Category>;
+    List<Tab> tabs = categories
+        .map((c) => Tab(
+              text: c.name,
+            ))
+        .toList();
+    tabs.add(
+        Tab(text: "Favorites", icon: Icon(Icons.favorite_border_outlined)));
     return DefaultTabController(
       length: tabs.length,
       initialIndex: 0,
@@ -51,12 +56,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
               tabs: tabs,
             ),
             actions: [
-              //consumer only rebuilds a part of a widget.
-              // Consumer<CartProvider>(
-              //   builder: (context, cart, ch) => Badge(
-              //     child: ch,
-              //     value: itemCount.toString(),
-              //   ),
               IconButton(
                 icon: Icon(
                   Icons.shopping_bag,
@@ -65,7 +64,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   Navigator.of(context).pushNamed(CartScreen.routeName);
                 },
               ),
-              // ),
             ],
           ),
           drawer: AppDrawer(),
