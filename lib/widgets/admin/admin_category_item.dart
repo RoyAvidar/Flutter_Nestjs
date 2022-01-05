@@ -58,9 +58,9 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
                   if (!_validate) {
                     setState(
                       () {
-                        Provider.of<CategoryProvider>(context, listen: false)
-                            .updateCategory(
-                                category.id!, categoryNameController.text);
+                        // Provider.of<CategoryProvider>(context, listen: false)
+                        //     .updateCategory(
+                        //         category.id!, categoryNameController.text, categoryIcon);
                         category.name = categoryNameController.text;
                         categoryNameController.text = "";
                         // Navigator.of(context)

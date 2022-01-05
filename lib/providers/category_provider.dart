@@ -7,7 +7,8 @@ const categoriesGraphql = """
   query {
   getCategories {
     categoryId,
-    categoryName
+    categoryName,
+    categoryIcon
   }
 }
 """;
@@ -35,13 +36,15 @@ class CategoryProvider with ChangeNotifier {
     return _categories;
   }
 
-  Future<bool> updateCategory(String categoryId, String categoryName) async {
+  Future<bool> updateCategory(
+      String categoryId, String categoryName, String categoryIcon) async {
     MutationOptions queryoptions = MutationOptions(
       document: gql(updateCategoryGraphql),
       variables: <String, dynamic>{
         "updateCategoryInput": {
           "categoryId": categoryId,
           "categoryName": categoryName,
+          "categoryIcon": categoryIcon
         }
       },
     );

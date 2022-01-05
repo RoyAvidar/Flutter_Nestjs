@@ -42,11 +42,11 @@ class _OverviewScreenState extends State<OverviewScreen> {
     List<Tab> tabs = categories
         .map((c) => Tab(
               text: c.name,
-              icon: c.id == "1"
+              icon: c.icon!.contains("Sandwich")
                   ? Icon(Icons.breakfast_dining_outlined)
-                  : c.id == "2"
+                  : c.icon!.contains("Salad")
                       ? Icon(Icons.rice_bowl_outlined)
-                      : c.id == "3"
+                      : c.icon!.contains("Lunch")
                           ? Icon(Icons.lunch_dining_outlined)
                           : null,
             ))
