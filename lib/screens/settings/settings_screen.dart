@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
+import 'package:flutter_main/screens/reviews_screen.dart';
 import 'package:flutter_main/screens/settings/account_settings_screen.dart';
 import 'package:flutter_main/screens/settings/header_settings_screen.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
@@ -100,7 +101,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Icons.thumb_up,
                     color: Colors.grey,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(ReviewsScreen.routeName);
+                  },
                 )
               ],
             ),

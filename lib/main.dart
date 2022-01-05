@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/providers/category_provider.dart';
+import 'package:flutter_main/providers/reviews.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/settings/header_settings_screen.dart';
 import 'package:flutter_main/screens/splash_screen.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => CategoryProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => ReviewsProvider(),
         )
       ],
       child: Consumer<AuthProvider>(

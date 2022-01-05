@@ -2,6 +2,7 @@ import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
 import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
 import 'package:flutter_main/screens/admin/admin_user_screen.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
+import 'package:flutter_main/screens/reviews_screen.dart';
 import 'package:flutter_main/screens/settings/edit_profile_screen.dart';
 import 'package:flutter_main/screens/settings/info_screen.dart';
 import 'package:flutter_main/screens/settings/security_screen.dart';
@@ -29,6 +30,7 @@ class Routes {
     SettingsScreen.routeName: (ctx) => SettingsScreen(),
     InfoScreen.routeName: (ctx) => InfoScreen(),
     SecurityScreen.routeName: (ctx) => SecurityScreen(),
-    EditProfileScreen.routeName: (ctx) => EditProfileScreen()
+    EditProfileScreen.routeName: (ctx) => EditProfileScreen(),
+    ReviewsScreen.routeName: (ctx) => ReviewsScreen()
   };
 }
