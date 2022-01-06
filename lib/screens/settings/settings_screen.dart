@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
+import 'package:flutter_main/screens/create_review_screen.dart';
 import 'package:flutter_main/screens/reviews_screen.dart';
 import 'package:flutter_main/screens/settings/account_settings_screen.dart';
 import 'package:flutter_main/screens/settings/header_settings_screen.dart';
@@ -99,11 +100,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   subtitle: "",
                   leading: Icon(
                     Icons.thumb_up,
-                    color: Colors.grey,
+                    color: Colors.green,
                   ),
                   onTap: () {
+                    //create a review
                     Navigator.of(context)
-                        .pushReplacementNamed(ReviewsScreen.routeName);
+                        .pushNamed(CreateReviewScreen.routeName);
                   },
                 )
               ],

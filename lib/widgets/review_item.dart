@@ -9,8 +9,18 @@ class ReviewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final review = Provider.of<Review>(context, listen: false);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(25),
-      child: Text(review.content!),
+      borderRadius: BorderRadius.circular(5),
+      child: Container(
+        color: Colors.blueGrey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(review.content!),
+            Text("from: -- " + review.user!.userName!),
+          ],
+        ),
+      ),
     );
   }
 }

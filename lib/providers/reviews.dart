@@ -18,6 +18,22 @@ const getReviewsGraphql = """
     }
 }
 """;
+const createReviewGraphql = """
+  mutation
+    createReview(\$createReviewInput: CreateReviewInput!) {
+      createReview(createReviewInput: \$createReviewInput) {
+        reviewId,
+        reviewContent,
+        user {
+          userId,
+          userName,
+          userPhone,
+          userProfilePic,
+          isAdmin
+        }
+      }
+    }
+""";
 
 class ReviewsProvider with ChangeNotifier {
   List<Review> _reviews = [];
@@ -33,5 +49,23 @@ class ReviewsProvider with ChangeNotifier {
         .toList();
     notifyListeners();
     return _reviews;
+  }
+
+  Future<Review> postReview(String reviewContent) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(createReviewGraphql),
+        variables: <String, dynamic>{
+          "createReviewInput": {
+            "reviewContent": reviewContent,
+          }
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    // print(result.data?["createReview"]);
+    final review = Review.fromJson(result.data?["createReview"]);
+    notifyListeners();
+    return review;
   }
 }

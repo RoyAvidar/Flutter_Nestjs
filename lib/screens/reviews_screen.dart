@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/models/review.dart';
 import 'package:flutter_main/providers/reviews.dart';
+import 'package:flutter_main/screens/create_review_screen.dart';
 import 'package:flutter_main/widgets/review_item.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
@@ -35,19 +36,20 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Reviews"),
+      ),
       drawer: AppDrawer(),
       body: Column(
         children: [
-          Text("Add a review to this app!"),
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(25),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 250,
-                childAspectRatio: 5 / 4,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                maxCrossAxisExtent: 200,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 25,
+                mainAxisSpacing: 35,
               ),
               itemCount: reviews.length,
               itemBuilder: (ctx, i) => ChangeNotifierProvider(
@@ -56,6 +58,16 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               ),
             ),
           ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 16),
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
+            },
+            child: const Text('Add A Review'),
+          ),
+          SizedBox(height: 55),
         ],
       ),
     );
