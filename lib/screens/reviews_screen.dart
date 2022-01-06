@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/models/review.dart';
 import 'package:flutter_main/providers/reviews.dart';
+import 'package:flutter_main/widgets/review_item.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
 
@@ -36,8 +37,26 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     return Scaffold(
       appBar: AppBar(),
       drawer: AppDrawer(),
-      body: Container(
-        child: Text("Hello"),
+      body: Column(
+        children: [
+          Text("Add a review to this app!"),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(25),
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 250,
+                childAspectRatio: 5 / 4,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: reviews.length,
+              itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                create: (c) => reviews[i],
+                child: ReviewItem(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

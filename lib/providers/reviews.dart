@@ -10,7 +10,10 @@ const getReviewsGraphql = """
       reviewContent,
       user {
         userId,
-        userName
+        userName,
+        userPhone,
+        userProfilePic,
+        isAdmin
       }
     }
 }
@@ -28,7 +31,6 @@ class ReviewsProvider with ChangeNotifier {
     _reviews = result.data?['getAllReviews']
         .map<Review>((rev) => Review.fromJson(rev))
         .toList();
-    print(_reviews[0].content);
     notifyListeners();
     return _reviews;
   }
