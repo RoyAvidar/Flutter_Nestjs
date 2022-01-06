@@ -24,49 +24,47 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text('What do you think about this app?'),
-          Divider(height: 15),
-          GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Container(
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Divider(height: 25),
+            Text('What do you think about this app?'),
+            Container(
               padding: EdgeInsets.only(left: 25, top: 100, right: 25),
               child: TextField(
                 controller: reviewController,
                 decoration: InputDecoration(
-                  errorText: _validate ? "Please Enter a Review" : null,
+                  errorText: _validate ? "Please Write Down a Review" : null,
                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                  labelText: 'Review',
+                  labelText: 'My Review',
                 ),
               ),
             ),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 16),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 16),
+              ),
+              onPressed: () {
+                setState(() {
+                  reviewController.text.isEmpty
+                      ? _validate = true
+                      : _validate = false;
+                });
+                if (!_validate) {
+                  Provider.of<ReviewsProvider>(context, listen: false)
+                      .postReview(reviewController.text);
+                  Navigator.of(context)
+                      .pushReplacementNamed(ReviewsScreen.routeName);
+                }
+              },
+              child: const Text('Post A Review'),
             ),
-            onPressed: () {
-              setState(() {
-                reviewController.text.isEmpty
-                    ? _validate = true
-                    : _validate = false;
-              });
-              if (!_validate) {
-                Provider.of<ReviewsProvider>(context, listen: false)
-                    .postReview(reviewController.text);
-                Navigator.of(context)
-                    .pushReplacementNamed(ReviewsScreen.routeName);
-              }
-            },
-            child: const Text('Post A Review'),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
