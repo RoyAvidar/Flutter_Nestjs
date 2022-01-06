@@ -47,7 +47,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               padding: const EdgeInsets.all(25),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
-                childAspectRatio: 3 / 2,
+                // childAspectRatio: 2 / 2,
                 crossAxisSpacing: 25,
                 mainAxisSpacing: 35,
               ),

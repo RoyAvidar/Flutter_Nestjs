@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/providers/reviews.dart';
+import 'package:flutter_main/screens/reviews_screen.dart';
 import 'package:provider/provider.dart';
 
 class CreateReviewScreen extends StatefulWidget {
@@ -59,7 +60,8 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
               if (!_validate) {
                 Provider.of<ReviewsProvider>(context, listen: false)
                     .postReview(reviewController.text);
-                Navigator.of(context).pop();
+                Navigator.of(context)
+                    .pushReplacementNamed(ReviewsScreen.routeName);
               }
             },
             child: const Text('Post A Review'),

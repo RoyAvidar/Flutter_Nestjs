@@ -11,13 +11,26 @@ class ReviewItem extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: Container(
-        color: Colors.blueGrey,
+        color: Colors.grey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(review.content!),
-            Text("from: -- " + review.user!.userName!),
+            Text(
+              review.content!,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              "Written by: -- " + review.user!.userName!,
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 12,
+                color: Colors.black,
+              ),
+            ),
           ],
         ),
       ),
