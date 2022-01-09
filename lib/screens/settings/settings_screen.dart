@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:flutter_main/screens/create_review_screen.dart';
+import 'package:flutter_main/screens/report_bug_screen.dart';
 import 'package:flutter_main/screens/reviews_screen.dart';
 import 'package:flutter_main/screens/settings/account_settings_screen.dart';
 import 'package:flutter_main/screens/settings/header_settings_screen.dart';
@@ -87,13 +88,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: "Feedback",
               children: [
                 SimpleSettingsTile(
-                  title: "report a bug",
+                  title: "Report a Bug",
                   subtitle: "",
                   leading: Icon(
                     Icons.bug_report,
-                    color: Colors.grey,
+                    color: Colors.orange[200],
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ReportBugScreen.routeName);
+                  },
                 ),
                 SimpleSettingsTile(
                   title: "Send Feedback",
