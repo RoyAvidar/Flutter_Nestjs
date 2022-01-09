@@ -9,29 +9,33 @@ class ReviewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final review = Provider.of<Review>(context, listen: false);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-        color: Colors.grey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              review.content!,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+      borderRadius: BorderRadius.circular(10),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 18),
+        child: Container(
+          color: Colors.grey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                review.content!,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            Text(
-              "Written by: -- " + review.user!.userName!,
-              style: TextStyle(
-                fontWeight: FontWeight.w300,
-                fontSize: 12,
-                color: Colors.black,
+              SizedBox(height: 15),
+              Text(
+                "Written by: -- " + review.user!.userName!,
+                style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 12,
+                  color: Colors.black,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

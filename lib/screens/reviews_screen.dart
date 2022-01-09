@@ -43,17 +43,15 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
       body: Column(
         children: [
           Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(25),
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                // childAspectRatio: 2 / 2,
-                crossAxisSpacing: 25,
-                mainAxisSpacing: 35,
-              ),
+            child: ListView.builder(
+              padding: const EdgeInsets.only(
+                  top: 25, left: 15, right: 15, bottom: 25),
               itemCount: reviews.length,
               itemBuilder: (ctx, i) => ChangeNotifierProvider(
                 create: (c) => reviews[i],
+                //A Review was used after being disposed.
+                //You should move your provider above MaterialApp/Navigator.
+                //or use ChangeNotifierProvider.value
                 child: ReviewItem(),
               ),
             ),

@@ -36,6 +36,11 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
             Container(
               padding: EdgeInsets.only(left: 25, top: 100, right: 25),
               child: TextField(
+                maxLines: null,
+                minLines: 2,
+                keyboardType: TextInputType.multiline,
+                autocorrect: false,
+                autofocus: false,
                 controller: reviewController,
                 decoration: InputDecoration(
                   errorText: _validate ? "Please Write Down a Review" : null,
