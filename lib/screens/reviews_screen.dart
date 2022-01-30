@@ -56,16 +56,25 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               ),
             ),
           ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 16),
-            ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
-            },
-            child: const Text('Add A Review'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.add,
+                color: Theme.of(context).primaryColor,
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 16),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
+                },
+                child: const Text('Add A Review'),
+              ),
+            ],
           ),
-          SizedBox(height: 55),
+          SizedBox(height: 45),
         ],
       ),
     );

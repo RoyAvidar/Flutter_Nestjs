@@ -2,42 +2,67 @@ import "package:flutter/material.dart";
 import 'package:flutter_main/models/review.dart';
 import 'package:provider/provider.dart';
 
-class ReviewItem extends StatelessWidget {
+class ReviewItem extends StatefulWidget {
   const ReviewItem({Key? key}) : super(key: key);
 
   @override
+  State<ReviewItem> createState() => _ReviewItemState();
+}
+
+class _ReviewItemState extends State<ReviewItem> {
+  var _expanded = false;
+  @override
   Widget build(BuildContext context) {
     final review = Provider.of<Review>(context, listen: false);
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 18),
-        child: Container(
-          color: Colors.grey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                review.content!,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(height: 15),
-              Text(
-                "Written by: -- " + review.user!.userName!,
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 12,
-                  color: Colors.black,
-                ),
-              ),
-            ],
+    return Column(
+      children: [
+        ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(
+                "http://10.0.2.2:8000/" + review.user!.userProfilePic!),
           ),
+          trailing: Container(
+            // color: Colors.grey,
+            width: 150,
+            child: Row(
+              children: [
+                Text(
+                  "Written by: -- " + review.user!.userName!,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12,
+                    color: Colors.black,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _expanded = !_expanded;
+                    });
+                  },
+                  icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                  color:
+                      _expanded ? Colors.black : Theme.of(context).primaryColor,
+                ),
+              ],
+            ),
+          ),
+          minVerticalPadding: 15,
+          contentPadding: EdgeInsets.all(5),
         ),
-      ),
+        if (_expanded)
+          Container(
+            child: Text(
+              review.content!,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+              ),
+              textAlign: TextAlign.left,
+              textDirection: TextDirection.ltr,
+            ),
+          ),
+      ],
     );
   }
 }

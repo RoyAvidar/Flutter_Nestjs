@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
@@ -83,6 +84,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
       onDismissed: (direction) {
         Provider.of<CartProvider>(context, listen: false)
             .removeItem(int.parse(widget.productId), cartId!);
+        // if (widget.quantity <= 0)
+        Navigator.of(context).pushReplacementNamed(CartScreen.routeName);
       },
       child: Card(
         margin: EdgeInsets.symmetric(

@@ -49,8 +49,8 @@ class _OrderItemState extends State<OrderItem> {
             child: ListView.builder(
               itemCount: order.products!.length,
               itemBuilder: (ctx, i) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("total amount: \$" + order.totalAmount.toString()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -71,6 +71,10 @@ class _OrderItemState extends State<OrderItem> {
                         ),
                       ),
                     ],
+                  ),
+                  Divider(),
+                  Text(
+                    "Total Amount: \$" + order.totalAmount.toString(),
                   ),
                 ],
               ),
