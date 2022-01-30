@@ -18,8 +18,13 @@ class _ReviewItemState extends State<ReviewItem> {
       children: [
         ListTile(
           leading: CircleAvatar(
-            backgroundImage: NetworkImage(
-                "http://10.0.2.2:8000/" + review.user!.userProfilePic!),
+            backgroundImage: review.user!.userProfilePic!.isNotEmpty
+                ? NetworkImage(
+                    "http://10.0.2.2:8000/" + review.user!.userProfilePic!,
+                  )
+                : NetworkImage(
+                    'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg',
+                  ),
           ),
           trailing: Container(
             // color: Colors.grey,
@@ -30,8 +35,7 @@ class _ReviewItemState extends State<ReviewItem> {
                   "Written by: -- " + review.user!.userName!,
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
-                    fontSize: 12,
-                    color: Colors.black,
+                    fontSize: 13,
                   ),
                 ),
                 IconButton(
@@ -42,7 +46,7 @@ class _ReviewItemState extends State<ReviewItem> {
                   },
                   icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
                   color:
-                      _expanded ? Colors.black : Theme.of(context).primaryColor,
+                      _expanded ? Colors.red : Theme.of(context).primaryColor,
                 ),
               ],
             ),

@@ -75,6 +75,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Hero(
               tag: 'dash',
@@ -91,55 +92,73 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              '\$${loadedProduct.price.toString()}',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Item Description:   '),
+                Text(
+                  loadedProduct.description.toString(),
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                ),
+              ],
             ),
             SizedBox(height: 10),
-            Text(
-              loadedProduct.description.toString(),
-              textAlign: TextAlign.center,
-              softWrap: true,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Item Price:   '),
+                Text(
+                  '\$${loadedProduct.price.toString()}',
+                ),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                Provider.of<CartProvider>(context, listen: false)
-                    .addItem(int.parse(productId), cartId);
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Added Item To Cart!',
-                      textAlign: TextAlign.left,
-                    ),
-                    duration: Duration(seconds: 2),
-                    action: SnackBarAction(
-                      label: 'UNDO',
-                      onPressed: () {
-                        Provider.of<CartProvider>(context, listen: false)
-                            .removeItem(int.parse(productId), cartId);
-                      },
-                    ),
-                  ),
-                );
-              },
-              child: Text('Add To Cart'),
-            ),
-            SizedBox(height: 10),
-            IconButton(
-              onPressed: () => {
-                favStatus
-                    ? setState(() {
-                        favStatus = !favStatus;
-                        removeProductFromFav(productId);
-                      })
-                    : setState(() {
-                        favStatus = !favStatus;
-                        addProductToFav(productId);
-                      })
-              },
-              icon: favStatus
-                  ? Icon(Icons.favorite)
-                  : Icon(Icons.favorite_border),
+            SizedBox(height: 35),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Provider.of<CartProvider>(context, listen: false)
+                        .addItem(int.parse(productId), cartId);
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Added Item To Cart!',
+                          textAlign: TextAlign.left,
+                        ),
+                        duration: Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: 'UNDO',
+                          onPressed: () {
+                            Provider.of<CartProvider>(context, listen: false)
+                                .removeItem(int.parse(productId), cartId);
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text('Add To Cart'),
+                ),
+                SizedBox(width: 10),
+                IconButton(
+                  onPressed: () => {
+                    favStatus
+                        ? setState(() {
+                            favStatus = !favStatus;
+                            removeProductFromFav(productId);
+                          })
+                        : setState(() {
+                            favStatus = !favStatus;
+                            addProductToFav(productId);
+                          })
+                  },
+                  icon: favStatus
+                      ? Icon(Icons.favorite)
+                      : Icon(Icons.favorite_border),
+                ),
+              ],
             ),
           ],
         ),
