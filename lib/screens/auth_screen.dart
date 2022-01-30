@@ -74,6 +74,17 @@ class _AuthScreenState extends State<AuthScreen> {
 
     if (result.hasException) {
       print(result.exception);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Username or Userpassword is incorrect!',
+            textAlign: TextAlign.left,
+            style: TextStyle(color: Colors.red[400]),
+          ),
+          duration: Duration(seconds: 1),
+        ),
+      );
     } else {
       // add the token to the Shared Preferences so we can use it globaly.
       final prefs = await SharedPreferences.getInstance();
@@ -197,7 +208,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           ? _validate = true
                           : _validate = false;
                     });
-                    login();
+                    _validate ? () {} : login();
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,

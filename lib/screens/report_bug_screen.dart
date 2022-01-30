@@ -101,6 +101,10 @@ class _ReportBugScreenState extends State<ReportBugScreen> {
                         content: Text(
                           'Thank you for your report!',
                           textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         duration: Duration(seconds: 2),
                       ),
