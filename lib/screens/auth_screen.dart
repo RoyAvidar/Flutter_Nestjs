@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
-import 'package:flutter_main/providers/cart.dart';
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -91,6 +91,7 @@ class _AuthScreenState extends State<AuthScreen> {
       final token = result.data!['login'];
       prefs.setString('token', token);
       // prefs.setInt('expireDate', token);
+      _getUserDarkMode();
       Navigator.of(context).pushReplacementNamed(OverviewScreen.routeName);
     }
   }
@@ -129,6 +130,14 @@ class _AuthScreenState extends State<AuthScreen> {
     String userName = userNameController.text;
     String userPassword = userPassController.text;
     _login(userName, userPassword);
+  }
+
+  Future<bool> _getUserDarkMode() async {
+    final userDarkmode = await Provider.of<UserProvider>(context, listen: false)
+        .getUserDarkMode();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('userDarkMode', userDarkmode);
+    return userDarkmode;
   }
 
   @override

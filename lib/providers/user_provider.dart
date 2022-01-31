@@ -81,6 +81,18 @@ const deleteUserGraphql = """
   }
 """;
 
+const getUserDarkModeGraphql = """
+  query {
+    getUserDarkMode
+  }
+""";
+
+const toggleUserDarkModeGraphql = """
+  mutation {
+    toggleUserDarkMode
+  }
+""";
+
 class UserProvider with ChangeNotifier {
   List<Product> _prods = [];
   List<User> _users = [];
@@ -197,5 +209,29 @@ class UserProvider with ChangeNotifier {
     final user = User.fromJson(resultData);
     notifyListeners();
     return user;
+  }
+
+  Future<bool> getUserDarkMode() async {
+    QueryOptions queryOptions =
+        QueryOptions(document: gql(getUserDarkModeGraphql));
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["getUserDarkMode"];
+    notifyListeners();
+    return resultData;
+  }
+
+  Future<bool> toggleUserDarkMode() async {
+    MutationOptions queryOptions =
+        MutationOptions(document: gql(toggleUserDarkModeGraphql));
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["toggleUserDarkMode"];
+    notifyListeners();
+    return resultData;
   }
 }

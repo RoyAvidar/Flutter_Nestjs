@@ -11,6 +11,7 @@ class User with ChangeNotifier {
   List<Product>? products;
   Order? orders;
   String? userProfilePic;
+  bool? isDarkMode;
 
   User({
     @required this.userId,
@@ -21,6 +22,7 @@ class User with ChangeNotifier {
     @required this.products,
     @required this.orders,
     this.userProfilePic,
+    this.isDarkMode,
   });
 
   User.fromJson(Map<String, dynamic> json)

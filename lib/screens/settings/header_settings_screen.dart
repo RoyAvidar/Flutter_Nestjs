@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HeaderScreen extends StatelessWidget {
@@ -8,15 +10,16 @@ class HeaderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //setState _userDarkMode =  userDarkMode;
     return Column(
       children: [
         buildHeader(),
-        buildDarkMode(),
+        buildDarkMode(context),
       ],
     );
   }
 
-  Widget buildDarkMode() => SwitchSettingsTile(
+  Widget buildDarkMode(context) => SwitchSettingsTile(
         settingKey: keyDarkMode,
         title: 'Change Theme',
         leading: Icon(
@@ -24,6 +27,8 @@ class HeaderScreen extends StatelessWidget {
           color: Colors.amber,
         ),
         onChange: (userDarkMode) async {
+          userDarkMode = await Provider.of<UserProvider>(context, listen: false)
+              .toggleUserDarkMode();
           final prefs = await SharedPreferences.getInstance();
           prefs.setBool('userDarkMode', userDarkMode);
         },
