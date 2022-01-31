@@ -72,7 +72,7 @@ class _OrderItemState extends State<OrderItem> {
                       ),
                     ],
                   ),
-                  Divider(),
+                  SizedBox(height: 5),
                   Text(
                     "Total Amount: \$" + order.totalAmount.toString(),
                   ),

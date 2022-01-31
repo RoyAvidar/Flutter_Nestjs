@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HeaderScreen extends StatelessWidget {
   const HeaderScreen({Key? key}) : super(key: key);
@@ -22,7 +23,10 @@ class HeaderScreen extends StatelessWidget {
           Icons.dark_mode,
           color: Colors.amber,
         ),
-        onChange: (_) {},
+        onChange: (userDarkMode) async {
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setBool('userDarkMode', userDarkMode);
+        },
       );
 
   Widget buildHeader() => Center(

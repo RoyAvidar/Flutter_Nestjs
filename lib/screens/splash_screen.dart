@@ -24,6 +24,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   var token;
   var expireDate;
+  bool userDarkMode = false;
 
   Future<int> _getExpireDate() async {
     QueryOptions queryOptions =
@@ -71,6 +72,20 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  Future<bool> _getUserDarkMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    final _userDarkMode = prefs.getBool('userDarkMode');
+    print(_userDarkMode);
+    if (_userDarkMode == null) {
+      return userDarkMode;
+    } else {
+      setState(() {
+        userDarkMode = _userDarkMode;
+      });
+      return userDarkMode;
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -78,6 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _getToken();
     _getExpireDate();
     _navHome();
+    _getUserDarkMode();
   }
 
   @override

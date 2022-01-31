@@ -59,8 +59,8 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
             child: ListView.builder(
               itemCount: order.products!.length,
               itemBuilder: (ctx, i) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("total amount: \$" + order.totalAmount.toString()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -68,7 +68,7 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
                         "Name:  ${order.products![i].title!}",
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.grey,
+                          color: Theme.of(context).accentColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -76,12 +76,14 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
                         '${order.products![i].quantity}x \$${order.products![i].price}',
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.grey,
+                          color: Theme.of(context).accentColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 5),
+                  Text("total amount: \$" + order.totalAmount.toString()),
                 ],
               ),
             ),
