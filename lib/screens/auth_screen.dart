@@ -135,6 +135,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Future<bool> _getUserDarkMode() async {
     final userDarkmode = await Provider.of<UserProvider>(context, listen: false)
         .getUserDarkMode();
+    print(userDarkmode);
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('userDarkMode', userDarkmode);
     return userDarkmode;

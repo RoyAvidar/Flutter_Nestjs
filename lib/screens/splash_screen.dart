@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
-import 'package:flutter_main/models/category.dart';
-import 'package:flutter_main/providers/category_provider.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
-import 'package:flutter_main/screens/settings/header_settings_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,8 +74,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<bool> _getUserDarkMode() async {
     var userDarkmode = await Provider.of<UserProvider>(context, listen: false)
         .getUserDarkMode();
-    print(userDarkmode);
-    // userDarkmode = HeaderScreen.keyDarkMode;
+    // print(userDarkmode);
+    // HeaderScreen.keyDarkMode = userDarkMode.toString();
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('userDarkMode', userDarkmode);
     return userDarkmode;
