@@ -29,6 +29,7 @@ class HeaderScreen extends StatelessWidget {
         onChange: (userDarkMode) async {
           userDarkMode = await Provider.of<UserProvider>(context, listen: false)
               .toggleUserDarkMode();
+          // print(userDarkMode);
           final prefs = await SharedPreferences.getInstance();
           prefs.setBool('userDarkMode', userDarkMode);
         },

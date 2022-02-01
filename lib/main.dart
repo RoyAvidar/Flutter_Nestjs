@@ -7,6 +7,7 @@ import 'package:flutter_main/screens/settings/header_settings_screen.dart';
 import 'package:flutter_main/screens/splash_screen.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/cart.dart';
 import '../providers/orders.dart';
@@ -19,8 +20,16 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
+//   @override
+//   State<MyApp> createState() => _MyAppState();
+// }
+
+// class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
+    // final prefs = await SharedPreferences.getInstance();
+    // final isDarkModeTheme = Provider
     // final isDarkMode = Settings.getValue<bool>(HeaderScreen.keyDarkMode, true);
     return MultiProvider(
       providers: [
@@ -52,6 +61,7 @@ class MyApp extends StatelessWidget {
           defaultValue: false,
           builder: (_, isDarkMode, __) => MaterialApp(
             title: 'Lunchies',
+            // theme: this.getTheme(),
             theme: isDarkMode
                 ? ThemeData.dark().copyWith(
                     primaryColor: Colors.teal[200],

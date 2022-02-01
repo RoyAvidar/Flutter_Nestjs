@@ -234,4 +234,23 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
     return resultData;
   }
+
+  Future<ThemeData> theme() async {
+    final isDarkMode = await getUserDarkMode();
+    return isDarkMode
+        ? ThemeData.dark().copyWith(
+            primaryColor: Colors.teal[200],
+            accentColor: Colors.red,
+            scaffoldBackgroundColor: Color(0xFF170635),
+            canvasColor: Color(0xFF170635),
+            appBarTheme: AppBarTheme(color: Colors.blueGrey),
+          )
+        : ThemeData.light().copyWith(
+            primaryColor: Colors.blue,
+            accentColor: Colors.lightBlue,
+            scaffoldBackgroundColor: Colors.white,
+            canvasColor: Colors.white,
+            appBarTheme: AppBarTheme(color: Colors.black54),
+          );
+  }
 }
