@@ -8,7 +8,7 @@ class Review with ChangeNotifier {
   User? userWriter;
   int? isLike;
   int? isDislike;
-  final List<UserReviewItem>? userReview;
+  List<UserReviewItem>? userReview;
 
   Review({
     @required this.id,
@@ -16,8 +16,15 @@ class Review with ChangeNotifier {
     @required this.userWriter,
     @required this.isLike,
     @required this.isDislike,
-    @required this.userReview,
+    this.userReview,
   });
+
+  Review.fromJsonWithoutUserReview(Map<String, dynamic> json)
+      : id = json['reviewId'],
+        content = json['reviewContent'],
+        userWriter = User.fromJson(json['user']),
+        isLike = json['isLike'],
+        isDislike = json['isDislike'];
 
   Review.fromJson(Map<String, dynamic> json)
       : id = json['reviewId'],

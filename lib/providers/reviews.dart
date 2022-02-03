@@ -40,6 +40,51 @@ const createReviewGraphql = """
     }
 """;
 
+const updateReviewContentGraphql = """
+  mutation 
+    updateReviewContent(\$updateReviewInput: UpdateReviewInput!) {
+      updateReviewContent(updateReviewInput: \$updateReviewInput) {
+        reviewId,
+        reviewContent,
+        user {
+          userId,
+          userName,
+          userPhone,
+          userProfilePic,
+          isAdmin
+        }
+      }
+    }
+""";
+
+const addReviewLikeGraphql = """
+  mutation
+    addReviewLike(\$reviewId: Int!) {
+      addReviewLike(reviewId: \$reviewId)
+    }
+""";
+
+const removeReviewLikeGraphql = """
+  mutation
+    removewReviewLike(\$reviewId: Int!) {
+      removeReviewLike(reviewId: \$reviewId)
+    }
+""";
+
+const addReviewDislikeGraphql = """
+  mutation 
+    addReviewDislike(\$reviewId: Int!) {
+      addReviewDislike(reviewId: \$reviewId)
+    }
+""";
+
+const removeReviewDislikeGraphql = """
+  mutation
+    removeReviewDislike(\$reviewId: Int!) {
+      removeReviewDislike(reviewId: \$reviewId)
+    }
+""";
+
 class UserReviewItem {
   final String? id;
   bool? likeDislike;
@@ -91,5 +136,84 @@ class ReviewsProvider with ChangeNotifier {
     final review = Review.fromJson(result.data?["createReview"]);
     notifyListeners();
     return review;
+  }
+
+  Future<Review> updateReviewContent(int reviewId, String reviewContent) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(updateReviewContentGraphql),
+        variables: <String, dynamic>{
+          "updateReviewInput": {
+            "reviewId": reviewId,
+            "reviewContent": reviewContent,
+          }
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final review =
+        Review.fromJsonWithoutUserReview(result.data?["updateReviewContent"]);
+    notifyListeners();
+    return review;
+  }
+
+  Future<bool> addReviewLike(int reviewId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(addReviewLikeGraphql),
+        variables: <String, dynamic>{
+          "reviewId": reviewId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final userDidLike = result.data?["addReviewLike"];
+    notifyListeners();
+    return userDidLike;
+  }
+
+  Future<bool> removeReviewLike(int reviewId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(removeReviewLikeGraphql),
+        variables: <String, dynamic>{
+          "reviewId": reviewId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final userRemovedLike = result.data?["removeReviewLike"];
+    notifyListeners();
+    return userRemovedLike;
+  }
+
+  Future<bool> addReviewDislike(int reviewId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(addReviewDislikeGraphql),
+        variables: <String, dynamic>{
+          "reviewId": reviewId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final userDidDislike = result.data?["addReviewDislike"];
+    notifyListeners();
+    return userDidDislike;
+  }
+
+  Future<bool> removeReviewDislike(int reviewId) async {
+    MutationOptions queryOptions = MutationOptions(
+        document: gql(removeReviewDislikeGraphql),
+        variables: <String, dynamic>{
+          "reviewId": reviewId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final userRemoveDislike = result.data?["removeReviewDislike"];
+    notifyListeners();
+    return userRemoveDislike;
   }
 }
