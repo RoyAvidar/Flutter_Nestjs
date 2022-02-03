@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/models/review.dart';
+import 'package:flutter_main/models/user.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 const getReviewsGraphql = """
   query {
     getAllReviews {
-      reviewId,
-      reviewContent,
+    reviewId,
+    reviewContent,
+    isLike,
+    isDislike
+    userReview {
       user {
-        userId,
-        userName,
-        userPhone,
-        userProfilePic,
-        isAdmin
+        userId
       }
+      review {
+        reviewId
+      }
+    	likeDislike
     }
+  }
 }
 """;
 const createReviewGraphql = """
@@ -34,6 +39,25 @@ const createReviewGraphql = """
       }
     }
 """;
+
+class UserReviewItem {
+  final String? id;
+  bool? likeDislike;
+  final User? user;
+  final Review? review;
+
+  UserReviewItem(
+      {@required this.id,
+      this.likeDislike,
+      @required this.user,
+      @required this.review});
+
+  UserReviewItem.fromJson(Map<String, dynamic> json)
+      : id = json['id'].toString(),
+        likeDislike = json['likeDislike'],
+        user = json['user']['userId'],
+        review = json['review']['reviewId'];
+}
 
 class ReviewsProvider with ChangeNotifier {
   List<Review> _reviews = [];

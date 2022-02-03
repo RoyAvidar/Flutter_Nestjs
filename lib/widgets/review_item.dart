@@ -18,9 +18,10 @@ class _ReviewItemState extends State<ReviewItem> {
       children: [
         ListTile(
           leading: CircleAvatar(
-            backgroundImage: review.user!.userProfilePic!.isNotEmpty
+            backgroundImage: review.userWriter!.userProfilePic!.isNotEmpty
                 ? NetworkImage(
-                    "http://10.0.2.2:8000/" + review.user!.userProfilePic!,
+                    "http://10.0.2.2:8000/" +
+                        review.userWriter!.userProfilePic!,
                   )
                 : NetworkImage(
                     'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg',
@@ -32,7 +33,7 @@ class _ReviewItemState extends State<ReviewItem> {
             child: Row(
               children: [
                 Text(
-                  "Written by: -- " + review.user!.userName!,
+                  "Written by: -- " + review.userWriter!.userName!,
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 13,
