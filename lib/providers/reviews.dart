@@ -8,21 +8,28 @@ const getReviewsGraphql = """
   query {
     getAllReviews {
     reviewId,
+    user {
+      userId,
+      userProfilePic,
+      userName,
+    },
     reviewContent,
     isLike,
-    isDislike
+    isDislike,
     userReview {
+      id,
       user {
         userId
-      }
+      },
       review {
         reviewId
-      }
+      },
     	likeDislike
     }
   }
 }
 """;
+
 const createReviewGraphql = """
   mutation
     createReview(\$createReviewInput: CreateReviewInput!) {
@@ -89,19 +96,20 @@ class UserReviewItem {
   final String? id;
   bool? likeDislike;
   final User? user;
-  final Review? review;
+  final int? reviewId;
 
-  UserReviewItem(
-      {@required this.id,
-      this.likeDislike,
-      @required this.user,
-      @required this.review});
+  UserReviewItem({
+    @required this.id,
+    this.likeDislike,
+    @required this.user,
+    @required this.reviewId,
+  });
 
   UserReviewItem.fromJson(Map<String, dynamic> json)
       : id = json['id'].toString(),
         likeDislike = json['likeDislike'],
-        user = json['user']['userId'],
-        review = json['review']['reviewId'];
+        user = User.fromJson(json['user']),
+        reviewId = json['review']['reviewId'];
 }
 
 class ReviewsProvider with ChangeNotifier {
@@ -113,6 +121,7 @@ class ReviewsProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
+    // print(result.data?['getAllReviews']);
     _reviews = result.data?['getAllReviews']
         .map<Review>((rev) => Review.fromJson(rev))
         .toList();

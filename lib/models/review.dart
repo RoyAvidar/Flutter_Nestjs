@@ -5,7 +5,7 @@ import 'package:flutter_main/providers/reviews.dart';
 class Review with ChangeNotifier {
   final int? id;
   final String? content;
-  User? userWriter;
+  final User? userWriter;
   int? isLike;
   int? isDislike;
   List<UserReviewItem>? userReview;

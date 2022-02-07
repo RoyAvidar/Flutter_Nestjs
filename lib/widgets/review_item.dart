@@ -56,16 +56,30 @@ class _ReviewItemState extends State<ReviewItem> {
           contentPadding: EdgeInsets.all(5),
         ),
         if (_expanded)
-          Container(
-            child: Text(
-              review.content!,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                child: Text(
+                  review.content!,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  textAlign: TextAlign.left,
+                  textDirection: TextDirection.ltr,
+                ),
               ),
-              textAlign: TextAlign.left,
-              textDirection: TextDirection.ltr,
-            ),
+              SizedBox(height: 7),
+              Row(
+                children: [
+                  Icon(Icons.favorite),
+                  Text("Likes:  " + review.isLike.toString() + " | "),
+                  Icon(Icons.not_interested),
+                  Text("Dislikes:  " + review.isDislike.toString()),
+                ],
+              )
+            ],
           ),
       ],
     );
