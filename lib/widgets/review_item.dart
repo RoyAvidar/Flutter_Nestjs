@@ -29,16 +29,10 @@ class _ReviewItemState extends State<ReviewItem> {
           ),
           trailing: Container(
             // color: Colors.grey,
-            width: 150,
+            width: 125,
             child: Row(
               children: [
-                Text(
-                  "Written by: -- " + review.userWriter!.userName!,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 13,
-                  ),
-                ),
+                Text("Review #:  " + review.id.toString()),
                 IconButton(
                   onPressed: () {
                     setState(() {
@@ -53,7 +47,7 @@ class _ReviewItemState extends State<ReviewItem> {
             ),
           ),
           minVerticalPadding: 15,
-          contentPadding: EdgeInsets.all(5),
+          contentPadding: EdgeInsets.all(15),
         ),
         if (_expanded)
           Column(
@@ -65,6 +59,7 @@ class _ReviewItemState extends State<ReviewItem> {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.italic,
                   ),
                   textAlign: TextAlign.left,
                   textDirection: TextDirection.ltr,
@@ -73,12 +68,21 @@ class _ReviewItemState extends State<ReviewItem> {
               SizedBox(height: 7),
               Row(
                 children: [
+                  //should be a IconButton that renders showDialog with userReview data and filter the likeDislke argument with user data...
                   Icon(Icons.favorite),
                   Text("Likes:  " + review.isLike.toString() + " | "),
                   Icon(Icons.not_interested),
                   Text("Dislikes:  " + review.isDislike.toString()),
                 ],
-              )
+              ),
+              SizedBox(height: 8),
+              Text(
+                "Written by: -- " + review.userWriter!.userName!,
+                style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 12,
+                ),
+              ),
             ],
           ),
       ],

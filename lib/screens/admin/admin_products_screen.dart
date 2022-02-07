@@ -53,15 +53,30 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
       ),
       drawer: AppDrawer(),
       //can use consumer here, insted of provider.
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: ListView.builder(
-          itemCount: products.length,
-          itemBuilder: (ctx, i) => ChangeNotifierProvider(
-            create: (c) => products[i],
-            child: AdminProductItem(),
+      body: Column(
+        children: [
+          SizedBox(height: 15),
+          Expanded(
+            child: ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                create: (c) => products[i],
+                child: AdminProductItem(),
+              ),
+            ),
           ),
-        ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 16),
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamed(EditProductScreen.routeName, arguments: null);
+            },
+            child: const Text('Add A Product'),
+          ),
+          SizedBox(height: 10),
+        ],
       ),
     );
   }

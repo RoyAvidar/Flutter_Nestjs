@@ -93,7 +93,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
             ),
             SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Item Description:   '),
                 Text(
@@ -103,9 +103,9 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 25),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Item Price:   '),
                 Text(
