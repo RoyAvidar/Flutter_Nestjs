@@ -66,28 +66,28 @@ const updateReviewContentGraphql = """
 
 const addReviewLikeGraphql = """
   mutation
-    addReviewLike(\$reviewId: Int!) {
+    addReviewLike(\$reviewId: Float!) {
       addReviewLike(reviewId: \$reviewId)
     }
 """;
 
 const removeReviewLikeGraphql = """
   mutation
-    removewReviewLike(\$reviewId: Int!) {
+    removewReviewLike(\$reviewId: Float!) {
       removeReviewLike(reviewId: \$reviewId)
     }
 """;
 
 const addReviewDislikeGraphql = """
   mutation 
-    addReviewDislike(\$reviewId: Int!) {
+    addReviewDislike(\$reviewId: Float!) {
       addReviewDislike(reviewId: \$reviewId)
     }
 """;
 
 const removeReviewDislikeGraphql = """
   mutation
-    removeReviewDislike(\$reviewId: Int!) {
+    removeReviewDislike(\$reviewId: Float!) {
       removeReviewDislike(reviewId: \$reviewId)
     }
 """;
