@@ -25,7 +25,8 @@ const getReviewsGraphql = """
         reviewId
       },
     	likeDislike
-    }
+    },
+    didLike
   }
 }
 """;

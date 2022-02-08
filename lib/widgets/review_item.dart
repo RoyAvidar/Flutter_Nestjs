@@ -79,14 +79,18 @@ class _ReviewItemState extends State<ReviewItem> {
                         final user = await Provider.of<UserProvider>(context,
                                 listen: false)
                             .getUser();
-                        if (ur.user!.userId == user.userId) {
+                        if (ur.id!.isNotEmpty &&
+                            ur.user!.userId == user.userId) {
                           if (ur.likeDislike == true) {
                             Provider.of<ReviewsProvider>(context, listen: false)
                                 .removeReviewLike(review.id!);
                           } else {
                             Provider.of<ReviewsProvider>(context, listen: false)
                                 .addReviewLike(review.id!);
+                            // setState(() {});
                           }
+                        } else {
+                          print('No like was find');
                         }
                       }
                     },
@@ -100,7 +104,8 @@ class _ReviewItemState extends State<ReviewItem> {
                         final user = await Provider.of<UserProvider>(context,
                                 listen: false)
                             .getUser();
-                        if (ur.user!.userId == user.userId) {
+                        if (ur.id!.isNotEmpty &&
+                            ur.user!.userId == user.userId) {
                           if (ur.likeDislike == false) {
                             Provider.of<ReviewsProvider>(context, listen: false)
                                 .removeReviewDislike(review.id!);
