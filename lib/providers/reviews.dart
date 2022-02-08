@@ -26,7 +26,8 @@ const getReviewsGraphql = """
       },
     	likeDislike
     },
-    didLike
+    userDidLikeOrDislike,
+    whatUserActuallyDid
   }
 }
 """;
