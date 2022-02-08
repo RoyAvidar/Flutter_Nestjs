@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/models/review.dart';
 import 'package:flutter_main/providers/reviews.dart';
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ReviewItem extends StatefulWidget {
@@ -70,58 +71,65 @@ class _ReviewItemState extends State<ReviewItem> {
               SizedBox(height: 7),
               Row(
                 children: [
+                  // review.userReview[0].likeDislike == true ? :
                   IconButton(
-                    onPressed: () {
+                    onPressed: () async {
                       // leave or remove a like depends on the userReview data (if its true: remove, if false: add)
-                      Provider.of<ReviewsProvider>(context, listen: false)
-                          .addReviewLike(review.id!);
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "You Like this review!",
-                            textAlign: TextAlign.left,
-                          ),
-                          duration: Duration(seconds: 1),
-                          action: SnackBarAction(
-                            label: "Undo",
-                            onPressed: () {
-                              Provider.of<ReviewsProvider>(context,
-                                      listen: false)
-                                  .removeReviewLike(review.id!);
-                            },
-                          ),
-                        ),
-                      );
+                      for (var ur in review.userReview!) {
+                        final user = await Provider.of<UserProvider>(context,
+                                listen: false)
+                            .getUser();
+                        if (ur.user!.userId == user.userId) {
+                          if (ur.likeDislike == true) {
+                            Provider.of<ReviewsProvider>(context, listen: false)
+                                .removeReviewLike(review.id!);
+                          } else {
+                            Provider.of<ReviewsProvider>(context, listen: false)
+                                .addReviewLike(review.id!);
+                          }
+                        }
+                      }
                     },
                     icon: Icon(Icons.favorite),
                     color: Colors.green,
                   ),
                   IconButton(
-                    onPressed: () {
+                    onPressed: () async {
                       // leave or remove a dislike depends on the userReview data (if its true: remove, if false: add)
-                      Provider.of<ReviewsProvider>(context, listen: false)
-                          .addReviewDislike(review.id!);
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "You Dislike this review!",
-                            textAlign: TextAlign.left,
-                          ),
-                          duration: Duration(seconds: 1),
-                          action: SnackBarAction(
-                            label: "Undo",
-                            onPressed: () {
-                              Provider.of<ReviewsProvider>(context,
-                                      listen: false)
-                                  .removeReviewDislike(review.id!);
-                            },
-                          ),
-                        ),
-                      );
+                      for (var ur in review.userReview!) {
+                        final user = await Provider.of<UserProvider>(context,
+                                listen: false)
+                            .getUser();
+                        if (ur.user!.userId == user.userId) {
+                          if (ur.likeDislike == false) {
+                            Provider.of<ReviewsProvider>(context, listen: false)
+                                .removeReviewDislike(review.id!);
+                          } else {
+                            Provider.of<ReviewsProvider>(context, listen: false)
+                                .addReviewDislike(review.id!);
+                            // ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   SnackBar(
+                            //     content: Text(
+                            //       "You Dislike this review!",
+                            //       textAlign: TextAlign.left,
+                            //     ),
+                            //     duration: Duration(seconds: 1),
+                            //     action: SnackBarAction(
+                            //       label: "Undo",
+                            //       onPressed: () {
+                            //         Provider.of<ReviewsProvider>(context,
+                            //                 listen: false)
+                            //             .removeReviewDislike(review.id!);
+                            //       },
+                            //     ),
+                            //   ),
+                            // );
+                          }
+                        }
+                      }
                     },
-                    icon: Icon(Icons.no_flash),
+                    icon: Icon(Icons.hearing),
                     color: Colors.red,
                   ),
                 ],
