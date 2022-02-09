@@ -31,6 +31,12 @@ const getSingleUser = """
 }
 """;
 
+const getUserIdGraphql = """
+  query {
+    getUserId 
+  }
+""";
+
 const getAllUsers = """
   query {
     users {
@@ -107,6 +113,17 @@ class UserProvider with ChangeNotifier {
     final user = User.fromJson(resultData);
     notifyListeners();
     return user;
+  }
+
+  Future<int> getUserId() async {
+    QueryOptions queryOptions = QueryOptions(document: gql(getUserIdGraphql));
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final userId = result.data?["getUserId"];
+    notifyListeners();
+    return userId;
   }
 
   Future<List<User>> getUsers() async {

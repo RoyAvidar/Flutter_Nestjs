@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/models/review.dart';
+import 'package:flutter_main/models/user.dart';
 import 'package:flutter_main/providers/reviews.dart';
-// import 'package:flutter_main/providers/user_provider.dart';
+import 'package:flutter_main/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ReviewItem extends StatefulWidget {
@@ -12,11 +13,29 @@ class ReviewItem extends StatefulWidget {
 }
 
 class _ReviewItemState extends State<ReviewItem> {
-  // var _userDidLike;
+  int userId = 0;
   var _expanded = false;
+
+  Future<int> getUserId() async {
+    userId =
+        await Provider.of<UserProvider>(context, listen: false).getUserId();
+    if (userId == 0) {
+      throw new Exception("cartId was not found.");
+    }
+    return userId;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getUserId();
+  }
+
   @override
   Widget build(BuildContext context) {
     final review = Provider.of<Review>(context, listen: false);
+    // final user = Provider.of<User>(context, listen: false);
     return Column(
       children: [
         ListTile(
@@ -69,45 +88,104 @@ class _ReviewItemState extends State<ReviewItem> {
                 ),
               ),
               SizedBox(height: 7),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: review.userDidLikeOrDislike!
-                        ? () {
-                            //
-                            if (review.whatUserActuallyDid == true) {
-                              Provider.of<ReviewsProvider>(context,
-                                      listen: false)
-                                  .removeReviewLike(review.id!);
-                            }
-                          }
-                        : () {
-                            Provider.of<ReviewsProvider>(context, listen: false)
-                                .addReviewLike(review.id!);
-                          },
-                    icon: Icon(Icons.favorite),
-                    color: Colors.green,
-                  ),
-                  IconButton(
-                    onPressed: review.userDidLikeOrDislike!
-                        ? () {
-                            //
-                            if (review.whatUserActuallyDid == false) {
-                              Provider.of<ReviewsProvider>(context,
-                                      listen: false)
-                                  .removeReviewDislike(review.id!);
-                            }
-                          }
-                        : () {
-                            Provider.of<ReviewsProvider>(context, listen: false)
-                                .addReviewDislike(review.id!);
-                          },
-                    icon: Icon(Icons.broken_image_outlined),
-                    color: Colors.red,
-                  ),
-                ],
-              ),
-              SizedBox(height: 7),
+              review.userWriter!.userId != userId
+                  ? Row(
+                      children: [
+                        IconButton(
+                          onPressed: review.userDidLikeOrDislike!
+                              ? () {
+                                  if (review.whatUserActuallyDid == true) {
+                                    Provider.of<ReviewsProvider>(context,
+                                            listen: false)
+                                        .removeReviewLike(review.id!);
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Like Removed',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                  }
+                                }
+                              : () {
+                                  Provider.of<ReviewsProvider>(context,
+                                          listen: false)
+                                      .addReviewLike(review.id!);
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Like Added',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                },
+                          icon: Icon(Icons.favorite),
+                          color: Colors.green,
+                        ),
+                        IconButton(
+                          onPressed: review.userDidLikeOrDislike!
+                              ? () {
+                                  if (review.whatUserActuallyDid == false) {
+                                    Provider.of<ReviewsProvider>(context,
+                                            listen: false)
+                                        .removeReviewDislike(review.id!);
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Disike Removed',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                  }
+                                }
+                              : () {
+                                  Provider.of<ReviewsProvider>(context,
+                                          listen: false)
+                                      .addReviewDislike(review.id!);
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Dislike Added',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                },
+                          icon: Icon(Icons.broken_image_outlined),
+                          color: Colors.red,
+                        ),
+                      ],
+                    )
+                  : SizedBox(height: 7),
               Row(
                 children: [
                   //should be a IconButton that renders showDialog&ListView.builder with userReview data and filter the likeDislke for true/false

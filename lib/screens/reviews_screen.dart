@@ -66,6 +66,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               TextButton(
                 style: TextButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 16),
+                  backgroundColor: Colors.lightGreen[100],
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
