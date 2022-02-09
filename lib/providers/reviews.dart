@@ -51,8 +51,8 @@ const createReviewGraphql = """
 
 const updateReviewContentGraphql = """
   mutation 
-    updateReviewContent(\$updateReviewInput: UpdateReviewInput!) {
-      updateReviewContent(updateReviewInput: \$updateReviewInput) {
+    updateReviewC(\$updateReviewInput: UpdateReviewInput!) {
+      updateReview(updateReviewInput: \$updateReviewInput) {
         reviewId,
         reviewContent,
         user {

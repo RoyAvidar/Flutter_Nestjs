@@ -125,7 +125,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
                         TextButton(
                           onPressed: () {
                             if (userNewPassController.text ==
-                                userValidPassController.text) {
+                                    userValidPassController.text &&
+                                !_validate) {
                               changePassword(userNewPassController.text);
                               Navigator.of(context)
                                   .pushNamed(OverviewScreen.routeName);

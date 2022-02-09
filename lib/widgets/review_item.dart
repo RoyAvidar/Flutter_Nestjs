@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/models/review.dart';
-import 'package:flutter_main/models/user.dart';
 import 'package:flutter_main/providers/reviews.dart';
 import 'package:flutter_main/providers/user_provider.dart';
+import 'package:flutter_main/screens/edit_review_screen.dart';
 import 'package:provider/provider.dart';
 
 class ReviewItem extends StatefulWidget {
@@ -35,7 +35,6 @@ class _ReviewItemState extends State<ReviewItem> {
   @override
   Widget build(BuildContext context) {
     final review = Provider.of<Review>(context, listen: false);
-    // final user = Provider.of<User>(context, listen: false);
     return Column(
       children: [
         ListTile(
@@ -185,7 +184,16 @@ class _ReviewItemState extends State<ReviewItem> {
                         ),
                       ],
                     )
-                  : SizedBox(height: 7),
+                  : //add an iconButton for editing the review.
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          EditReviewScreen.routeName,
+                          arguments: review.id,
+                        );
+                      },
+                      icon: Icon(Icons.edit)),
+              SizedBox(height: 7),
               Row(
                 children: [
                   //should be a IconButton that renders showDialog&ListView.builder with userReview data and filter the likeDislke for true/false
