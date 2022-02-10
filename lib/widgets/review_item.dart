@@ -192,7 +192,9 @@ class _ReviewItemState extends State<ReviewItem> {
                           arguments: review.id,
                         );
                       },
-                      icon: Icon(Icons.edit)),
+                      icon: Icon(Icons.edit),
+                      color: Theme.of(context).primaryColor,
+                    ),
               SizedBox(height: 7),
               Row(
                 children: [

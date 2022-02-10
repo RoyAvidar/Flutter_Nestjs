@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/category.dart';
+import 'package:flutter_main/providers/cart.dart';
 import 'package:flutter_main/providers/category_provider.dart';
 import 'package:flutter_main/screens/favorites_screen.dart';
+import 'package:flutter_main/widgets/badge.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/app_drawer.dart';
@@ -80,14 +82,24 @@ class _OverviewScreenState extends State<OverviewScreen> {
               tabs: tabs,
             ),
             actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.shopping_bag,
+              Consumer<CartProvider>(
+                builder: (co, cartData, ch) => FutureBuilder(
+                  future: cartData.itemCount(),
+                  builder: (context, snapshot) {
+                    return Badge(
+                      child: IconButton(
+                          icon: Icon(Icons.shopping_bag),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(CartScreen.routeName);
+                          }),
+                      value: snapshot.data.toString(),
+                      color: Colors.amber,
+                    );
+                  },
                 ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(CartScreen.routeName);
-                },
               ),
+              // FutureBuilder(builder: builder)
             ],
           ),
           drawer: AppDrawer(),
