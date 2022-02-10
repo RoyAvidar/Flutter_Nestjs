@@ -72,6 +72,8 @@ class ProductsProvider with ChangeNotifier {
     return _items;
   }
 
+  //write a function that takes a number wich be the categoryId n filter the products accordingly.
+
   // List<Product> get items {
   //   return _items;
   // }
