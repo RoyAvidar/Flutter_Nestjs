@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<bool> _getUserDarkMode() async {
     var userDarkmode = await Provider.of<UserProvider>(context, listen: false)
         .getUserDarkMode();
-    print(userDarkmode);
+    // print(userDarkmode);
     // HeaderScreen.keyDarkMode = userDarkMode.toString();
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('userDarkMode', userDarkmode);

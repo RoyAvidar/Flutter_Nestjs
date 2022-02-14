@@ -29,7 +29,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
     setState(() {
       categories = cat;
     });
-
     return categories;
   }
 
@@ -43,76 +42,82 @@ class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
     List<Tab> tabs = categories
-        .map((c) => Tab(
-              text: c.name,
-              icon: c.icon!.contains("Sandwich")
-                  ? Icon(Icons.breakfast_dining_outlined)
-                  : c.icon!.contains("Salad")
-                      ? Icon(Icons.rice_bowl_outlined)
-                      : c.icon!.contains("Lunch")
-                          ? Icon(Icons.lunch_dining_outlined)
-                          : null,
-            ))
+        .map(
+          (c) => Tab(
+            text: c.name,
+            icon: c.icon!.contains("Sandwich")
+                ? Icon(Icons.breakfast_dining_outlined)
+                : c.icon!.contains("Salad")
+                    ? Icon(Icons.rice_bowl_outlined)
+                    : c.icon!.contains("Lunch")
+                        ? Icon(Icons.lunch_dining_outlined)
+                        : null,
+          ),
+        )
         .toList();
     tabs.add(
         Tab(text: "Favorites", icon: Icon(Icons.favorite_border_outlined)));
-    return DefaultTabController(
-      length: tabs.length,
-      initialIndex: 0,
-      // The Builder widget is used to have a different BuildContext to access
-      // closest DefaultTabController.
-      child: Builder(builder: (BuildContext context) {
-        final TabController tabController = DefaultTabController.of(context)!;
-        tabController.addListener(() {
-          if (!tabController.indexIsChanging) {
-            // To get index of current tab use tabController.index
-            var index = tabController.index;
-            // Your code goes here.
-          }
-        });
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Lunchies'),
-            bottom: TabBar(
-              indicatorWeight: 2.5,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(2), // Creates border
-                color: Theme.of(context).accentColor,
-              ),
-              tabs: tabs,
-            ),
-            actions: [
-              Consumer<CartProvider>(
-                builder: (co, cartData, ch) => FutureBuilder(
-                  future: cartData.itemCount(),
-                  builder: (context, snapshot) {
-                    return Badge(
-                      child: IconButton(
-                          icon: Icon(Icons.shopping_bag),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(CartScreen.routeName);
-                          }),
-                      value: snapshot.data.toString(),
-                      color: Colors.amber,
-                    );
-                  },
+    // print(tabs.length);
+    return categories.length == 0
+        ? Container()
+        : DefaultTabController(
+            length: tabs.length,
+            initialIndex: 0,
+            // The Builder widget is used to have a different BuildContext to access
+            // closest DefaultTabController.
+            child: Builder(builder: (BuildContext context) {
+              final TabController tabController =
+                  DefaultTabController.of(context)!;
+              tabController.addListener(() {
+                if (!tabController.indexIsChanging) {
+                  // To get index of current tab use tabController.index
+                  var index = tabController.index;
+                  // Your code goes here.
+                }
+              });
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Lunchies'),
+                  bottom: TabBar(
+                    indicatorWeight: 2.5,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(2), // Creates border
+                      color: Theme.of(context).accentColor,
+                    ),
+                    tabs: tabs,
+                  ),
+                  actions: [
+                    Consumer<CartProvider>(
+                      builder: (co, cartData, ch) => FutureBuilder(
+                        future: cartData.itemCount(),
+                        builder: (context, snapshot) {
+                          return Badge(
+                            child: IconButton(
+                                icon: Icon(Icons.shopping_bag),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed(CartScreen.routeName);
+                                }),
+                            value: snapshot.data.toString(),
+                            color: Colors.amber,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          drawer: AppDrawer(),
-          body: TabBarView(
-            children: [
-              SandwichScreen(),
-              SaladScreen(),
-              LunchScreen(),
-              FavoriteScreen(),
-            ],
-          ),
-        );
-      }),
-    );
+                drawer: AppDrawer(),
+                body: TabBarView(
+                  children: [
+                    SandwichScreen(),
+                    SaladScreen(),
+                    LunchScreen(),
+                    FavoriteScreen(),
+                  ],
+                ),
+              );
+            }),
+          );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/providers/user_provider.dart';
@@ -133,12 +134,14 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<bool> _getUserDarkMode() async {
-    final userDarkmode = await Provider.of<UserProvider>(context, listen: false)
+    final userDarkMode = await Provider.of<UserProvider>(context, listen: false)
         .getUserDarkMode();
-    print(userDarkmode);
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('userDarkMode', userDarkmode);
-    return userDarkmode;
+    // print(userDarkmode);
+    userDarkMode
+        ? AdaptiveTheme.of(context).setDark()
+        : AdaptiveTheme.of(context).setLight();
+
+    return userDarkMode;
   }
 
   @override

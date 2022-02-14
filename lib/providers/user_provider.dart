@@ -254,6 +254,7 @@ class UserProvider with ChangeNotifier {
 
   Future<ThemeData> theme() async {
     final isDarkMode = await getUserDarkMode();
+    print(isDarkMode);
     return isDarkMode
         ? ThemeData.dark().copyWith(
             primaryColor: Colors.teal[200],

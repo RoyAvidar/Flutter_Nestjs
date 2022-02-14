@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
@@ -29,9 +30,9 @@ class HeaderScreen extends StatelessWidget {
         onChange: (userDarkMode) async {
           userDarkMode = await Provider.of<UserProvider>(context, listen: false)
               .toggleUserDarkMode();
-          // print(userDarkMode);
-          final prefs = await SharedPreferences.getInstance();
-          prefs.setBool('userDarkMode', userDarkMode);
+          userDarkMode
+              ? AdaptiveTheme.of(context).setDark()
+              : AdaptiveTheme.of(context).setLight();
         },
       );
 
