@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           defaultValue: false,
           builder: (_, isDarkMode, __) => MaterialApp(
             title: 'Lunchies',
-            // theme: this.getTheme(),
+            // theme: ,
             theme: isDarkMode
                 ? ThemeData.dark().copyWith(
                     primaryColor: Colors.teal[200],

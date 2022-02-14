@@ -82,7 +82,7 @@ class _AuthScreenState extends State<AuthScreen> {
             textAlign: TextAlign.left,
             style: TextStyle(color: Colors.red[400]),
           ),
-          duration: Duration(seconds: 1),
+          duration: Duration(seconds: 2),
         ),
       );
     } else {

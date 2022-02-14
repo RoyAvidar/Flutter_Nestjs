@@ -83,11 +83,11 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
                     ],
                   ),
                   SizedBox(height: 5),
-                  Text("total amount: \$" + order.totalAmount.toString()),
                 ],
               ),
             ),
           ),
+        Text("total amount: \$" + order.totalAmount.toString()),
       ],
     );
   }

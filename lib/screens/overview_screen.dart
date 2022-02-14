@@ -5,6 +5,7 @@ import 'package:flutter_main/providers/category_provider.dart';
 import 'package:flutter_main/screens/favorites_screen.dart';
 import 'package:flutter_main/widgets/badge.dart';
 import 'package:provider/provider.dart';
+// import 'package:badges/badges.dart';
 
 import '../widgets/app_drawer.dart';
 import '../screens/salad_screen.dart';
