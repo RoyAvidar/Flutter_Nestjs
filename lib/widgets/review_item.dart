@@ -97,6 +97,11 @@ class _ReviewItemState extends State<ReviewItem> {
                                     Provider.of<ReviewsProvider>(context,
                                             listen: false)
                                         .removeReviewLike(review.id!);
+                                    // print
+                                    setState(() {
+                                      review.isLike = review.isLike! - 1;
+                                      review.userDidLikeOrDislike = false;
+                                    });
                                     ScaffoldMessenger.of(context)
                                         .hideCurrentSnackBar();
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -118,6 +123,11 @@ class _ReviewItemState extends State<ReviewItem> {
                                   Provider.of<ReviewsProvider>(context,
                                           listen: false)
                                       .addReviewLike(review.id!);
+                                  setState(() {
+                                    review.isLike = review.isLike! + 1;
+                                    review.userDidLikeOrDislike = true;
+                                    review.whatUserActuallyDid = true;
+                                  });
                                   ScaffoldMessenger.of(context)
                                       .hideCurrentSnackBar();
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -143,6 +153,11 @@ class _ReviewItemState extends State<ReviewItem> {
                                     Provider.of<ReviewsProvider>(context,
                                             listen: false)
                                         .removeReviewDislike(review.id!);
+                                    setState(() {
+                                      review.isDislike = review.isDislike! - 1;
+                                      review.userDidLikeOrDislike = false;
+                                      // review.whatUserActuallyDid = false;
+                                    });
                                     ScaffoldMessenger.of(context)
                                         .hideCurrentSnackBar();
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -164,6 +179,11 @@ class _ReviewItemState extends State<ReviewItem> {
                                   Provider.of<ReviewsProvider>(context,
                                           listen: false)
                                       .addReviewDislike(review.id!);
+                                  setState(() {
+                                    review.isDislike = review.isDislike! + 1;
+                                    review.userDidLikeOrDislike = true;
+                                    review.whatUserActuallyDid = false;
+                                  });
                                   ScaffoldMessenger.of(context)
                                       .hideCurrentSnackBar();
                                   ScaffoldMessenger.of(context).showSnackBar(
