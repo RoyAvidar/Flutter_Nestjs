@@ -1,3 +1,4 @@
+import 'package:flutter_main/screens/address_screen.dart';
 import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
 import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
 import 'package:flutter_main/screens/admin/admin_user_screen.dart';
@@ -37,6 +38,7 @@ class Routes {
     ReviewsScreen.routeName: (ctx) => ReviewsScreen(),
     CreateReviewScreen.routeName: (ctx) => CreateReviewScreen(),
     ReportBugScreen.routeName: (ctx) => ReportBugScreen(),
-    EditReviewScreen.routeName: (ctx) => EditReviewScreen()
+    EditReviewScreen.routeName: (ctx) => EditReviewScreen(),
+    AddressScreen.routeName: (ctx) => AddressScreen(),
   };
 }

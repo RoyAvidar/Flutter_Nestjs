@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_main/providers/address_provider.dart';
 import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/providers/category_provider.dart';
 import 'package:flutter_main/providers/reviews.dart';
@@ -67,6 +68,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (ctx) => ReviewsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => AddressProvider(),
         )
       ],
       child: AdaptiveTheme(

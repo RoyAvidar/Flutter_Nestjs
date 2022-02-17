@@ -8,16 +8,17 @@ class Address with ChangeNotifier {
   final int? streetNumber;
   final int? floorNumber;
   final int? apartmentNumber;
-  final User? user;
+  User? user;
 
-  Address(
-      {@required this.addressId,
-      @required this.city,
-      @required this.streetName,
-      @required this.streetNumber,
-      @required this.floorNumber,
-      @required this.apartmentNumber,
-      @required this.user});
+  Address({
+    @required this.addressId,
+    @required this.city,
+    @required this.streetName,
+    @required this.streetNumber,
+    @required this.floorNumber,
+    @required this.apartmentNumber,
+    this.user,
+  });
 
   Address.fromJson(Map<String, dynamic> json)
       : addressId = json['addressId'],
@@ -25,6 +26,6 @@ class Address with ChangeNotifier {
         streetName = json['streetName'],
         streetNumber = json['streetNumber'],
         floorNumber = json['floorNumber'],
-        apartmentNumber = json['apartmentNumber'],
-        user = User.fromJson(json['user']);
+        apartmentNumber = json['apartmentNumber'];
+  // user = User.fromJson(json['user']);
 }
