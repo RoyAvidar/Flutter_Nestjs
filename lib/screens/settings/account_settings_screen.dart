@@ -20,6 +20,7 @@ class AccoutScreen extends StatelessWidget {
         children: [
           buildSecurity(context),
           buildAccountInfo(context),
+          buildAccountAddress(context),
         ],
       ),
     );
@@ -46,6 +47,27 @@ class AccoutScreen extends StatelessWidget {
         ),
         onTap: () {
           Navigator.of(context).pushReplacementNamed(InfoScreen.routeName);
+        },
+      );
+
+  Widget buildAccountAddress(BuildContext context) => SimpleSettingsTile(
+        title: "Account Addresses",
+        subtitle: "",
+        leading: Icon(
+          Icons.library_books,
+          color: Colors.green,
+        ),
+        onTap: () {
+          //navigate to my address screen.
+          // IconButton(
+          //         onPressed: () {
+          //           //navigate to editAddressScreen & will continue to confirmOrderScreen with editedAddressId.
+          //           // Navigator.of(context).pushNamed(EditProductScreen.routeName,
+          //           //     arguments: product.id);
+          //         },
+          //         icon: Icon(Icons.edit),
+          //         color: Theme.of(context).primaryColor,
+          //       ),
         },
       );
 }

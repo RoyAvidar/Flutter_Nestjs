@@ -81,16 +81,15 @@ class _AddressScreenState extends State<AddressScreen> {
                     textStyle: const TextStyle(
                       fontSize: 16,
                     ),
-                    backgroundColor: Colors.black26,
                   ),
                   onPressed: () {
                     //navigate to addAddressScreen.
                     // Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
                   },
-                  child: Text('Add A Review'),
+                  child: Text('Add A New Address'),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 50,
                 ),
               ],
             ),

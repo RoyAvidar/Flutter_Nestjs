@@ -19,11 +19,7 @@ class _AddressItemState extends State<AddressItem> {
     return Column(
       children: [
         ListTile(
-          title: Text(address.city! +
-              " " +
-              address.streetName! +
-              " " +
-              address.streetNumber.toString()),
+          title: Text(address.city!),
           leading: IconButton(
             onPressed: () {
               setState(() {
@@ -33,18 +29,9 @@ class _AddressItemState extends State<AddressItem> {
             icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
           ),
           trailing: Container(
-            width: 100,
+            width: 50,
             child: Row(
               children: [
-                IconButton(
-                  onPressed: () {
-                    //navigate to editAddressScreen & will continue to confirmOrderScreen with editedAddressId.
-                    // Navigator.of(context).pushNamed(EditProductScreen.routeName,
-                    //     arguments: product.id);
-                  },
-                  icon: Icon(Icons.edit),
-                  color: Theme.of(context).primaryColor,
-                ),
                 IconButton(
                   icon: Icon(Icons.check),
                   color: Colors.lightGreen,
@@ -63,8 +50,15 @@ class _AddressItemState extends State<AddressItem> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                child: Text(address.floorNumber.toString()),
-              )
+                child: Text(" " +
+                    address.streetName! +
+                    " " +
+                    address.streetNumber.toString()),
+              ),
+              SizedBox(
+                height: 2,
+              ),
+              Text(address.floorNumber.toString())
             ],
           )
       ],
