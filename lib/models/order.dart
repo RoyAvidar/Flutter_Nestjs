@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/models/address.dart';
 import 'package:flutter_main/models/user.dart';
 import 'package:flutter_main/providers/cart.dart';
 
@@ -9,6 +10,7 @@ class Order with ChangeNotifier {
   final DateTime? dateTime;
   User? user;
   bool? isReady;
+  final Address? address;
 
   Order({
     @required this.id,
@@ -17,6 +19,7 @@ class Order with ChangeNotifier {
     @required this.dateTime,
     this.user,
     @required this.isReady,
+    @required this.address,
   });
 
   Order.fromJsonWithUser(Map<String, dynamic> json)
@@ -27,7 +30,8 @@ class Order with ChangeNotifier {
             .toList(),
         dateTime = DateTime.parse(json['createdAt']),
         user = User.fromJson(json['user']),
-        isReady = json['isReady'];
+        isReady = json['isReady'],
+        address = json['address'];
 
   Order.fromJson(Map<String, dynamic> json)
       : id = json['orderId'].toString(),
@@ -36,5 +40,6 @@ class Order with ChangeNotifier {
             .map<CartItem>((pord) => CartItem.fromJson(pord))
             .toList(),
         dateTime = DateTime.parse(json['createdAt']),
-        isReady = json['isReady'];
+        isReady = json['isReady'],
+        address = json['address'];
 }

@@ -190,7 +190,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   );
                 },
               ),
-              DropdownButton<int>(
+              DropdownButton<String>(
                 icon: const Icon(Icons.arrow_downward),
                 iconSize: 20,
                 elevation: 16,
@@ -206,21 +206,27 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: _editedProduct.price,
                     description: _editedProduct.description,
                     imageUrl: _editedProduct.imageUrl,
-                    categoryId: value,
+                    categoryId: value!.contains("Sandwich")
+                        ? 1
+                        : value.contains("Salad")
+                            ? 2
+                            : 3,
                   );
                   setState(() {});
                 },
-                items: <int>[1, 2, 3].map<DropdownMenuItem<int>>((int value) {
-                  return DropdownMenuItem<int>(
+                items: <String>["Sandwich", "Salad", "Lunch"]
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value.toString()),
+                    child: Text(value),
                   );
                 }).toList(),
               ),
+              SizedBox(height: 5),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("pick image"),
+                  Text("Pick an Image"),
                   IconButton(
                     color: Colors.greenAccent[300],
                     onPressed: _takePicture,
@@ -229,10 +235,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ],
               ),
               Divider(),
-              IconButton(
-                onPressed: _saveForm,
-                icon: Icon(Icons.save),
-                color: Colors.green,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Save Product:"),
+                  IconButton(
+                    onPressed: _saveForm,
+                    icon: Icon(Icons.save),
+                    color: Colors.green,
+                  ),
+                ],
               ),
             ],
           ),
