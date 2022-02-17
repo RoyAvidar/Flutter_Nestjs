@@ -26,7 +26,10 @@ const getSingleUser = """
     userName,
     userPhone,
     userProfilePic,
-    isAdmin
+    isAdmin,
+    address {
+      addressId,
+    }
   }
 }
 """;

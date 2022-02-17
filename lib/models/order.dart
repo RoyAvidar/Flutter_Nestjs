@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_main/models/address.dart';
 import 'package:flutter_main/models/user.dart';
 import 'package:flutter_main/providers/cart.dart';
 
@@ -10,7 +9,7 @@ class Order with ChangeNotifier {
   final DateTime? dateTime;
   User? user;
   bool? isReady;
-  final Address? address;
+  final String? address;
 
   Order({
     @required this.id,
