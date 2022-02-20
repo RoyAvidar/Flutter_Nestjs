@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/address.dart';
 import 'package:flutter_main/providers/address_provider.dart';
+import 'package:flutter_main/screens/add_address_screen.dart';
 import 'package:flutter_main/widgets/address_item.dart';
 import 'package:provider/provider.dart';
 
@@ -84,7 +85,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   ),
                   onPressed: () {
                     //navigate to addAddressScreen.
-                    // Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
+                    Navigator.of(context).pushNamed(AddAddressScreen.routeName);
                   },
                   child: Text('Add A New Address'),
                 ),

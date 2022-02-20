@@ -1,7 +1,9 @@
+import 'package:flutter_main/screens/add_address_screen.dart';
 import 'package:flutter_main/screens/address_screen.dart';
 import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
 import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
 import 'package:flutter_main/screens/admin/admin_user_screen.dart';
+import 'package:flutter_main/screens/confirm_order_screen.dart';
 import 'package:flutter_main/screens/create_review_screen.dart';
 import 'package:flutter_main/screens/edit_review_screen.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
@@ -40,5 +42,7 @@ class Routes {
     ReportBugScreen.routeName: (ctx) => ReportBugScreen(),
     EditReviewScreen.routeName: (ctx) => EditReviewScreen(),
     AddressScreen.routeName: (ctx) => AddressScreen(),
+    ConfirmOrderScreen.routeName: (ctx) => ConfirmOrderScreen(),
+    AddAddressScreen.routeName: (ctx) => AddAddressScreen(),
   };
 }

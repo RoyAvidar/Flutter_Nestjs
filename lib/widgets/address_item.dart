@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/address.dart';
+import 'package:flutter_main/screens/confirm_order_screen.dart';
 import 'package:provider/provider.dart';
 
 class AddressItem extends StatefulWidget {
@@ -37,8 +38,9 @@ class _AddressItemState extends State<AddressItem> {
                   color: Colors.lightGreen,
                   onPressed: () {
                     //will navigate to confirm order screen where submit will use this addressId & cartId.
-                    // Navigator.of(context).pushNamed(EditProductScreen.routeName,
-                    //     arguments: address.addressId);
+                    Navigator.of(context).pushNamed(
+                        ConfirmOrderScreen.routeName,
+                        arguments: address.addressId);
                   },
                 ),
               ],
