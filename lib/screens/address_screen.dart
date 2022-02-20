@@ -87,7 +87,9 @@ class _AddressScreenState extends State<AddressScreen> {
                     itemCount: addresses.length,
                     itemBuilder: (ctx, i) => ChangeNotifierProvider(
                       create: (c) => addresses[i],
-                      child: AddressItem(),
+                      child: AddressItem(
+                        isFromSettings: false,
+                      ),
                     ),
                   ),
                 ),

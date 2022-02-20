@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter_main/screens/account_address_screen.dart';
 import 'package:flutter_main/screens/settings/info_screen.dart';
 import 'package:flutter_main/screens/settings/security_screen.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
@@ -59,6 +60,8 @@ class AccoutScreen extends StatelessWidget {
         ),
         onTap: () {
           //navigate to my address screen.
+          Navigator.of(context)
+              .pushReplacementNamed(AccountAddressScreen.routeName);
         },
       );
 }
