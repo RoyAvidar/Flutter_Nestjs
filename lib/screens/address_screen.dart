@@ -35,21 +35,35 @@ class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("My Addresses"),
-      ),
+      appBar: AppBar(),
       body: addresses.isEmpty
-          ? Center(
-              child: Container(
-                child: Text(
-                  'You Have No Addresses Yet.',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold,
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    'You Have No Addresses Yet.',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
+                SizedBox(height: 35),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(AddAddressScreen.routeName);
+                  },
+                  child: Text('Add A New Address'),
+                ),
+              ],
             )
           : Column(
               children: [

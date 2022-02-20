@@ -59,15 +59,6 @@ class AccoutScreen extends StatelessWidget {
         ),
         onTap: () {
           //navigate to my address screen.
-          // IconButton(
-          //         onPressed: () {
-          //           //navigate to editAddressScreen & will continue to confirmOrderScreen with editedAddressId.
-          //           // Navigator.of(context).pushNamed(EditProductScreen.routeName,
-          //           //     arguments: product.id);
-          //         },
-          //         icon: Icon(Icons.edit),
-          //         color: Theme.of(context).primaryColor,
-          //       ),
         },
       );
 }
