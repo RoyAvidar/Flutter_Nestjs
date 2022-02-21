@@ -6,7 +6,11 @@ import 'package:flutter_main/screens/settings/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 class AddressItem extends StatefulWidget {
-  const AddressItem({Key? key, bool? isFromSettings}) : super(key: key);
+  const AddressItem({Key? key, this.arrivedFromSettings}) : super(key: key);
+  // AddressItem({bool? arrivedFromSettings}) {
+  //   this.arrivedFromSettings = arrivedFromSettings;
+  // }
+  final bool? arrivedFromSettings;
 
   @override
   _AddressItemState createState() => _AddressItemState();
@@ -14,7 +18,7 @@ class AddressItem extends StatefulWidget {
 
 class _AddressItemState extends State<AddressItem> {
   var _expanded = false;
-  // var isFromSettings;
+  // var isFromSettings = arrivedFromSettings;
 
   @override
   Widget build(BuildContext context) {
