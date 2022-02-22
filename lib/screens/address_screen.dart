@@ -78,7 +78,7 @@ class _AddressScreenState extends State<AddressScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Divider(
+                SizedBox(
                   height: 10,
                 ),
                 Expanded(
@@ -88,7 +88,9 @@ class _AddressScreenState extends State<AddressScreen> {
                     itemBuilder: (ctx, i) => ChangeNotifierProvider(
                       create: (c) => addresses[i],
                       // child: AddressItem(arrivedFromSettings: true),
-                      child: AddressItem(),
+                      child: AddressItem(
+                        arrivedFromSettings: false,
+                      ),
                     ),
                   ),
                 ),

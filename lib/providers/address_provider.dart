@@ -16,6 +16,14 @@ const getAddressByUserGraphQL = """
   }
 """;
 
+const getAddressByIDGrpahql = """
+  query {
+    getAddressByID(\$addressId: Float!) {
+      addressId,
+    }
+  }
+""";
+
 const createAddressGraphQL = """
   mutation 
     createAddress(\$createAddressInput: CreateAddressInput!) {
@@ -51,8 +59,29 @@ const deleteAddressGraphQL = """
     }
 """;
 
+const addressItemFromBackGraphql = """
+  query {
+    addressItemToFront(\$fromSetting: Boolean!)
+  }
+""";
+
 class AddressProvider extends ChangeNotifier {
   List<Address> _addresses = [];
+
+  Future<Address> getAddressByID(int addressId) async {
+    QueryOptions queryOptions = QueryOptions(
+        document: gql(getAddressByIDGrpahql),
+        variables: <String, dynamic>{
+          "addressId": addressId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final dbAddress = result.data?['getAddressByID'];
+    final address = Address.fromJson(dbAddress);
+    return address;
+  }
 
   Future<List<Address>> get getAddressByUser async {
     QueryOptions queryOptions =
@@ -137,5 +166,19 @@ class AddressProvider extends ChangeNotifier {
     final isDeleted = result.data?["deleteAddress"];
     notifyListeners();
     return isDeleted;
+  }
+
+  Future<bool> addressItemFromBack(bool fromSettings) async {
+    QueryOptions queryOptions = QueryOptions(
+        document: gql(addressItemFromBackGraphql),
+        variables: <String, dynamic>{
+          "fromSettings": fromSettings,
+        });
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final isFromFront = result.data?['addressItemToFront'];
+    return isFromFront;
   }
 }

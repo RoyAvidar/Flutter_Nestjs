@@ -14,15 +14,18 @@ class AddressItem extends StatefulWidget {
 
   @override
   _AddressItemState createState() => _AddressItemState();
+  // _AddressItemState createState() => _AddressItemState(arrivedFromSettings);
 }
 
 class _AddressItemState extends State<AddressItem> {
   var _expanded = false;
-  // var isFromSettings = arrivedFromSettings;
+  // final bool isFromSettings = arrivedFromSettings;
 
   @override
   Widget build(BuildContext context) {
     final address = Provider.of<Address>(context, listen: false);
+    final isFrom = widget.arrivedFromSettings;
+
     Future<bool> deleteAddress() async {
       Provider.of<AddressProvider>(context, listen: false)
           .deleteAddress(address.addressId!);
@@ -72,13 +75,14 @@ class _AddressItemState extends State<AddressItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Sreet: " + address.streetName!),
-                          IconButton(
-                            onPressed: () {
-                              //navigate to editAddressScreen.
-                            },
-                            icon: Icon(Icons.edit),
-                            color: Colors.lightBlue,
-                          ),
+                          if (isFrom!)
+                            IconButton(
+                              onPressed: () {
+                                //navigate to editAddressScreen.
+                              },
+                              icon: Icon(Icons.edit),
+                              color: Colors.lightBlue,
+                            ),
                         ],
                       ),
                       Row(
@@ -88,46 +92,48 @@ class _AddressItemState extends State<AddressItem> {
                               address.streetNumber.toString() +
                               "  "),
                           Text("Floor: " + address.floorNumber.toString()),
-                          IconButton(
-                            onPressed: () {
-                              //delete this address.
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: Text("Are You Sure?"),
-                                  content: Text(
-                                      "You will not be able to restore this address!"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, "Oops"),
-                                      child: Text("Oops"),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        deleteAddress();
-                                        Navigator.of(context).pushNamed(
-                                            SettingsScreen.routeName);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'Address Deleted Successfuly!',
-                                              textAlign: TextAlign.left,
+                          if (isFrom)
+                            IconButton(
+                              onPressed: () {
+                                //delete this address.
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: Text("Are You Sure?"),
+                                    content: Text(
+                                        "You will not be able to restore this address!"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, "Oops"),
+                                        child: Text("Oops"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          deleteAddress();
+                                          Navigator.of(context).pushNamed(
+                                              SettingsScreen.routeName);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Address Deleted Successfuly!',
+                                                textAlign: TextAlign.left,
+                                              ),
+                                              duration: Duration(seconds: 2),
                                             ),
-                                            duration: Duration(seconds: 2),
-                                          ),
-                                        );
-                                      },
-                                      child: Text("HIT IT!"),
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
-                            icon: Icon(Icons.delete),
-                            color: Colors.red,
-                          ),
+                                          );
+                                        },
+                                        child: Text("HIT IT!"),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.delete),
+                              color: Colors.red,
+                            ),
                         ],
                       ),
                     ],
