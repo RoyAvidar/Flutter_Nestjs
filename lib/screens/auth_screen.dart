@@ -159,26 +159,32 @@ class _AuthScreenState extends State<AuthScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextField(
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'User Name',
-                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
+              Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: TextField(
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'User Name',
+                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  ),
+                  controller: userNameController,
                 ),
-                controller: userNameController,
               ),
               SizedBox(
-                height: 16,
+                height: 25,
               ),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
+              Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  ),
+                  controller: userPassController,
                 ),
-                controller: userPassController,
               ),
               SizedBox(
                 height: 16,
@@ -186,24 +192,30 @@ class _AuthScreenState extends State<AuthScreen> {
               if (_authMode == AuthMode.Signup)
                 Column(
                   children: [
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Validate Password',
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Validate Password',
+                        ),
+                        controller: validatePassController,
                       ),
-                      controller: validatePassController,
                     ),
                     SizedBox(
-                      height: 16,
+                      height: 25,
                     ),
-                    TextField(
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Phone Number',
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: TextField(
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Phone Number',
+                        ),
+                        controller: userPhoneController,
                       ),
-                      controller: userPhoneController,
                     ),
                     SizedBox(
                       height: 16,
@@ -229,7 +241,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   child: Text('Login'),
                 ),
-              Divider(
+              SizedBox(
                 height: 10,
               ),
               if (_authMode == AuthMode.Signup)
@@ -241,7 +253,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   child: Text('Sign Up'),
                 ),
-              Divider(
+              SizedBox(
                 height: 10,
               ),
               if (_authMode == AuthMode.Login)
@@ -249,7 +261,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   onPressed: _switchAuthMode,
                   child: Text('Sign Up'),
                   style: TextButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
+                    primary: Colors.grey,
                   ),
                 )
               else
@@ -257,7 +269,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   onPressed: _switchAuthMode,
                   child: Text('Login'),
                   style: TextButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
+                    primary: Colors.grey,
                   ),
                 ),
             ],
