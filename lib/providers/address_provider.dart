@@ -17,11 +17,18 @@ const getAddressByUserGraphQL = """
 """;
 
 const getAddressByIDGrpahql = """
-  query {
+  query 
     getAddressByID(\$addressId: Float!) {
+      getAddressByID(addressId: \$addressId) {
       addressId,
+      city,
+      streetName,
+      streetNumber,
+      floorNumber,
+      apartmentNumber,
+      }
     }
-  }
+  
 """;
 
 const createAddressGraphQL = """
@@ -80,6 +87,7 @@ class AddressProvider extends ChangeNotifier {
     }
     final dbAddress = result.data?['getAddressByID'];
     final address = Address.fromJson(dbAddress);
+    notifyListeners();
     return address;
   }
 

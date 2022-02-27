@@ -27,10 +27,10 @@ class _CartItemWidgetState extends State<CartItemWidget> {
   int? cartId;
 
   getCartId() async {
-    final Id =
+    final id =
         await Provider.of<CartProvider>(context, listen: false).getCartId();
     setState(() {
-      cartId = Id;
+      cartId = id;
     });
     return cartId;
   }

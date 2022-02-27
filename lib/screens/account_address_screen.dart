@@ -72,12 +72,13 @@ class _AccountAddressScreenState extends State<AccountAddressScreen> {
                 fontSize: 16,
               ),
             ),
+            child: Text('Add A New Address'),
             onPressed: () {
               Navigator.of(context)
                   .pushReplacementNamed(AddAddressScreen.routeName);
             },
-            child: Text('Add A New Address'),
           ),
+          SizedBox(height: 35),
         ],
       ),
     );
