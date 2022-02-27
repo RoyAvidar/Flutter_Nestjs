@@ -96,15 +96,13 @@ class OrdersProvider with ChangeNotifier {
   }
 
   //add all the content of the cart into the order.
-  void addOrder(
-    int cartId,
-  ) async {
+  void addOrder(int cartId, int addressId) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(createOrderGraphql),
         variables: <String, dynamic>{
           "createOrderData": {
             "cartId": cartId,
-            // "addressId": addressId,
+            "addressId": addressId,
           }
         });
 

@@ -51,17 +51,17 @@ class _CartScreenState extends State<CartScreen> {
     return result;
   }
 
-  submit() async {
-    final cartId =
-        await Provider.of<CartProvider>(context, listen: false).getCartId();
-    Provider.of<OrdersProvider>(context, listen: false).addOrder(cartId);
-    final isClean = await this.cleanCart(cartId);
-    if (isClean) {
-      Navigator.of(context).pop();
-    } else {
-      throw new Error();
-    }
-  }
+  // submit() async {
+  //   final cartId =
+  //       await Provider.of<CartProvider>(context, listen: false).getCartId();
+  //   Provider.of<OrdersProvider>(context, listen: false).addOrder(cartId);
+  //   final isClean = await this.cleanCart(cartId);
+  //   if (isClean) {
+  //     Navigator.of(context).pop();
+  //   } else {
+  //     throw new Error();
+  //   }
+  // }
 
   @override
   void initState() {
