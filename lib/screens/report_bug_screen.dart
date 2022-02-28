@@ -73,6 +73,9 @@ class _ReportBugScreenState extends State<ReportBugScreen> {
               Row(
                 children: [
                   TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: TextStyle(fontSize: 16),
+                    ),
                     onPressed: () {
                       setState(() {
                         bugReportController.text = "";
@@ -80,40 +83,40 @@ class _ReportBugScreenState extends State<ReportBugScreen> {
                     },
                     child: Text("clear"),
                   ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: TextStyle(fontSize: 16),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        bugReportController.text.isEmpty
+                            ? _validate = true
+                            : _validate = false;
+                      });
+                      if (!_validate) {
+                        _sendBugReport(bugReportController.text);
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Thank you for your report!',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: Text("Send"),
+                  ),
                 ],
               ),
-              SizedBox(height: 50),
-              TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: TextStyle(fontSize: 16),
-                ),
-                onPressed: () {
-                  setState(() {
-                    bugReportController.text.isEmpty
-                        ? _validate = true
-                        : _validate = false;
-                  });
-                  if (!_validate) {
-                    _sendBugReport(bugReportController.text);
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Thank you for your report!',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: Text("Send"),
-              ),
+              SizedBox(height: 25),
             ],
           ),
         ),

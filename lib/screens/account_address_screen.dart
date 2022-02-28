@@ -42,15 +42,17 @@ class _AccountAddressScreenState extends State<AccountAddressScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           addresses.isNotEmpty
-              ? Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.all(12),
-                    itemCount: addresses.length,
-                    itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                      create: (c) => addresses[i],
-                      // child: AddressItem(arrivedFromSettings: true),
-                      child: AddressItem(
-                        arrivedFromSettings: true,
+              ? Container(
+                  height: 250,
+                  child: Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(12),
+                      itemCount: addresses.length,
+                      itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                        create: (c) => addresses[i],
+                        child: AddressItem(
+                          arrivedFromSettings: true,
+                        ),
                       ),
                     ),
                   ),

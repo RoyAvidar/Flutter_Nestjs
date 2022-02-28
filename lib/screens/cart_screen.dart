@@ -3,6 +3,7 @@ import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/models/cart.dart';
 import 'package:flutter_main/providers/orders.dart';
 import 'package:flutter_main/screens/address_screen.dart';
+import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:flutter_main/widgets/cart_item.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -81,70 +82,87 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                // listView of cartItem's ,
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: cart!.products!.length,
-                    itemBuilder: (ctx, i) => CartItemWidget(
-                      DateTime.now().toString(),
-                      cart!.products![i].id!,
-                      cart!.products![i].price!,
-                      cart!.products![i].quantity!,
-                      cart!.products![i].title!,
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: EdgeInsets.all(15),
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          : cart!.products!.isEmpty
+              ? Center(
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    child: Column(
                       children: [
-                        Text(
-                          'Total',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        Chip(
-                          label: Text(
-                            // '\$${cart.totalAmount.toStringAsFixed(2)}',
-                            "${cart!.totalPrice}",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                            ),
+                        Text("No items in cart"),
+                        Container(
+                          child: TextButton(
+                            child: Text("Back to main screen"),
+                            onPressed: () {
+                              Navigator.of(context).pushReplacementNamed(
+                                  OverviewScreen.routeName);
+                            },
                           ),
                         ),
                       ],
                     ),
                   ),
+                )
+              : Column(
+                  children: [
+                    // listView of cartItem's ,
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: cart!.products!.length,
+                        itemBuilder: (ctx, i) => CartItemWidget(
+                          DateTime.now().toString(),
+                          cart!.products![i].id!,
+                          cart!.products![i].price!,
+                          cart!.products![i].quantity!,
+                          cart!.products![i].title!,
+                        ),
+                      ),
+                    ),
+                    Card(
+                      margin: EdgeInsets.all(15),
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                            Chip(
+                              label: Text(
+                                // '\$${cart.totalAmount.toStringAsFixed(2)}',
+                                "${cart!.totalPrice}",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // submit();
+                        Navigator.of(context)
+                            .pushNamed(AddressScreen.routeName);
+                      },
+                      style: buttonStyle,
+                      child: Text('Order Now'),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        cleanCart(cart!.cartId!);
+                      },
+                      style: buttonStyle,
+                      child: Text('Clear Cart'),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
-                  onPressed: cart!.products!.isNotEmpty
-                      ? () {
-                          // submit();
-                          Navigator.of(context)
-                              .pushNamed(AddressScreen.routeName);
-                        }
-                      : null,
-                  style: buttonStyle,
-                  child: Text('Order Now'),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                ElevatedButton(
-                  onPressed: cart!.products!.isNotEmpty
-                      ? () {
-                          cleanCart(cart!.cartId!);
-                        }
-                      : null,
-                  style: buttonStyle,
-                  child: Text('Clear Cart'),
-                ),
-              ],
-            ),
     );
   }
 }

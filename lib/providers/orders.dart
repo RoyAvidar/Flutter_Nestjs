@@ -37,6 +37,7 @@ const userOrdersGraphql = """
     createdAt,
     orderPrice,
     isReady,
+    address,
     productOrder {
       quantity,
       product {
