@@ -29,7 +29,7 @@ class AdminProductItem extends StatelessWidget {
                     arguments: product.id);
               },
               icon: Icon(Icons.edit),
-              color: Theme.of(context).primaryColor,
+              color: Colors.lightBlue[300],
             ),
             IconButton(
               onPressed: () {

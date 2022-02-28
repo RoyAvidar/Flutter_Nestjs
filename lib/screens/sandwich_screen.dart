@@ -33,21 +33,29 @@ class _SandwichScreenState extends State<SandwichScreen> {
   @override
   Widget build(BuildContext context) {
     //maybe change to ListView.Builder n the produtId to listTile// to make a new function in provider.
-    return GridView.builder(
-      padding: const EdgeInsets.all(25),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-      ),
-      itemCount: products.length,
-      itemBuilder: (ctx, i) => ChangeNotifierProvider(
-        // will return a single product as it stored in the products_provider class.
-        create: (c) => products[i],
-        child: products[i].categoryId == 1 ? ProductItem() : SizedBox(),
-        // child: ProductItem(),
-      ),
-    );
+    // return GridView.builder(
+    //   padding: const EdgeInsets.all(25),
+    //   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+    //     maxCrossAxisExtent: 200,
+    //     childAspectRatio: 3 / 2,
+    //     crossAxisSpacing: 20,
+    //     mainAxisSpacing: 20,
+    //   ),
+    //   itemCount: products.length,
+    //   itemBuilder: (ctx, i) => ChangeNotifierProvider(
+    //     // will return a single product as it stored in the products_provider class.
+    //     create: (c) => products[i],
+    //     child: products[i].categoryId == 1 ? ProductItem() : SizedBox(),
+    //   ),
+    // );
+    // return ListView.builder(
+    //   padding: const EdgeInsets.all(15),
+    //   itemCount: products.length,
+    //   itemBuilder: (ctx, i) => ChangeNotifierProvider(
+    //     create: (c) => products[i],
+    //     child: products[i].categoryId == 1 ? ProductItem() : SizedBox(),
+    //   ),
+    // );
+    return Container();
   }
 }

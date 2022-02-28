@@ -32,19 +32,12 @@ class _SaladScreenState extends State<SaladScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(25),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-      ),
+    return ListView.builder(
+      padding: const EdgeInsets.all(15),
       itemCount: products.length,
       itemBuilder: (ctx, i) => ChangeNotifierProvider(
-        // will return a single product as it stored in the products_provider class.
         create: (c) => products[i],
-        child: products[i].categoryId == 2 ? ProductItem() : Container(),
+        child: products[i].categoryId == 2 ? ProductItem() : SizedBox(),
       ),
     );
   }

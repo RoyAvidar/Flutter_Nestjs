@@ -28,6 +28,7 @@ class _OrderItemState extends State<OrderItem> {
         CheckboxListTile(
           title: Text(
             DateFormat('dd/MM/yyyy hh:mm').format(order.dateTime!),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
           secondary: IconButton(
             icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
@@ -70,19 +71,11 @@ class _OrderItemState extends State<OrderItem> {
                         children: [
                           Text(
                             "Name:  ${order.products![i].title!}",
-                            style: TextStyle(
-                              fontSize: 14,
-                              // color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.values[4],
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '${order.products![i].quantity}x \$${order.products![i].price}',
-                            style: TextStyle(
-                              fontSize: 14,
-                              // color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.values[4],
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -103,21 +96,12 @@ class _OrderItemState extends State<OrderItem> {
               SizedBox(height: 10),
               Text(
                 order.address!,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.values[4],
-                ),
+                style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(height: 15),
               Text(
                 "Total Amount: \$" + order.totalAmount.toString(),
-                style: TextStyle(
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.values[3],
-                ),
+                style: Theme.of(context).textTheme.bodyText2,
               ),
             ],
           ),

@@ -94,10 +94,6 @@ class _AppDrawerState extends State<AppDrawer> {
               ? ListTile(
                   title: Text('Admin'),
                   leading: Icon(Icons.edit),
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(AdminProductsScreen.routeName);
-                  },
                   trailing: IconButton(
                     icon:
                         Icon(_expanded ? Icons.expand_less : Icons.expand_more),
@@ -114,6 +110,16 @@ class _AppDrawerState extends State<AppDrawer> {
               padding: EdgeInsets.symmetric(horizontal: 4, vertical: 14),
               child: Column(
                 children: [
+                  ListTile(
+                    title: Text("Admin Products"),
+                    leading: Icon(
+                      Icons.pin_rounded,
+                    ),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(AdminProductsScreen.routeName);
+                    },
+                  ),
                   ListTile(
                     title: Text("Admin Orders"),
                     leading: Icon(
