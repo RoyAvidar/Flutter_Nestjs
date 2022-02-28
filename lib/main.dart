@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_main/providers/address_provider.dart';
 import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/providers/category_provider.dart';
@@ -73,8 +74,46 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: AdaptiveTheme(
-        light: ThemeData.light(),
-        dark: ThemeData.dark(),
+        light: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: Colors.red,
+          appBarTheme: AppBarTheme(backgroundColor: Colors.amber[700]),
+          textTheme: const TextTheme(
+            headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
+            headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+            bodyText2: TextStyle(
+              fontSize: 14.0,
+              fontFamily: 'Hind',
+              fontStyle: FontStyle.italic,
+            ),
+            bodyText1: TextStyle(
+              fontSize: 14.0,
+              fontFamily: 'Hind',
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ),
+        dark: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: Colors.lightBlue[900],
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.blueGrey,
+          ),
+          textTheme: const TextTheme(
+            headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
+            headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+            bodyText2: TextStyle(
+              fontSize: 14.0,
+              fontFamily: 'Hind',
+              fontStyle: FontStyle.italic,
+            ),
+            bodyText1: TextStyle(
+              fontSize: 14.0,
+              fontFamily: 'Hind',
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ),
         initial: AdaptiveThemeMode.system,
         builder: (light, dark) => MaterialApp(
           theme: light,

@@ -47,7 +47,15 @@ class _OrderItemState extends State<OrderItem> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Cart Info: "),
+              Text(
+                "Cart Info: ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
+              ),
               SizedBox(height: 15),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -63,17 +71,17 @@ class _OrderItemState extends State<OrderItem> {
                           Text(
                             "Name:  ${order.products![i].title!}",
                             style: TextStyle(
-                              fontSize: 15,
-                              color: Theme.of(context).accentColor,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              // color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.values[4],
                             ),
                           ),
                           Text(
                             '${order.products![i].quantity}x \$${order.products![i].price}',
                             style: TextStyle(
-                              fontSize: 15,
-                              color: Theme.of(context).accentColor,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              // color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.values[4],
                             ),
                           ),
                         ],
@@ -83,18 +91,33 @@ class _OrderItemState extends State<OrderItem> {
                   ),
                 ),
               ),
-              Text("Address Info: "),
-              SizedBox(height: 15),
               Text(
-                order.address!,
+                "Address Info: ",
                 style: TextStyle(
                   fontSize: 15,
                   fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                order.address!,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.values[4],
                 ),
               ),
               SizedBox(height: 15),
               Text(
                 "Total Amount: \$" + order.totalAmount.toString(),
+                style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
               ),
             ],
           ),

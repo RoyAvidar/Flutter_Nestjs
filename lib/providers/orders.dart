@@ -12,6 +12,7 @@ const ordersGraphql = """
     createdAt,
     orderPrice,
     isReady,
+    address,
     user {
       userId,
       userName,

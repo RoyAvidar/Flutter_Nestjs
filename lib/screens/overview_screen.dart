@@ -82,8 +82,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     indicatorWeight: 2.5,
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(2), // Creates border
-                      color: Theme.of(context).accentColor,
+                      borderRadius: BorderRadius.circular(7), // Creates border
+                      color: Theme.of(context).primaryColor,
                     ),
                     tabs: tabs,
                   ),
@@ -94,11 +94,12 @@ class _OverviewScreenState extends State<OverviewScreen> {
                         builder: (context, snapshot) {
                           return Badge(
                             child: IconButton(
-                                icon: Icon(Icons.shopping_bag),
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamed(CartScreen.routeName);
-                                }),
+                              icon: Icon(Icons.shopping_bag),
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(CartScreen.routeName);
+                              },
+                            ),
                             value: snapshot.data.toString(),
                             color: Colors.amber,
                           );

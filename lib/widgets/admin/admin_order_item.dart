@@ -25,6 +25,7 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
     );
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CheckboxListTile(
           title: Text(
@@ -40,54 +41,115 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
           ),
           controlAffinity: ListTileControlAffinity.leading,
           value: order.isReady! ? true : isChecked,
-          onChanged: (value) {
-            setState(() {
-              isChecked = value!;
-              Provider.of<OrdersProvider>(context, listen: false)
-                  .toggleIsReady(int.parse(order.id!));
-              print(order.isReady);
-            });
-          },
+          onChanged: (value) {},
           activeColor: Colors.green,
           checkColor: Colors.white,
         ),
         if (_expanded)
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            height: min(order.products!.length * 20 + 50, 100),
-            // can be a ListView.builder
-            child: ListView.builder(
-              itemCount: order.products!.length,
-              itemBuilder: (ctx, i) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Cart Info: ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                height: min(order.products!.length * 20 + 50, 100),
+                child: ListView.builder(
+                  itemCount: order.products!.length,
+                  itemBuilder: (ctx, i) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Name:  ${order.products![i].title!}",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Theme.of(context).accentColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Name:  ${order.products![i].title!}",
+                            style: TextStyle(
+                              fontSize: 14,
+                              // color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.values[4],
+                            ),
+                          ),
+                          Text(
+                            '${order.products![i].quantity}x \$${order.products![i].price}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              // color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.values[4],
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '${order.products![i].quantity}x \$${order.products![i].price}',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Theme.of(context).accentColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      SizedBox(height: 5),
                     ],
                   ),
-                  SizedBox(height: 5),
-                ],
+                ),
               ),
-            ),
+              Text(
+                "Address Info: ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                order.address!,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.values[4],
+                ),
+              ),
+              SizedBox(height: 15),
+              Text(
+                "User Info: ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
+              ),
+              SizedBox(height: 5),
+              Text(
+                "Name:  " + order.user!.userName!,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.values[4],
+                ),
+              ),
+              Text(
+                "Phone:  " + order.user!.userPhone!,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.values[4],
+                ),
+              ),
+              SizedBox(height: 15),
+              Text(
+                "Total Amount: \$" + order.totalAmount.toString(),
+                style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
+              ),
+            ],
           ),
-        Text("total amount: \$" + order.totalAmount.toString()),
       ],
     );
   }
