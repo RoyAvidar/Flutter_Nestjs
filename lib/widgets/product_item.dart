@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
 import '../models/product.dart';
-import '../screens/single_product_screen.dart';
+// import '../screens/single_product_screen.dart';
 
 class ProductItem extends StatefulWidget {
   @override
@@ -36,40 +36,65 @@ class _ProductItemState extends State<ProductItem> {
       listen: false,
     );
 
+    // return ListTile(
+    //   leading: CircleAvatar(
+    //     child: Padding(
+    //       padding: EdgeInsets.all(5),
+    //       child: FittedBox(
+    //         child: Image.network(
+    //           "http://10.0.2.2:8000/" + product.imageUrl.toString(),
+    //           fit: BoxFit.cover,
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    //   title: Text(product.name!),
+    //   subtitle: Text(product.description!),
+    //   // dense: true,
+    //   // enabled: false,
+    //   // selected: true,
+    //   // onTap: () {},
+    //   trailing: Row(
+    //     mainAxisAlignment: MainAxisAlignment.end,
+    //     children: [
+    //       IconButton(
+    //         onPressed: () {
+    //           Provider.of<CartProvider>(context, listen: false)
+    //               .addItem(int.parse(product.id!), cartId);
+    //           ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    //           ScaffoldMessenger.of(context).showSnackBar(
+    //             SnackBar(
+    //               content: Text(
+    //                 'Item Added To The Cart!',
+    //                 textAlign: TextAlign.left,
+    //               ),
+    //               duration: Duration(seconds: 1),
+    //               action: SnackBarAction(
+    //                 label: 'UNDO',
+    //                 onPressed: () {
+    //                   Provider.of<CartProvider>(context, listen: false)
+    //                       .removeItem(int.parse(product.id!), cartId);
+    //                 },
+    //               ),
+    //             ),
+    //           );
+    //         },
+    //         icon: Icon(Icons.add),
+    //       ),
+    //     ],
+    //   ),
+    // );
     return ListTile(
-      leading: Image.network(
-        "http://10.0.2.2:8000/" + product.imageUrl.toString(),
-        fit: BoxFit.cover,
-      ),
-      trailing: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          IconButton(
-            onPressed: () {
-              Provider.of<CartProvider>(context, listen: false)
-                  .addItem(int.parse(product.id!), cartId);
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Item Added To The Cart!',
-                    textAlign: TextAlign.left,
-                  ),
-                  duration: Duration(seconds: 1),
-                  action: SnackBarAction(
-                    label: 'UNDO',
-                    onPressed: () {
-                      Provider.of<CartProvider>(context, listen: false)
-                          .removeItem(int.parse(product.id!), cartId);
-                    },
-                  ),
-                ),
-              );
-            },
-            icon: Icon(Icons.add),
+      leading: CircleAvatar(
+        child: Padding(
+          padding: EdgeInsets.all(5),
+          child: Image.network(
+            "http://10.0.2.2:8000/" + product.imageUrl.toString(),
+            fit: BoxFit.cover,
           ),
-        ],
+        ),
       ),
+      title: Text(product.name!),
     );
   }
 }

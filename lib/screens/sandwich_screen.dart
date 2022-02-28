@@ -48,14 +48,13 @@ class _SandwichScreenState extends State<SandwichScreen> {
     //     child: products[i].categoryId == 1 ? ProductItem() : SizedBox(),
     //   ),
     // );
-    // return ListView.builder(
-    //   padding: const EdgeInsets.all(15),
-    //   itemCount: products.length,
-    //   itemBuilder: (ctx, i) => ChangeNotifierProvider(
-    //     create: (c) => products[i],
-    //     child: products[i].categoryId == 1 ? ProductItem() : SizedBox(),
-    //   ),
-    // );
-    return Container();
+    return ListView.builder(
+      padding: const EdgeInsets.all(15),
+      itemCount: products.length,
+      itemBuilder: (ctx, i) => ChangeNotifierProvider(
+        create: (c) => products[i],
+        child: products[i].categoryId == 1 ? ProductItem() : SizedBox(),
+      ),
+    );
   }
 }
