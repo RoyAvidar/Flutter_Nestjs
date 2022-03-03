@@ -80,9 +80,9 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
             Hero(
               tag: 'dash',
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(35),
+                borderRadius: BorderRadius.circular(25),
                 child: Container(
-                  height: 250,
+                  height: 200,
                   width: double.infinity,
                   child: Image.network(
                     "http://10.0.2.2:8000/" + loadedProduct.imageUrl!,
@@ -113,7 +113,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 35),
+            SizedBox(height: 25),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

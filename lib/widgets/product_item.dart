@@ -39,11 +39,11 @@ class _ProductItemState extends State<ProductItem> {
 
     return ListTile(
       leading: Hero(
-        tag: 'hero',
+        tag: 'dash',
         child: Stack(
           children: [
             Container(
-              width: 65,
+              width: 50,
               height: 100,
               decoration: BoxDecoration(
                 border: Border.all(
