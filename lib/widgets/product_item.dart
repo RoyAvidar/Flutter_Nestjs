@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/screens/single_product_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
@@ -36,65 +37,121 @@ class _ProductItemState extends State<ProductItem> {
       listen: false,
     );
 
-    // return ListTile(
-    //   leading: CircleAvatar(
-    //     child: Padding(
-    //       padding: EdgeInsets.all(5),
-    //       child: FittedBox(
-    //         child: Image.network(
-    //           "http://10.0.2.2:8000/" + product.imageUrl.toString(),
-    //           fit: BoxFit.cover,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    //   title: Text(product.name!),
-    //   subtitle: Text(product.description!),
-    //   // dense: true,
-    //   // enabled: false,
-    //   // selected: true,
-    //   // onTap: () {},
-    //   trailing: Row(
-    //     mainAxisAlignment: MainAxisAlignment.end,
-    //     children: [
-    //       IconButton(
-    //         onPressed: () {
-    //           Provider.of<CartProvider>(context, listen: false)
-    //               .addItem(int.parse(product.id!), cartId);
-    //           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    //           ScaffoldMessenger.of(context).showSnackBar(
-    //             SnackBar(
-    //               content: Text(
-    //                 'Item Added To The Cart!',
-    //                 textAlign: TextAlign.left,
-    //               ),
-    //               duration: Duration(seconds: 1),
-    //               action: SnackBarAction(
-    //                 label: 'UNDO',
-    //                 onPressed: () {
-    //                   Provider.of<CartProvider>(context, listen: false)
-    //                       .removeItem(int.parse(product.id!), cartId);
-    //                 },
-    //               ),
-    //             ),
-    //           );
-    //         },
-    //         icon: Icon(Icons.add),
-    //       ),
-    //     ],
-    //   ),
-    // );
     return ListTile(
-      leading: CircleAvatar(
-        child: Padding(
-          padding: EdgeInsets.all(5),
-          child: Image.network(
-            "http://10.0.2.2:8000/" + product.imageUrl.toString(),
-            fit: BoxFit.cover,
-          ),
+      leading: Hero(
+        tag: 'hero',
+        child: Stack(
+          children: [
+            Container(
+              width: 65,
+              height: 100,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 3,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    color: Colors.black.withOpacity(0.5),
+                    offset: Offset(0, 15),
+                  )
+                ],
+                shape: BoxShape.circle,
+                image: product.imageUrl == null ||
+                        product.imageUrl.toString().isEmpty
+                    ? DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg",
+                        ),
+                      )
+                    : DecorationImage(
+                        image: NetworkImage(
+                          "http://10.0.2.2:8000/" + product.imageUrl.toString(),
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+              ),
+            ),
+          ],
         ),
       ),
+      dense: true,
       title: Text(product.name!),
+      subtitle: Text(product.price.toString()),
+      trailing: Container(
+        width: 100,
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                Provider.of<CartProvider>(context, listen: false)
+                    .addItem(int.parse(product.id!), cartId);
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Item Added To The Cart!',
+                      textAlign: TextAlign.left,
+                    ),
+                    duration: Duration(seconds: 1),
+                    action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        Provider.of<CartProvider>(context, listen: false)
+                            .removeItem(int.parse(product.id!), cartId);
+                      },
+                    ),
+                  ),
+                );
+              },
+              icon: Icon(Icons.plus_one),
+            ),
+            IconButton(
+              onPressed: () async {
+                final removeItemFuture =
+                    await Provider.of<CartProvider>(context, listen: false)
+                        .removeItem(int.parse(product.id!), cartId);
+                removeItemFuture
+                    ?
+                    //  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Item Removed From The Cart!',
+                            textAlign: TextAlign.left,
+                          ),
+                          duration: Duration(seconds: 1),
+                          action: SnackBarAction(
+                            label: 'UNDO',
+                            onPressed: () {
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .addItem(int.parse(product.id!), cartId);
+                            },
+                          ),
+                        ),
+                      )
+                    : ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'No ' + product.name! + ' was found in cart',
+                            textAlign: TextAlign.left,
+                          ),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+              },
+              icon: Icon(Icons.exposure_minus_1),
+            )
+          ],
+        ),
+      ),
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(SingleProductScreen.routeName, arguments: product.id);
+      },
     );
   }
 }

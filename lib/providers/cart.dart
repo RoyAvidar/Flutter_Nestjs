@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/models/cart.dart';
@@ -176,6 +177,7 @@ class CartProvider with ChangeNotifier {
     QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
+      return false;
     }
     notifyListeners();
     return true;

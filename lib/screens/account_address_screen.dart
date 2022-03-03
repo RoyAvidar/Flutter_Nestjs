@@ -35,12 +35,16 @@ class _AccountAddressScreenState extends State<AccountAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("My Addresses"),
-      ),
+      appBar: AppBar(),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          Container(
+            child: Text(
+              "My Addresses",
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+          ),
           addresses.isNotEmpty
               ? Container(
                   height: 250,
