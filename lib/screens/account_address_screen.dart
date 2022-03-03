@@ -46,17 +46,14 @@ class _AccountAddressScreenState extends State<AccountAddressScreen> {
             ),
           ),
           addresses.isNotEmpty
-              ? Container(
-                  height: 250,
-                  child: Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.all(12),
-                      itemCount: addresses.length,
-                      itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                        create: (c) => addresses[i],
-                        child: AddressItem(
-                          arrivedFromSettings: true,
-                        ),
+              ? Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.all(12),
+                    itemCount: addresses.length,
+                    itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                      create: (c) => addresses[i],
+                      child: AddressItem(
+                        arrivedFromSettings: true,
                       ),
                     ),
                   ),
@@ -71,7 +68,6 @@ class _AccountAddressScreenState extends State<AccountAddressScreen> {
                     ),
                   ),
                 ),
-          SizedBox(height: 35),
           TextButton(
             style: TextButton.styleFrom(
               textStyle: const TextStyle(

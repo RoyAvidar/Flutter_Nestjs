@@ -49,6 +49,23 @@ class _OrderItemState extends State<OrderItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
+                "Address Info: ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                order.address!,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
                 "Cart Info: ",
                 style: TextStyle(
                   fontSize: 15,
@@ -57,10 +74,10 @@ class _OrderItemState extends State<OrderItem> {
                   fontWeight: FontWeight.values[3],
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                height: min(order.products!.length * 20 + 50, 100),
+                height: min(order.products!.length * 20 + 20, 100),
                 child: ListView.builder(
                   itemCount: order.products!.length,
                   itemBuilder: (ctx, i) => Column(
@@ -84,21 +101,6 @@ class _OrderItemState extends State<OrderItem> {
                   ),
                 ),
               ),
-              Text(
-                "Address Info: ",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.values[3],
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                order.address!,
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-              SizedBox(height: 15),
               Text(
                 "Total Amount: \$" + order.totalAmount.toString(),
                 style: Theme.of(context).textTheme.bodyText2,

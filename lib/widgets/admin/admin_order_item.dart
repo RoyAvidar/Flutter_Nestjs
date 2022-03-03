@@ -56,6 +56,25 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
+                "Address Info: ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.values[3],
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                order.address!,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.values[4],
+                ),
+              ),
+              SizedBox(height: 15),
+              Text(
                 "Cart Info: ",
                 style: TextStyle(
                   fontSize: 15,
@@ -64,10 +83,10 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
                   fontWeight: FontWeight.values[3],
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                height: min(order.products!.length * 20 + 50, 100),
+                height: min(order.products!.length * 20 + 20, 100),
                 child: ListView.builder(
                   itemCount: order.products!.length,
                   itemBuilder: (ctx, i) => Column(
@@ -99,25 +118,6 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
                   ),
                 ),
               ),
-              Text(
-                "Address Info: ",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.values[3],
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                order.address!,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.values[4],
-                ),
-              ),
-              SizedBox(height: 15),
               Text(
                 "User Info: ",
                 style: TextStyle(
