@@ -59,14 +59,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.add,
-                color: Theme.of(context).primaryColor,
-              ),
               TextButton(
                 style: TextButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 16),
-                  backgroundColor: Colors.lightGreen[100],
+                  textStyle: const TextStyle(fontSize: 14),
+                  backgroundColor: Theme.of(context).primaryColor,
+                  primary: Colors.black,
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamed(CreateReviewScreen.routeName);

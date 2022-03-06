@@ -62,7 +62,7 @@ class _ReviewItemState extends State<ReviewItem> {
                   },
                   icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
                   color:
-                      _expanded ? Colors.red : Theme.of(context).primaryColor,
+                      _expanded ? Colors.black : Theme.of(context).primaryColor,
                 ),
               ],
             ),

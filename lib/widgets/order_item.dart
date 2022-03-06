@@ -37,6 +37,7 @@ class _OrderItemState extends State<OrderItem> {
                 _expanded = !_expanded;
               });
             },
+            color: _expanded ? Colors.black : Theme.of(context).primaryColor,
           ),
           controlAffinity: ListTileControlAffinity.leading,
           value: order.isReady! ? true : isChecked,
@@ -101,10 +102,18 @@ class _OrderItemState extends State<OrderItem> {
                   ),
                 ),
               ),
-              Text(
-                "Total Amount: \$" + order.totalAmount.toString(),
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
+              Row(
+                children: [
+                  Text(
+                    "Total Amount: ",
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                  Text(
+                    " \$" + order.totalAmount.toString(),
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ],
+              )
             ],
           ),
       ],

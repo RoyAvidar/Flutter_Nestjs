@@ -63,7 +63,7 @@ class _AppDrawerState extends State<AppDrawer> {
             title: Text('Hello, ${userName}'),
             automaticallyImplyLeading: false,
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 2),
           ListTile(
             title: Text('Shop'),
             leading: Icon(Icons.shop),
@@ -71,7 +71,7 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.of(context).pushReplacementNamed('/overView');
             },
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 2),
           ListTile(
             title: Text('Orders'),
             leading: Icon(Icons.payment),
@@ -80,7 +80,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   .pushReplacementNamed(OrdersScreen.routeName);
             },
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 2),
           ListTile(
             title: Text('Reviews'),
             leading: Icon(Icons.reviews_outlined),
@@ -89,7 +89,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   .pushReplacementNamed(ReviewsScreen.routeName);
             },
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 2),
           isAdmin
               ? ListTile(
                   title: Text('Admin'),
@@ -162,7 +162,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   .pushReplacementNamed(SettingsScreen.routeName);
             },
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 2),
           ListTile(
             title: Text('Logout'),
             leading: Icon(Icons.logout),

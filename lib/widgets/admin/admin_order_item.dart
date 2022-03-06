@@ -38,6 +38,7 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
                 _expanded = !_expanded;
               });
             },
+            color: _expanded ? Colors.black : Theme.of(context).primaryColor,
           ),
           controlAffinity: ListTileControlAffinity.leading,
           value: order.isReady! ? true : isChecked,

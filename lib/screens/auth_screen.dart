@@ -75,16 +75,37 @@ class _AuthScreenState extends State<AuthScreen> {
 
     if (result.hasException) {
       print(result.exception);
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Username or Userpassword is incorrect!',
-            textAlign: TextAlign.left,
-            style: TextStyle(color: Colors.red[400]),
-          ),
-          duration: Duration(seconds: 2),
-        ),
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -40.0,
+                  top: -40.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 65,
+                  child: Text(
+                    'Invalid User Name or User Password, Please Try Again.',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       );
     } else {
       // add the token to the Shared Preferences so we can use it globaly.

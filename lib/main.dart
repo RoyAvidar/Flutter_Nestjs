@@ -96,10 +96,8 @@ class _MyAppState extends State<MyApp> {
         ),
         dark: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: Colors.lightBlue[900],
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.blueGrey,
-          ),
+          primaryColor: Color.fromARGB(255, 194, 216, 248),
+          appBarTheme: AppBarTheme(backgroundColor: Colors.blueGrey),
           textTheme: const TextTheme(
             headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
             headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
@@ -115,6 +113,7 @@ class _MyAppState extends State<MyApp> {
               color: Colors.white,
             ),
           ),
+          // buttonTheme: ButtonThemeData(colorScheme: ColorScheme(primary: Colors.black),),
         ),
         initial: AdaptiveThemeMode.system,
         builder: (light, dark) => MaterialApp(

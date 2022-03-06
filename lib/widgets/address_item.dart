@@ -68,7 +68,7 @@ class _AddressItemState extends State<AddressItem> {
               });
             },
             icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-            color: _expanded ? Colors.lightBlue : Colors.grey,
+            color: _expanded ? Colors.black : Theme.of(context).primaryColor,
           ),
           trailing: Container(
             width: 50,

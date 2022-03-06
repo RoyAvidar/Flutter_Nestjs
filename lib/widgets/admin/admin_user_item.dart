@@ -27,9 +27,10 @@ class _AdminUserItemState extends State<AdminUserItem> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black54,
+                color: Theme.of(context).primaryColor,
               ),
             ),
+            dense: true,
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () {
@@ -37,14 +38,15 @@ class _AdminUserItemState extends State<AdminUserItem> {
                   _expanded = !_expanded;
                 });
               },
+              color: _expanded ? Colors.black : Theme.of(context).primaryColor,
             ),
           ),
           if (_expanded)
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              height: min(20 + 50, 100),
+              height: min(30 + 60, 100),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -64,7 +66,7 @@ class _AdminUserItemState extends State<AdminUserItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text("Admin Status: "),
-                      user.isAdmin! ? Text("True") : Text("False")
+                      user.isAdmin! ? Text("True") : Text("False"),
                     ],
                   )
                 ],
