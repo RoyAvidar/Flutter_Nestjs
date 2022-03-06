@@ -78,7 +78,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Hero(
-              tag: 'dash',
+              tag: 'dash' + loadedProduct.id.toString(),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
                 child: Container(

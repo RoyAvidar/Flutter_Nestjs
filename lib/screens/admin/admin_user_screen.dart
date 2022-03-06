@@ -45,11 +45,7 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
         children: [
           Text(
             "All Users",
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
-            ),
+            style: Theme.of(context).textTheme.bodyText1,
           ),
           Expanded(
             child: ListView.builder(

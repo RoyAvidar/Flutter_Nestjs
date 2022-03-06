@@ -39,7 +39,7 @@ class _ProductItemState extends State<ProductItem> {
 
     return ListTile(
       leading: Hero(
-        tag: 'dash',
+        tag: 'dash' + product.id.toString(),
         child: Stack(
           children: [
             Container(

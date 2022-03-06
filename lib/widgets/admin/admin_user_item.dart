@@ -66,7 +66,7 @@ class _AdminUserItemState extends State<AdminUserItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text("Admin Status: "),
-                      user.isAdmin! ? Text("True") : Text("False"),
+                      Text(user.isAdmin!.toString()),
                     ],
                   )
                 ],
