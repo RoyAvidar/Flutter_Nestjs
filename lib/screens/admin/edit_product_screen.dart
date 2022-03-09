@@ -226,7 +226,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Pick an Image"),
+                  Text(
+                    "Pick an Image:",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                   IconButton(
                     color: Colors.greenAccent[300],
                     onPressed: _takePicture,

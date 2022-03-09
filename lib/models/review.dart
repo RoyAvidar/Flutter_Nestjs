@@ -27,6 +27,7 @@ class Review with ChangeNotifier {
       : id = json['reviewId'],
         content = json['reviewContent'],
         userWriter = User.fromJson(json['user']),
+        // userWriter = json['userId'],
         isLike = json['isLike'],
         isDislike = json['isDislike'];
 

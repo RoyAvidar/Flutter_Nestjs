@@ -163,7 +163,7 @@ class ReviewsProvider with ChangeNotifier {
       print(result.exception);
     }
     final review =
-        Review.fromJsonWithoutUserReview(result.data?["updateReviewContent"]);
+        Review.fromJsonWithoutUserReview(result.data?["updateReview"]);
     notifyListeners();
     return review;
   }
