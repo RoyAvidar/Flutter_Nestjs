@@ -15,6 +15,12 @@ const uploadFileGraphQl = """
   }
 """;
 
+const deleteUserProfileImageFileGraphQL = """
+  mutation {
+    deleteUserProfileImageFile
+  }
+""";
+
 class InfoScreen extends StatefulWidget {
   const InfoScreen({Key? key}) : super(key: key);
   static const routeName = '/info';
@@ -59,7 +65,19 @@ class _InfoScreenState extends State<InfoScreen> {
     return isUploaded;
   }
 
-  Future _takePicture() async {
+  Future<bool> _deleteProfilePic() async {
+    MutationOptions queryOptions =
+        MutationOptions(document: gql(deleteUserProfileImageFileGraphQL));
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final didDeleteUserProfileImage =
+        result.data?['deleteUserProfileImageFile'];
+    return didDeleteUserProfileImage;
+  }
+
+  Future<bool> _takePicture() async {
     var picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
     _image = new MultipartFile.fromBytes(
@@ -67,9 +85,10 @@ class _InfoScreenState extends State<InfoScreen> {
       await image!.readAsBytes(),
       filename: image.name,
     );
+    return true;
   }
 
-  Future _getGalleryImage() async {
+  Future<bool> _getGalleryImage() async {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.gallery);
     _image = new MultipartFile.fromBytes(
@@ -77,6 +96,7 @@ class _InfoScreenState extends State<InfoScreen> {
       await image!.readAsBytes(),
       filename: image.name,
     );
+    return true;
   }
 
   @override
@@ -162,10 +182,14 @@ class _InfoScreenState extends State<InfoScreen> {
                         icon: Icon(Icons.camera),
                         color: Colors.white,
                         onPressed: () async {
+                          if (_image != null && _image.toString().isNotEmpty) {
+                            _deleteProfilePic();
+                          }
                           await showDialog(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
-                              title: Text("Choose Your Image Through"),
+                              title: Text("Alert"),
+                              content: Text("Choose Your Image Through"),
                               actions: [
                                 TextButton(
                                   onPressed: _takePicture,
@@ -176,9 +200,14 @@ class _InfoScreenState extends State<InfoScreen> {
                                   child: Text("Gallery"),
                                 ),
                               ],
+                              elevation: 24,
+                              backgroundColor: Colors.blueGrey[200],
                             ),
                           );
-                          _uploadFile(_image);
+                          final newImage = await _uploadFile(_image);
+                          if (newImage) {
+                            Navigator.of(context).pop();
+                          }
                         },
                       ),
                     ),
