@@ -15,6 +15,7 @@ query {
 				productId
       	productPrice,
       	productName,
+        imageUrl,
       }
       quantity
     }
@@ -71,17 +72,20 @@ class CartItem {
   final String? title;
   final int? quantity;
   final double? price;
+  final String? imageUrl;
 
   CartItem({
     @required this.id,
     @required this.title,
     @required this.quantity,
     @required this.price,
+    this.imageUrl,
   });
 
   CartItem.fromJson(Map<String, dynamic> json)
       : id = json['product']['productId'].toString(),
         title = json['product']['productName'],
+        imageUrl = json['product']['imageUrl'],
         quantity = json['quantity'],
         price = double.parse(json['product']['productPrice'].toString());
 }

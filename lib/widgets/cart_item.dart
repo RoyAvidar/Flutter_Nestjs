@@ -5,11 +5,13 @@ import 'package:provider/provider.dart';
 import '../providers/cart.dart';
 
 class CartItemWidget extends StatefulWidget {
+  //add an image field and change the CircleAvatar to represent it.
   final String id;
   final String productId;
   final String title;
   final double price;
   final int quantity;
+  final String? imageUrl;
 
   CartItemWidget(
     this.id,
@@ -17,6 +19,7 @@ class CartItemWidget extends StatefulWidget {
     this.price,
     this.quantity,
     this.title,
+    this.imageUrl,
   );
 
   @override
@@ -99,12 +102,36 @@ class _CartItemWidgetState extends State<CartItemWidget> {
               child: Padding(
                 padding: EdgeInsets.all(5),
                 child: FittedBox(
-                  child: Text('\$${widget.price}'),
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 3,
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          color: Colors.black.withOpacity(0.5),
+                          offset: Offset(0, 15),
+                        )
+                      ],
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          "http://10.0.2.2:8000/" + widget.imageUrl.toString(),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
             title: Text('${widget.title}'),
-            subtitle: Text('Total: \$${(widget.price * widget.quantity)}'),
+            subtitle: Text('Price: \$${(widget.price * widget.quantity)}'),
             // trailing: IconButton(
             //   icon: Icon(Icons.add),
             //   onPressed: () {},

@@ -115,6 +115,7 @@ class _CartScreenState extends State<CartScreen> {
                           cart!.products![i].price!,
                           cart!.products![i].quantity!,
                           cart!.products![i].title!,
+                          cart!.products![i].imageUrl,
                         ),
                       ),
                     ),
