@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/models/cart.dart';
 import 'package:flutter_main/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,7 @@ class CartItemWidget extends StatefulWidget {
   final String productId;
   final String title;
   final double price;
-  final int quantity;
+  int quantity;
   final String? imageUrl;
 
   CartItemWidget(
@@ -27,22 +28,24 @@ class CartItemWidget extends StatefulWidget {
 }
 
 class _CartItemWidgetState extends State<CartItemWidget> {
-  int? cartId;
+  Cart? cart;
 
-  getCartId() async {
-    final id =
-        await Provider.of<CartProvider>(context, listen: false).getCartId();
+  Future<Cart?> getCart() async {
+    var isLoading = true;
+    final cartData =
+        await Provider.of<CartProvider>(context, listen: false).getCart();
     setState(() {
-      cartId = id;
+      cart = cartData;
+      isLoading = false;
     });
-    return cartId;
+    return cart;
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    this.getCartId();
+    this.getCart();
   }
 
   @override
@@ -86,7 +89,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
       },
       onDismissed: (direction) {
         Provider.of<CartProvider>(context, listen: false)
-            .removeItem(int.parse(widget.productId), cartId!);
+            .removeItem(int.parse(widget.productId), cart!.cartId!);
         // if (widget.quantity <= 0)
         Navigator.of(context).pushReplacementNamed(CartScreen.routeName);
       },
@@ -99,31 +102,28 @@ class _CartItemWidgetState extends State<CartItemWidget> {
           padding: EdgeInsets.all(8),
           child: ListTile(
             leading: CircleAvatar(
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: FittedBox(
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 3,
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          color: Colors.black.withOpacity(0.5),
-                          offset: Offset(0, 15),
-                        )
-                      ],
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          "http://10.0.2.2:8000/" + widget.imageUrl.toString(),
-                        ),
+              child: FittedBox(
+                child: Container(
+                  width: 300,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 3,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        color: Colors.black.withOpacity(0.5),
+                        offset: Offset(0, 15),
+                      )
+                    ],
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        "http://10.0.2.2:8000/" + widget.imageUrl.toString(),
                       ),
                     ),
                   ),
@@ -132,11 +132,46 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             ),
             title: Text('${widget.title}'),
             subtitle: Text('Price: \$${(widget.price * widget.quantity)}'),
-            // trailing: IconButton(
-            //   icon: Icon(Icons.add),
-            //   onPressed: () {},
-            // ),
-            trailing: Text('x ${widget.quantity}'),
+            trailing: Container(
+              width: 120,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    '${widget.quantity}',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Provider.of<CartProvider>(context, listen: false)
+                          .addItem(int.parse(widget.productId), cart!.cartId!);
+                      setState(() {
+                        widget.quantity = widget.quantity + 1;
+                        cart!.totalPrice =
+                            cart!.totalPrice! + widget.price.toInt();
+                      });
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      if (widget.quantity <= 1) {
+                        return;
+                      }
+                      Provider.of<CartProvider>(context, listen: false)
+                          .removeItem(
+                              int.parse(widget.productId), cart!.cartId!);
+                      setState(() {
+                        widget.quantity = widget.quantity - 1;
+                        cart!.totalPrice =
+                            cart!.totalPrice! - widget.price.toInt();
+                      });
+                    },
+                    icon: Icon(Icons.remove),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

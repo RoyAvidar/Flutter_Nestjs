@@ -128,7 +128,7 @@ class _CartScreenState extends State<CartScreen> {
                           children: [
                             Text(
                               'Total',
-                              style: TextStyle(fontSize: 15),
+                              style: Theme.of(context).textTheme.bodyText1,
                             ),
                             Chip(
                               label: Text(
