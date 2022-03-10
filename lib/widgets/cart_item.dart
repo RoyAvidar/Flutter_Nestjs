@@ -29,9 +29,9 @@ class CartItemWidget extends StatefulWidget {
 
 class _CartItemWidgetState extends State<CartItemWidget> {
   Cart? cart;
+  var isLoading = true;
 
   Future<Cart?> getCart() async {
-    var isLoading = true;
     final cartData =
         await Provider.of<CartProvider>(context, listen: false).getCart();
     setState(() {
@@ -147,9 +147,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           .addItem(int.parse(widget.productId), cart!.cartId!);
                       setState(() {
                         widget.quantity = widget.quantity + 1;
-                        cart!.totalPrice =
-                            cart!.totalPrice! + widget.price.toInt();
                       });
+                      ChangeNotifier();
                     },
                     icon: Icon(Icons.add),
                   ),
@@ -163,9 +162,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                               int.parse(widget.productId), cart!.cartId!);
                       setState(() {
                         widget.quantity = widget.quantity - 1;
-                        cart!.totalPrice =
-                            cart!.totalPrice! - widget.price.toInt();
                       });
+                      ChangeNotifier();
                     },
                     icon: Icon(Icons.remove),
                   ),

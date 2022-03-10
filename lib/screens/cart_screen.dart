@@ -107,17 +107,53 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     // listView of cartItem's ,
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: cart!.products!.length,
-                        itemBuilder: (ctx, i) => CartItemWidget(
-                          DateTime.now().toString(),
-                          cart!.products![i].id!,
-                          cart!.products![i].price!,
-                          cart!.products![i].quantity!,
-                          cart!.products![i].title!,
-                          cart!.products![i].imageUrl,
+                      // child: ChangeNotifierProvider(
+                      //   create: (_) => CartProvider(),
+                      //   child: Consumer<CartProvider>(
+                      //     builder: (co, cartData, ch) => ListView.builder(
+                      //       itemCount: cart!.products!.length,
+                      //       itemBuilder: (ctx, i) {
+                      //         return CartItemWidget(
+                      //           DateTime.now().toString(),
+                      //           cart!.products![i].id!,
+                      //           cart!.products![i].price!,
+                      //           cart!.products![i].quantity!,
+                      //           cart!.products![i].title!,
+                      //           cart!.products![i].imageUrl,
+                      //         );
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
+                      child: ChangeNotifierProvider(
+                        create: (_) => CartProvider(),
+                        child: ListView.builder(
+                          itemCount: cart!.products!.length,
+                          itemBuilder: (ctx, i) {
+                            return CartItemWidget(
+                              DateTime.now().toString(),
+                              cart!.products![i].id!,
+                              cart!.products![i].price!,
+                              cart!.products![i].quantity!,
+                              cart!.products![i].title!,
+                              cart!.products![i].imageUrl,
+                            );
+                          },
                         ),
                       ),
+                      // child: ListView.builder(
+                      //   itemCount: cart!.products!.length,
+                      //   itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                      //     create: (c) => cart!.products![i],
+                      //     child: CartItemWidget(
+                      //         DateTime.now().toString(),
+                      //         cart!.products![i].id!,
+                      //         cart!.products![i].price!,
+                      //         cart!.products![i].quantity!,
+                      //         cart!.products![i].title!,
+                      //         cart!.products![i].imageUrl),
+                      //   ),
+                      // ),
                     ),
                     Card(
                       margin: EdgeInsets.all(15),

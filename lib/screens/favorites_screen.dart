@@ -14,31 +14,44 @@ class FavoriteScreen extends StatefulWidget {
 class _FavoriteScreenState extends State<FavoriteScreen> {
   List<Product> products = [];
 
-  Future<List<Product>> getProds() async {
-    final prods = await Provider.of<UserProvider>(context, listen: false)
-        .getUserProducts();
-    setState(() {
-      products = prods;
-    });
-    return products;
-  }
+  // Future<List<Product>> getProds() async {
+  //   final prods = await Provider.of<UserProvider>(context, listen: false)
+  //       .getUserProducts();
+  //   setState(() {
+  //     products = prods;
+  //   });
+  //   return products;
+  // }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    this.getProds();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   this.getProds();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(15),
-      itemCount: products.length,
-      itemBuilder: (ctx, i) => ChangeNotifierProvider(
-        create: (c) => products[i],
-        child: ProductItem(),
+    // TODO: implement build
+    return Consumer<UserProvider>(
+      builder: (co, userData, ch) => FutureBuilder(
+        future: userData.getUserProducts(),
+        builder: (context, snapshot) {
+          return Text(snapshot.data.toString());
+        },
       ),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return ListView.builder(
+  //     padding: const EdgeInsets.all(15),
+  //     itemCount: products.length,
+  //     itemBuilder: (ctx, i) => ChangeNotifierProvider(
+  //       create: (c) => products[i],
+  //       child: ProductItem(),
+  //     ),
+  //   );
+  // }
 }
