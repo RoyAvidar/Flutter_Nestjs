@@ -12,46 +12,66 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  List<Product> products = [];
-
-  // Future<List<Product>> getProds() async {
-  //   final prods = await Provider.of<UserProvider>(context, listen: false)
-  //       .getUserProducts();
-  //   setState(() {
-  //     products = prods;
-  //   });
-  //   return products;
-  // }
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   this.getProds();
-  // }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Consumer<UserProvider>(
-      builder: (co, userData, ch) => FutureBuilder(
+      builder: (co, userData, ch) => FutureBuilder<List<Product>>(
         future: userData.getUserProducts(),
         builder: (context, snapshot) {
-          return Text(snapshot.data.toString());
+          List<Widget> children;
+
+          if (snapshot.hasError) {
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              )
+            ];
+          } else if (snapshot.hasData) {
+            if (snapshot.data.toString() == "[]") {
+              children = <Widget>[
+                Text("No items found"),
+              ];
+            } else {
+              children = <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                      create: (c) => snapshot.data![i],
+                      child: ProductItem(),
+                    ),
+                  ),
+                ),
+              ];
+            }
+          } else {
+            children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              )
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
+          );
         },
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return ListView.builder(
-  //     padding: const EdgeInsets.all(15),
-  //     itemCount: products.length,
-  //     itemBuilder: (ctx, i) => ChangeNotifierProvider(
-  //       create: (c) => products[i],
-  //       child: ProductItem(),
-  //     ),
-  //   );
-  // }
 }
