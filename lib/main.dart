@@ -79,17 +79,17 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Colors.red,
           appBarTheme: AppBarTheme(backgroundColor: Colors.amber[700]),
           textTheme: const TextTheme(
-            headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
+            headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
             headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
             bodyText2: TextStyle(
               fontSize: 14.0,
-              fontFamily: 'Hind',
+              fontFamily: 'Lato',
               fontStyle: FontStyle.italic,
               color: Colors.black,
             ),
             bodyText1: TextStyle(
-              fontSize: 14.0,
-              fontFamily: 'Hind',
+              fontSize: 13.0,
+              fontFamily: 'Anton',
               fontStyle: FontStyle.italic,
               // color: Colors.black,
             ),
@@ -100,17 +100,17 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Color.fromARGB(255, 194, 216, 248),
           appBarTheme: AppBarTheme(backgroundColor: Colors.blueGrey),
           textTheme: const TextTheme(
-            headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
+            headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
             headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
             bodyText2: TextStyle(
               fontSize: 14.0,
-              fontFamily: 'Hind',
+              fontFamily: 'Lato',
               fontStyle: FontStyle.italic,
               color: Colors.white,
             ),
             bodyText1: TextStyle(
-              fontSize: 14.0,
-              fontFamily: 'Hind',
+              fontSize: 13.0,
+              fontFamily: 'Anton',
               fontStyle: FontStyle.italic,
               // color: Colors.white,
             ),

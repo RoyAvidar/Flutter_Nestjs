@@ -85,7 +85,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             padding: EdgeInsets.all(20),
             child: Text(
               "Order Information: ",
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
           Container(
@@ -99,6 +99,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             width: 380,
             height: 180,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: ListView.builder(
@@ -145,7 +146,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                           ),
                           title: Text('${cart!.products![i].title}'),
                           subtitle: Text(
-                            'Total: \$${(cart!.products![i].price! * cart!.products![i].quantity!)}',
+                            'Price: \$${(cart!.products![i].price! * cart!.products![i].quantity!)}',
                           ),
                           trailing: Text('x ${cart!.products![i].quantity}'),
                         ),
@@ -153,11 +154,16 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                     ),
                   ),
                 ),
+                Text(
+                  'Total: \$${cart!.totalPrice}',
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
               ],
             ),
           ),
+          SizedBox(height: 15),
           Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(15),
             child: Text(
               "Address Information: ",
               style: Theme.of(context).textTheme.bodyText1,
@@ -177,7 +183,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
           ),
           if (_expanded)
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -201,18 +207,19 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                 ],
               ),
             ),
-          SizedBox(height: 20),
+          Divider(height: 35),
           Dismissible(
             key: ValueKey(cart!.cartId),
             background: Container(
               color: Colors.lightGreen,
               child: Icon(Icons.send),
               alignment: Alignment.centerRight,
-              padding: EdgeInsets.only(right: 20),
+              margin: EdgeInsets.symmetric(horizontal: 15),
             ),
             direction: DismissDirection.startToEnd,
             child: Container(
-              width: 350,
+              padding: EdgeInsets.only(left: 15),
+              width: 360,
               height: 30,
               child: Text(
                 "Swipe right to order Now!",
@@ -224,6 +231,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             },
           ),
           Container(
+            padding: EdgeInsets.only(left: 10),
             child: TextButton(
               child: Text(
                 "Back to main screen",
