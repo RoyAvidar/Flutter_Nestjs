@@ -36,7 +36,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           } else if (snapshot.hasData) {
             if (snapshot.data.toString() == "[]") {
               children = <Widget>[
-                Text("No items found"),
+                Text(
+                  "No items found",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ];
             } else {
               children = <Widget>[

@@ -30,6 +30,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
       cart = cartData;
       isLoading = false;
     });
+    // print(cart);
     return cart;
   }
 
@@ -78,52 +79,89 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             padding: EdgeInsets.all(20),
-            child: Text("Order Information: "),
-          ),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Text("Cart Items: "),
-          ),
-          Container(
-            width: 380,
-            height: 180,
-            child: Expanded(
-              child: ListView.builder(
-                itemCount: cart!.products!.length,
-                itemBuilder: (ctx, i) => Card(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 4,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: FittedBox(
-                            child: Text('\$${cart!.products![i].price}'),
-                          ),
-                        ),
-                      ),
-                      title: Text('${cart!.products![i].title}'),
-                      subtitle: Text(
-                        'Total: \$${(cart!.products![i].price! * cart!.products![i].quantity!)}',
-                      ),
-                      trailing: Text('x ${cart!.products![i].quantity}'),
-                    ),
-                  ),
-                ),
-              ),
+            child: Text(
+              "Order Information: ",
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
           Container(
             padding: EdgeInsets.all(20),
-            child: Text("Address Information: "),
+            child: Text(
+              "Cart Items: ",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
+          Container(
+            width: 380,
+            height: 180,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cart!.products!.length,
+                    itemBuilder: (ctx, i) => Card(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 4,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            child: FittedBox(
+                              child: Container(
+                                width: 300,
+                                height: 300,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 3,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      spreadRadius: 1,
+                                      blurRadius: 5,
+                                      color: Colors.black.withOpacity(0.5),
+                                      offset: Offset(0, 15),
+                                    )
+                                  ],
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      "http://10.0.2.2:8000/" +
+                                          cart!.products![i].imageUrl
+                                              .toString(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Text('${cart!.products![i].title}'),
+                          subtitle: Text(
+                            'Total: \$${(cart!.products![i].price! * cart!.products![i].quantity!)}',
+                          ),
+                          trailing: Text('x ${cart!.products![i].quantity}'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              "Address Information: ",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
           ListTile(
             title: Text("City: " + address!.city!),
@@ -163,28 +201,40 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                 ],
               ),
             ),
+          SizedBox(height: 20),
           Dismissible(
             key: ValueKey(cart!.cartId),
             background: Container(
               color: Colors.lightGreen,
               child: Icon(Icons.send),
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 4,
-              ),
+              alignment: Alignment.centerRight,
               padding: EdgeInsets.only(right: 20),
             ),
             direction: DismissDirection.startToEnd,
             child: Container(
               width: 350,
-              padding: EdgeInsets.all(15),
-              child: Text("Order Now!"),
+              height: 30,
+              child: Text(
+                "Swipe right to order Now!",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
             onDismissed: (direction) {
               submit();
             },
           ),
+          Container(
+            child: TextButton(
+              child: Text(
+                "Back to main screen",
+                style: TextStyle(color: Colors.grey),
+              ),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(OverviewScreen.routeName);
+              },
+            ),
+          )
         ],
       ),
     );

@@ -69,7 +69,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('Are you sure?'),
-            content: Text('Do you want to remove the item from the cart?'),
+            content: Text('Do you want to remove this item from the cart?'),
             actions: [
               ElevatedButton(
                 onPressed: () {
