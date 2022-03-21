@@ -40,6 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
   TextEditingController userPhoneController = TextEditingController();
   AuthMode _authMode = AuthMode.Login;
   bool _validate = false;
+  bool _showPassword = true;
   var expireDate;
 
   @override
@@ -167,134 +168,137 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Lunchies'),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: deviceSize.height,
-          width: deviceSize.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: TextField(
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'User Name',
-                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                  ),
-                  controller: userNameController,
+    // final mediaqueryData = MediaQuery.of(context);
+    // mediaqueryData.padding;
+    // mediaqueryData.viewInsets;
+    // mediaqueryData.viewPadding;
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Welcome'),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: TextField(
+                obscureText: false,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'User Name',
+                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
                 ),
+                controller: userNameController,
               ),
-              SizedBox(
-                height: 25,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                  ),
-                  controller: userPassController,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
                 ),
+                controller: userPassController,
               ),
-              SizedBox(
-                height: 16,
-              ),
-              if (_authMode == AuthMode.Signup)
-                Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Validate Password',
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            if (_authMode == AuthMode.Signup)
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: TextField(
+                      obscureText: _showPassword,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Validate Password',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.remove_red_eye),
+                          onPressed: () {
+                            setState(() {
+                              _showPassword = !_showPassword;
+                            });
+                          },
                         ),
-                        controller: validatePassController,
                       ),
+                      controller: validatePassController,
                     ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: TextField(
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Phone Number',
-                        ),
-                        controller: userPhoneController,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: TextField(
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Phone Number',
                       ),
+                      controller: userPhoneController,
                     ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                  ],
-                )
-              else
-                Container(),
-              if (_authMode == AuthMode.Login)
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      userNameController.text.isEmpty ||
-                              userPassController.text.isEmpty
-                          ? _validate = true
-                          : _validate = false;
-                    });
-                    _validate ? () {} : login();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    onPrimary: Colors.black,
                   ),
-                  child: Text('Login'),
+                  SizedBox(
+                    height: 5,
+                  ),
+                ],
+              )
+            else
+              Container(),
+            if (_authMode == AuthMode.Login)
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    userNameController.text.isEmpty ||
+                            userPassController.text.isEmpty
+                        ? _validate = true
+                        : _validate = false;
+                  });
+                  _validate ? () {} : login();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  onPrimary: Colors.black,
                 ),
-              SizedBox(
-                height: 10,
+                child: Text('Login'),
               ),
-              if (_authMode == AuthMode.Signup)
-                ElevatedButton(
-                  onPressed: signUp,
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    onPrimary: Colors.black,
-                  ),
-                  child: Text('Sign Up'),
+            if (_authMode == AuthMode.Signup)
+              ElevatedButton(
+                onPressed: signUp,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  onPrimary: Colors.black,
                 ),
-              SizedBox(
-                height: 10,
+                child: Text('Sign Up'),
               ),
-              if (_authMode == AuthMode.Login)
-                TextButton(
-                  onPressed: _switchAuthMode,
-                  child: Text('Sign Up'),
-                  style: TextButton.styleFrom(
-                    primary: Colors.grey,
-                  ),
-                )
-              else
-                TextButton(
-                  onPressed: _switchAuthMode,
-                  child: Text('Login'),
-                  style: TextButton.styleFrom(
-                    primary: Colors.grey,
-                  ),
+            if (_authMode == AuthMode.Login)
+              TextButton(
+                onPressed: _switchAuthMode,
+                child: Text('Sign Up'),
+                style: TextButton.styleFrom(
+                  primary: Colors.grey,
                 ),
-            ],
-          ),
+              )
+            else
+              TextButton(
+                onPressed: _switchAuthMode,
+                child: Text('Login'),
+                style: TextButton.styleFrom(
+                  primary: Colors.grey,
+                ),
+              ),
+          ],
         ),
       ),
     );

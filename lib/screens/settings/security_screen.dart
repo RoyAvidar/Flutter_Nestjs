@@ -36,126 +36,131 @@ class _SecurityScreenState extends State<SecurityScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Security"),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          height: deviceSize.height,
-          width: deviceSize.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Change Password",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Current Password',
-                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                ),
-                controller: userOldPassController,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'New Password',
-                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                ),
-                controller: userNewPassController,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextField(
-                obscureText: _showPassword,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Valid Password',
-                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.remove_red_eye),
-                    onPressed: () {
-                      setState(() {
-                        _showPassword = !_showPassword;
-                      });
-                    },
+    // return GestureDetector
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Security"),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(5),
+            height: deviceSize.height,
+            width: deviceSize.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Change Password",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
-                controller: userValidPassController,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    userNewPassController.text.isEmpty ||
-                            userValidPassController.text.isEmpty
-                        ? _validate = true
-                        : _validate = false;
-                  });
-                  // changePass();
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: Text("Are You Sure?"),
-                      content: Text("This Procses will change your password."),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, "Cancel"),
-                          child: Text("Cancel"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            if (userNewPassController.text ==
-                                    userValidPassController.text &&
-                                !_validate) {
-                              changePassword(userNewPassController.text);
-                              Navigator.of(context)
-                                  .pushNamed(OverviewScreen.routeName);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Password Change Successfuly!',
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                            } else {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                          child: Text("Agree"),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  onPrimary: Colors.black,
+                SizedBox(
+                  height: 5,
                 ),
-                child: Text('Change Password'),
-              ),
-            ],
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    labelText: 'Current Password',
+                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  ),
+                  controller: userOldPassController,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    labelText: 'New Password',
+                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  ),
+                  controller: userNewPassController,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                TextField(
+                  obscureText: _showPassword,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    labelText: 'Valid Password',
+                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.remove_red_eye),
+                      onPressed: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                    ),
+                  ),
+                  controller: userValidPassController,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      userNewPassController.text.isEmpty ||
+                              userValidPassController.text.isEmpty
+                          ? _validate = true
+                          : _validate = false;
+                    });
+                    // changePass();
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Text("Are You Sure?"),
+                        content:
+                            Text("This Procses will change your password."),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, "Cancel"),
+                            child: Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              if (userNewPassController.text ==
+                                      userValidPassController.text &&
+                                  !_validate) {
+                                changePassword(userNewPassController.text);
+                                Navigator.of(context)
+                                    .pushNamed(OverviewScreen.routeName);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Password Change Successfuly!',
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              } else {
+                                Navigator.of(context).pop();
+                              }
+                            },
+                            child: Text("Agree"),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    onPrimary: Colors.black,
+                  ),
+                  child: Text('Change Password'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

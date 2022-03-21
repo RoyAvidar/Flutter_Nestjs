@@ -4,6 +4,7 @@ import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
 import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
 import 'package:flutter_main/screens/admin/admin_user_screen.dart';
+import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:flutter_main/screens/reviews_screen.dart';
 import 'package:flutter_main/screens/settings/settings_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -168,7 +169,7 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: Icon(Icons.logout),
             onTap: () {
               Provider.of<AuthProvider>(context, listen: false).logout();
-              Navigator.of(context).pushReplacementNamed('/auth');
+              Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
             },
           ),
         ],
