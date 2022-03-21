@@ -53,7 +53,10 @@ class _ReviewItemState extends State<ReviewItem> {
             width: 125,
             child: Row(
               children: [
-                Text("Review #:  " + review.id.toString()),
+                Text(
+                  review.userWriter!.userName!,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
                 IconButton(
                   onPressed: () {
                     setState(() {
@@ -77,11 +80,7 @@ class _ReviewItemState extends State<ReviewItem> {
               Container(
                 child: Text(
                   review.content!,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.italic,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                   textAlign: TextAlign.left,
                   textDirection: TextDirection.ltr,
                 ),
@@ -199,7 +198,7 @@ class _ReviewItemState extends State<ReviewItem> {
                                     ),
                                   );
                                 },
-                          icon: Icon(Icons.broken_image_outlined),
+                          icon: Icon(Icons.heart_broken_outlined),
                           color: Colors.red,
                         ),
                       ],
@@ -224,13 +223,6 @@ class _ReviewItemState extends State<ReviewItem> {
                 ],
               ),
               SizedBox(height: 8),
-              Text(
-                "Written by: -- " + review.userWriter!.userName!,
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 12,
-                ),
-              ),
             ],
           ),
       ],

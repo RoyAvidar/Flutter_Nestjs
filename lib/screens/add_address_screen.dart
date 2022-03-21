@@ -34,7 +34,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Product Added Successfuly!',
+          'Address Added Successfuly!',
           textAlign: TextAlign.left,
         ),
         duration: Duration(seconds: 2),

@@ -18,6 +18,7 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   //allow me to interact with the state behind the Form widget.
   final _form = GlobalKey<FormState>();
+  var _dropdownValue = null;
   var _editedProduct = Product(
     id: null,
     name: '',
@@ -190,14 +191,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   );
                 },
               ),
+              SizedBox(height: 5),
               DropdownButton<String>(
-                icon: const Icon(Icons.arrow_downward),
-                iconSize: 20,
+                iconSize: 30,
+                iconEnabledColor: Colors.black,
+                isExpanded: true,
                 elevation: 16,
-                style: const TextStyle(color: Colors.lightBlue),
+                style: Theme.of(context).textTheme.bodyText1,
+                value: _dropdownValue,
                 underline: Container(
-                  height: 2,
-                  color: Colors.blue,
+                  height: 1,
+                  color: Colors.black,
                 ),
                 onChanged: (value) {
                   _editedProduct = Product(
@@ -212,7 +216,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             ? 2
                             : 3,
                   );
-                  setState(() {});
+                  setState(() {
+                    _dropdownValue = value;
+                  });
                 },
                 items: <String>["Sandwich", "Salad", "Lunch"]
                     .map<DropdownMenuItem<String>>((String value) {
