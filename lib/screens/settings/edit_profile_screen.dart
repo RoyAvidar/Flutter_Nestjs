@@ -74,6 +74,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Cancel"),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 35),
+                      ),
+                      overlayColor: MaterialStateProperty.all(Colors.black),
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
                       setState(() {
                         userNameController.text.isEmpty ||
                                 userPhoneController.text.isEmpty
@@ -139,19 +152,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       overlayColor: MaterialStateProperty.all(Colors.black),
                       backgroundColor: MaterialStateProperty.all(Colors.green),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Cancel"),
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(horizontal: 35),
-                      ),
-                      overlayColor: MaterialStateProperty.all(Colors.black),
-                      backgroundColor: MaterialStateProperty.all(Colors.red),
                     ),
                   ),
                 ],

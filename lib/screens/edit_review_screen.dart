@@ -26,60 +26,64 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
   Widget build(BuildContext context) {
     int reviewId = ModalRoute.of(context)!.settings.arguments as int;
     final deviceSize = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Reviews'),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          height: deviceSize.height,
-          width: deviceSize.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Edit your review:"),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "enter text here",
-                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Reviews'),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(20),
+            height: deviceSize.height,
+            width: deviceSize.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Edit your review:"),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "enter text here",
+                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  ),
+                  controller: editReviewController,
                 ),
-                controller: editReviewController,
-              ),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, "Cancel"),
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(
-                        color: Colors.red,
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, "Cancel"),
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
                       ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        editReviewController.text.isEmpty
-                            ? _validate = true
-                            : _validate = false;
-                      });
-                      if (_validate) {
-                        return;
-                      }
-                      Provider.of<ReviewsProvider>(context, listen: false)
-                          .updateReviewContent(
-                              reviewId, editReviewController.text);
-                      Navigator.of(context).pushNamed(ReviewsScreen.routeName);
-                    },
-                    child: Text(
-                      "Save Changes",
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          editReviewController.text.isEmpty
+                              ? _validate = true
+                              : _validate = false;
+                        });
+                        if (_validate) {
+                          return;
+                        }
+                        Provider.of<ReviewsProvider>(context, listen: false)
+                            .updateReviewContent(
+                                reviewId, editReviewController.text);
+                        Navigator.of(context)
+                            .pushNamed(ReviewsScreen.routeName);
+                      },
+                      child: Text(
+                        "Save Changes",
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

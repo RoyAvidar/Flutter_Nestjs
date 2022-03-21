@@ -53,10 +53,13 @@ class _ReportBugScreenState extends State<ReportBugScreen> {
         body: Container(
           padding: EdgeInsets.only(left: 15, top: 35, right: 15),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text("Did you find something wrong?"),
-              SizedBox(height: 50),
+              Text(
+                "Did you find something wrong with the app?",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              SizedBox(height: 10),
               TextField(
                 maxLines: null,
                 minLines: 2,
@@ -68,6 +71,7 @@ class _ReportBugScreenState extends State<ReportBugScreen> {
                   errorText: _validate ? "Text is empty" : null,
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelText: "I've found a bug in...",
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
               Row(
@@ -87,28 +91,42 @@ class _ReportBugScreenState extends State<ReportBugScreen> {
                     style: TextButton.styleFrom(
                       textStyle: TextStyle(fontSize: 16),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
                         bugReportController.text.isEmpty
                             ? _validate = true
                             : _validate = false;
                       });
                       if (!_validate) {
-                        _sendBugReport(bugReportController.text);
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Thank you for your report!',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
+                        final emailSent =
+                            await _sendBugReport(bugReportController.text);
+                        emailSent
+                            ? ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Thank you for your bug report!',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              )
+                            : ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Invalid login error: Username and Password not accepted.',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  duration: Duration(seconds: 4),
+                                ),
+                              );
                         Navigator.of(context).pop();
                       }
                     },

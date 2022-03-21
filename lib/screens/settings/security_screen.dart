@@ -159,6 +159,15 @@ class _SecurityScreenState extends State<SecurityScreen> {
                   ),
                   child: Text('Change Password'),
                 ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, "Cancel"),
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
