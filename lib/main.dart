@@ -79,13 +79,21 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Colors.red,
           appBarTheme: AppBarTheme(backgroundColor: Colors.amber[700]),
           textTheme: const TextTheme(
-            headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-            headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+            headline1: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.italic,
+            ),
+            headline6: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.italic,
+            ),
             bodyText2: TextStyle(
               fontSize: 14.0,
               fontFamily: 'Lato',
               fontStyle: FontStyle.italic,
-              color: Colors.black,
+              color: Colors.red,
             ),
             bodyText1: TextStyle(
               fontSize: 13.0,
@@ -100,13 +108,21 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Color.fromARGB(255, 194, 216, 248),
           appBarTheme: AppBarTheme(backgroundColor: Colors.blueGrey),
           textTheme: const TextTheme(
-            headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-            headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+            headline1: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.italic,
+            ),
+            headline6: TextStyle(
+              fontSize: 18.0,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w500,
+            ),
             bodyText2: TextStyle(
               fontSize: 14.0,
               fontFamily: 'Lato',
               fontStyle: FontStyle.italic,
-              color: Colors.white,
+              color: Colors.red,
             ),
             bodyText1: TextStyle(
               fontSize: 13.0,

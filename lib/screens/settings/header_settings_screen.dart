@@ -13,61 +13,53 @@ class HeaderScreen extends StatefulWidget {
 }
 
 class _HeaderScreenState extends State<HeaderScreen> {
-  bool darkModeDefaultValue = false;
-
-  getUserDarkMode() async {
-    final userDarkMode = await Provider.of<UserProvider>(context, listen: false)
-        .getUserDarkMode();
-    setState(() {
-      darkModeDefaultValue = userDarkMode;
-    });
-    print(darkModeDefaultValue);
-    return darkModeDefaultValue;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    this.getUserDarkMode();
-  }
-
   @override
   Widget build(BuildContext context) {
     //setState _userDarkMode =  userDarkMode;
     return Column(
       children: [
         buildHeader(),
-        buildDarkMode(context, darkModeDefaultValue),
+        buildDarkMode(),
       ],
     );
   }
 
-  Widget buildDarkMode(context, darkModeDefaultValue) => SwitchSettingsTile(
-        settingKey: HeaderScreen.keyDarkMode,
-        title: 'Change Theme',
-        leading: Icon(
-          Icons.dark_mode,
-          color: Colors.amber,
+  Widget buildDarkMode() => Consumer<UserProvider>(
+        builder: (co, userData, ch) => FutureBuilder<bool>(
+          future: userData.getUserDarkMode(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              );
+            }
+            return SwitchSettingsTile(
+              settingKey: HeaderScreen.keyDarkMode,
+              title: 'Change Theme',
+              leading: Icon(
+                Icons.dark_mode,
+                color: Colors.amber,
+              ),
+              defaultValue: snapshot.data!,
+              // defaultValue: true,
+              onChange: (userDarkMode) async {
+                userDarkMode =
+                    await Provider.of<UserProvider>(context, listen: false)
+                        .toggleUserDarkMode();
+                userDarkMode
+                    ? AdaptiveTheme.of(context).setDark()
+                    : AdaptiveTheme.of(context).setLight();
+              },
+            );
+          },
         ),
-        defaultValue: darkModeDefaultValue,
-        onChange: (userDarkMode) async {
-          userDarkMode = await Provider.of<UserProvider>(context, listen: false)
-              .toggleUserDarkMode();
-          userDarkMode
-              ? AdaptiveTheme.of(context).setDark()
-              : AdaptiveTheme.of(context).setLight();
-        },
       );
 
   Widget buildHeader() => Center(
         child: Text(
           "SETTINGS",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: Colors.redAccent,
-          ),
+          style: Theme.of(context).textTheme.bodyText2,
         ),
       );
 }
