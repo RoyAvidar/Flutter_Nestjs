@@ -4,9 +4,33 @@ import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:provider/provider.dart';
 
-class HeaderScreen extends StatelessWidget {
+class HeaderScreen extends StatefulWidget {
   const HeaderScreen({Key? key}) : super(key: key);
   static const keyDarkMode = 'key-dark-mode';
+
+  @override
+  State<HeaderScreen> createState() => _HeaderScreenState();
+}
+
+class _HeaderScreenState extends State<HeaderScreen> {
+  bool darkModeDefaultValue = false;
+
+  getUserDarkMode() async {
+    final userDarkMode = await Provider.of<UserProvider>(context, listen: false)
+        .getUserDarkMode();
+    setState(() {
+      darkModeDefaultValue = userDarkMode;
+    });
+    print(darkModeDefaultValue);
+    return darkModeDefaultValue;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getUserDarkMode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +38,19 @@ class HeaderScreen extends StatelessWidget {
     return Column(
       children: [
         buildHeader(),
-        buildDarkMode(context),
+        buildDarkMode(context, darkModeDefaultValue),
       ],
     );
   }
 
-  Widget buildDarkMode(context) => SwitchSettingsTile(
-        settingKey: keyDarkMode,
+  Widget buildDarkMode(context, darkModeDefaultValue) => SwitchSettingsTile(
+        settingKey: HeaderScreen.keyDarkMode,
         title: 'Change Theme',
         leading: Icon(
           Icons.dark_mode,
           color: Colors.amber,
         ),
+        defaultValue: darkModeDefaultValue,
         onChange: (userDarkMode) async {
           userDarkMode = await Provider.of<UserProvider>(context, listen: false)
               .toggleUserDarkMode();

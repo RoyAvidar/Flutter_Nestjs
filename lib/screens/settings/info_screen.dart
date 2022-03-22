@@ -182,21 +182,109 @@ class _InfoScreenState extends State<InfoScreen> {
                         icon: Icon(Icons.camera),
                         color: Colors.white,
                         onPressed: () async {
-                          if (_image != null && _image.toString().isNotEmpty) {
-                            _deleteProfilePic();
-                          }
                           await showDialog(
+                            barrierDismissible: true,
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
                               title: Text("Alert"),
                               content: Text("Choose Your Image Through"),
                               actions: [
                                 TextButton(
-                                  onPressed: _takePicture,
+                                  onPressed: () =>
+                                      Navigator.pop(context, "Cancel"),
+                                  child: Text(
+                                    "Cancel",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    if (_image != null &&
+                                        _image.toString().isNotEmpty) {
+                                      _deleteProfilePic();
+                                    }
+                                    final success = await _takePicture();
+                                    if (success) {
+                                      final newImage =
+                                          await _uploadFile(_image);
+                                      if (newImage) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Profile Pic Added Successfuly!',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                            duration: Duration(seconds: 2),
+                                          ),
+                                        );
+                                        Navigator.of(context).pop();
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Error: Profile Pic Couldn\'t Update!',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
                                   child: Text("Camera"),
                                 ),
                                 TextButton(
-                                  onPressed: _getGalleryImage,
+                                  onPressed: () async {
+                                    if (_image != null &&
+                                        _image.toString().isNotEmpty) {
+                                      _deleteProfilePic();
+                                    }
+                                    final success = await _getGalleryImage();
+                                    if (success) {
+                                      final newImage =
+                                          await _uploadFile(_image);
+                                      if (newImage) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Profile Pic Added Successfuly!',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                            duration: Duration(seconds: 2),
+                                          ),
+                                        );
+                                        Navigator.of(context).pop();
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Error: Profile Pic Couldn\'t Update!',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
                                   child: Text("Gallery"),
                                 ),
                               ],
@@ -204,10 +292,12 @@ class _InfoScreenState extends State<InfoScreen> {
                               backgroundColor: Colors.blueGrey[200],
                             ),
                           );
-                          final newImage = await _uploadFile(_image);
-                          if (newImage) {
-                            Navigator.of(context).pop();
-                          }
+
+                          // if (newImage) {
+                          //   print('sda');
+                          //
+                          // Navigator.of(context).pop();
+                          // }
                         },
                       ),
                     ),
