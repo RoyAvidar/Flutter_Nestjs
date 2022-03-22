@@ -122,7 +122,7 @@ class _MyAppState extends State<MyApp> {
               fontSize: 14.0,
               fontFamily: 'Lato',
               fontStyle: FontStyle.italic,
-              color: Colors.red,
+              // color: Colors.red,
             ),
             bodyText1: TextStyle(
               fontSize: 13.0,
