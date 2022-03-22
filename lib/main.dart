@@ -77,7 +77,8 @@ class _MyAppState extends State<MyApp> {
         light: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.red,
-          appBarTheme: AppBarTheme(backgroundColor: Colors.amber[700]),
+          appBarTheme:
+              AppBarTheme(backgroundColor: Color.fromARGB(255, 235, 143, 81)),
           textTheme: const TextTheme(
             headline1: TextStyle(
               fontSize: 20.0,
@@ -93,7 +94,7 @@ class _MyAppState extends State<MyApp> {
               fontSize: 14.0,
               fontFamily: 'Lato',
               fontStyle: FontStyle.italic,
-              color: Colors.red,
+              // color: Colors.red,
             ),
             bodyText1: TextStyle(
               fontSize: 13.0,
@@ -105,7 +106,7 @@ class _MyAppState extends State<MyApp> {
         ),
         dark: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: Color.fromARGB(255, 194, 216, 248),
+          primaryColor: Color.fromARGB(255, 52, 70, 97),
           appBarTheme: AppBarTheme(backgroundColor: Colors.blueGrey),
           textTheme: const TextTheme(
             headline1: TextStyle(

@@ -47,8 +47,8 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               padding: const EdgeInsets.only(
                   top: 25, left: 15, right: 15, bottom: 25),
               itemCount: reviews.length,
-              itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                create: (c) => reviews[i],
+              itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                value: reviews[i],
                 //A Review was used after being disposed.
                 //You should move your provider above MaterialApp/Navigator.
                 //or use ChangeNotifierProvider.value

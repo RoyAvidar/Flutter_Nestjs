@@ -70,8 +70,8 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
                   child: ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: orders.length,
-                    itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                      create: (c) => orders[i],
+                    itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                      value: orders[i],
                       child: AdminOrderItem(),
                     ),
                   ),

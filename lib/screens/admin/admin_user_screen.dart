@@ -51,8 +51,8 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
             child: ListView.builder(
               padding: const EdgeInsets.all(12),
               itemCount: users.length,
-              itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                create: (c) => users[i],
+              itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                value: users[i],
                 child: Container(
                   child: AdminUserItem(),
                 ),
