@@ -41,8 +41,10 @@ class _HeaderScreenState extends State<HeaderScreen> {
                 Icons.dark_mode,
                 color: Colors.amber,
               ),
+              disabledLabel: 'light',
+              enabledLabel: 'dark',
+              // enabled: false,
               defaultValue: snapshot.data!,
-              // defaultValue: true,
               onChange: (userDarkMode) async {
                 userDarkMode =
                     await Provider.of<UserProvider>(context, listen: false)

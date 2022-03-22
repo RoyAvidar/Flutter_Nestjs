@@ -75,7 +75,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
               tag: 'dash' + loadedProduct.id.toString(),
@@ -92,31 +92,38 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               ),
             ),
             SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text('Item Description:   '),
-                Text(
-                  loadedProduct.description.toString(),
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                ),
-              ],
+            Text(
+              'Item Description:   ' + loadedProduct.description.toString(),
+              textAlign: TextAlign.center,
+              softWrap: true,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(height: 25),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text('Item Price:   '),
-                Text(
-                  '\$${loadedProduct.price.toString()}',
-                ),
-              ],
+            Text(
+              'Item Price:   ' + '\$${loadedProduct.price.toString()}',
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(height: 25),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                IconButton(
+                  onPressed: () => {
+                    favStatus
+                        ? setState(() {
+                            favStatus = !favStatus;
+                            removeProductFromFav(productId);
+                          })
+                        : setState(() {
+                            favStatus = !favStatus;
+                            addProductToFav(productId);
+                          })
+                  },
+                  icon: favStatus
+                      ? Icon(Icons.favorite)
+                      : Icon(Icons.favorite_border),
+                ),
+                SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
                     Provider.of<CartProvider>(context, listen: false)
@@ -140,23 +147,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                     );
                   },
                   child: Text('Add To Cart'),
-                ),
-                SizedBox(width: 10),
-                IconButton(
-                  onPressed: () => {
-                    favStatus
-                        ? setState(() {
-                            favStatus = !favStatus;
-                            removeProductFromFav(productId);
-                          })
-                        : setState(() {
-                            favStatus = !favStatus;
-                            addProductToFav(productId);
-                          })
-                  },
-                  icon: favStatus
-                      ? Icon(Icons.favorite)
-                      : Icon(Icons.favorite_border),
                 ),
               ],
             ),
