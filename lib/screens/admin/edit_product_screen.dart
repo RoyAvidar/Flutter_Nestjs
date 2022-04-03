@@ -73,7 +73,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     Navigator.of(context).pop();
   }
 
-  Future _takePicture() async {
+  Future _getCameraImage() async {
     var picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
     _image = new MultipartFile.fromBytes(
@@ -81,6 +81,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
       await image!.readAsBytes(),
       filename: image.name,
     );
+  }
+
+  Future<bool> _getGalleryImage() async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(source: ImageSource.gallery);
+    _image = new MultipartFile.fromBytes(
+      'file',
+      await image!.readAsBytes(),
+      filename: image.name,
+    );
+    return true;
   }
 
   //extract data from admin_product_item.
@@ -233,12 +244,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
+                    "Take a photo:",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  IconButton(
+                    color: Colors.greenAccent[300],
+                    onPressed: _getCameraImage,
+                    icon: Icon(Icons.camera_alt_outlined),
+                  ),
+                  Text(
                     "Pick an Image:",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   IconButton(
                     color: Colors.greenAccent[300],
-                    onPressed: _takePicture,
+                    onPressed: _getGalleryImage,
                     icon: Icon(Icons.image_search),
                   ),
                 ],
