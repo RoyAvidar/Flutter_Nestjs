@@ -3,6 +3,7 @@ import 'package:flutter_main/models/user.dart';
 import 'package:flutter_main/providers/user_provider.dart';
 import 'package:flutter_main/widgets/admin/admin_user_item.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
+import 'package:flutter_main/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
 
 class AdminUserScreen extends StatefulWidget {
@@ -39,6 +40,9 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Hello Admin"),
+        actions: [
+          SearchBar(),
+        ],
       ),
       drawer: AppDrawer(),
       body: Column(
