@@ -13,6 +13,7 @@ class HeaderScreen extends StatefulWidget {
 }
 
 class _HeaderScreenState extends State<HeaderScreen> {
+  bool defaultValue = false;
   @override
   Widget build(BuildContext context) {
     //setState _userDarkMode =  userDarkMode;
@@ -33,6 +34,14 @@ class _HeaderScreenState extends State<HeaderScreen> {
                 padding: const EdgeInsets.only(top: 16),
                 child: Text('Error: ${snapshot.error}'),
               );
+            } else if (snapshot.hasData) {
+              if (snapshot.data.toString() == 'true') {
+                defaultValue = true;
+              }
+            } else {
+              return Container(
+                child: CircularProgressIndicator(),
+              );
             }
             return SwitchSettingsTile(
               settingKey: HeaderScreen.keyDarkMode,
@@ -44,7 +53,7 @@ class _HeaderScreenState extends State<HeaderScreen> {
               disabledLabel: 'light',
               enabledLabel: 'dark',
               // enabled: false,
-              defaultValue: snapshot.data!,
+              defaultValue: defaultValue,
               onChange: (userDarkMode) async {
                 userDarkMode =
                     await Provider.of<UserProvider>(context, listen: false)

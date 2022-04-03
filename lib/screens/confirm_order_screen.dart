@@ -154,10 +154,6 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                     ),
                   ),
                 ),
-                Text(
-                  'Total: \$${cart!.totalPrice}',
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
               ],
             ),
           ),
@@ -208,12 +204,17 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
               ),
             ),
           Divider(height: 35),
+          Text(
+            'Total Price: \$${cart!.totalPrice}',
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          SizedBox(height: 15),
           Dismissible(
             key: ValueKey(cart!.cartId),
             background: Container(
               color: Colors.lightGreen,
               child: Icon(Icons.send),
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               margin: EdgeInsets.symmetric(horizontal: 15),
             ),
             direction: DismissDirection.startToEnd,
@@ -222,7 +223,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
               width: 360,
               height: 30,
               child: Text(
-                "Swipe right to order Now!",
+                "Swipe right to order now!",
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -235,7 +236,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             child: TextButton(
               child: Text(
                 "Back to main screen",
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(color: Colors.grey[600]),
               ),
               onPressed: () {
                 Navigator.of(context)

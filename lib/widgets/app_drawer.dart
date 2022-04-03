@@ -98,7 +98,6 @@ class _AppDrawerState extends State<AppDrawer> {
                       : CrossFadeState.showSecond,
                   duration: const Duration(milliseconds: 200),
                   firstChild: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 14),
                     child: Column(
                       children: [
                         ListTile(

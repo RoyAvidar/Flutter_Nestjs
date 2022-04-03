@@ -179,24 +179,26 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                     ),
-                    ElevatedButton(
+                    ElevatedButton.icon(
                       onPressed: () {
                         // submit();
                         Navigator.of(context)
                             .pushNamed(AddressScreen.routeName);
                       },
                       style: buttonStyle,
-                      child: Text('Order Now'),
+                      icon: const Icon(Icons.check),
+                      label: Text('Order Now'),
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    ElevatedButton(
+                    ElevatedButton.icon(
                       onPressed: () {
                         cleanCart(cart!.cartId!);
                       },
                       style: buttonStyle,
-                      child: Text('Clear Cart'),
+                      icon: const Icon(Icons.clear),
+                      label: Text('Clear Cart'),
                     ),
                   ],
                 ),

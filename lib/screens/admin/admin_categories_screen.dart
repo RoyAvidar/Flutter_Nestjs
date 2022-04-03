@@ -58,6 +58,7 @@ class _AdminCategoryScreenState extends State<AdminCategoryScreen> {
               FocusScope.of(context).unfocus();
             },
             child: ListView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               itemCount: categories.length,
               padding: EdgeInsets.all(12),
               itemBuilder: (ctx, i) => ChangeNotifierProvider(
