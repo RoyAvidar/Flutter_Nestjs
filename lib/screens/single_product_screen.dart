@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/product.dart';
 import 'package:flutter_main/providers/user_provider.dart';
@@ -81,6 +83,20 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               tag: 'dash' + loadedProduct.id.toString(),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
+                // child: BackdropFilter(
+                //   filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                //   child: Container(
+                //     height: 200,
+                //     width: double.infinity,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(25),
+                //       color: Colors.black54,
+                //     ),
+                //     child: Text(
+                //       "Glass",
+                //     ),
+                //   ),
+                // ),
                 child: Container(
                   height: 200,
                   width: double.infinity,
