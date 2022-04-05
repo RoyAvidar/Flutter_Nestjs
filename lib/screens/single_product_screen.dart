@@ -38,8 +38,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
       userProds.forEach((p) {
         if (p.id == productId) {
           favStatus = true;
-        } else {
-          favStatus = false;
         }
       });
     });

@@ -85,7 +85,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             padding: EdgeInsets.all(20),
             child: Text(
               "Order Information: ",
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.headline6,
             ),
           ),
           Container(
@@ -146,7 +146,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                           ),
                           title: Text('${cart!.products![i].title}'),
                           subtitle: Text(
-                            'Price: \$${(cart!.products![i].price! * cart!.products![i].quantity!)}',
+                            'Price: \$${(cart!.products![i].price!)}',
                           ),
                           trailing: Text('x ${cart!.products![i].quantity}'),
                         ),
@@ -206,7 +206,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
           Divider(height: 35),
           Text(
             'Total Price: \$${cart!.totalPrice}',
-            style: Theme.of(context).textTheme.bodyText2,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
           SizedBox(height: 15),
           Dismissible(
@@ -219,7 +219,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             ),
             direction: DismissDirection.startToEnd,
             child: Container(
-              padding: EdgeInsets.only(left: 15),
+              // padding: EdgeInsets.only(left: 15),
               width: 360,
               height: 30,
               child: Text(
@@ -232,7 +232,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             },
           ),
           Container(
-            padding: EdgeInsets.only(left: 10),
+            // padding: EdgeInsets.only(left: 10),
             child: TextButton(
               child: Text(
                 "Back to main screen",

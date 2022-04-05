@@ -131,7 +131,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
               ),
             ),
             title: Text('${widget.title}'),
-            subtitle: Text('Price: \$${(widget.price * widget.quantity)}'),
+            subtitle: Text('Price: \$${(widget.price)}'),
             trailing: Container(
               width: 120,
               child: Row(
