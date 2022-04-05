@@ -155,28 +155,43 @@ class _CartScreenState extends State<CartScreen> {
                       //   ),
                       // ),
                     ),
-                    Card(
-                      margin: EdgeInsets.all(15),
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Total',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            Chip(
-                              label: Text(
-                                // '\$${cart.totalAmount.toStringAsFixed(2)}',
-                                "${cart!.totalPrice}",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                    Consumer<CartProvider>(
+                      builder: (co, cartData, child) => FutureBuilder<int?>(
+                        future: cartData.getCartTotalPrice(),
+                        builder: (contex, snapshot) {
+                          if (snapshot.hasError) {
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          }
+                          return Card(
+                            margin: EdgeInsets.all(15),
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Total',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  Chip(
+                                    label: Text(
+                                      // '\$${cart.totalAmount.toStringAsFixed(2)}',
+                                      "${snapshot.data.toString()}",
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
                     ElevatedButton.icon(

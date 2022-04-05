@@ -35,6 +35,12 @@ const getItemCountGraphql = """
 }
 """;
 
+const getCartTotalPriceGraphql = """
+  query {
+    getCartTotalPrice
+  }
+""";
+
 const createCartGraphql = """
   mutation 
   createCart {
@@ -142,14 +148,18 @@ class CartProvider with ChangeNotifier {
     return count;
   }
 
-  //counts the total price of the cartItems in the cart.
-  // double get totalAmount {
-  //   var total = 0.0;
-  //   _items!.forEach((cartItem) {
-  //     total += cartItem.price! * cartItem.quantity!.toDouble();
-  //   });
-  //   return total;
-  // }
+  Future<int> getCartTotalPrice() async {
+    QueryOptions queryOptions = QueryOptions(
+      document: gql(getCartTotalPriceGraphql),
+    );
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final totalPrice = result.data?['getCartTotalPrice'];
+    notifyListeners();
+    return totalPrice;
+  }
 
   Future<bool> addItem(int productId, int cartId) async {
     MutationOptions queryOptions = MutationOptions(
