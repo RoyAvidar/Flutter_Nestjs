@@ -49,7 +49,7 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
         children: [
           Text(
             "All Users",
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.headline6,
           ),
           Expanded(
             child: ListView.builder(

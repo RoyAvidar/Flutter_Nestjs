@@ -24,11 +24,7 @@ class _AdminUserItemState extends State<AdminUserItem> {
           ListTile(
             title: Text(
               "${user.userName}",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-              ),
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             dense: true,
             trailing: IconButton(

@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
         ),
         dark: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: Color.fromARGB(255, 52, 70, 97),
+          primaryColor: Color.fromARGB(255, 55, 106, 182),
           appBarTheme: AppBarTheme(backgroundColor: Colors.blueGrey),
           textTheme: const TextTheme(
             headline1: TextStyle(

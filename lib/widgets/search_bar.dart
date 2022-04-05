@@ -66,6 +66,7 @@ class CustomSearchDelegate extends SearchDelegate {
       itemCount: matchQuery.length,
       itemBuilder: (context, i) {
         var result = matchQuery[i];
+        print(result);
         return ListTile(
           title: Text(result),
         );
