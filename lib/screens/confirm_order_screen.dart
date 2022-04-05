@@ -165,24 +165,41 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
-          ListTile(
-            title: Text("City: " + address!.city!),
-            leading: IconButton(
-              onPressed: () {
-                setState(() {
-                  _expanded = !_expanded;
-                });
-              },
-              icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-              color: _expanded ? Colors.lightBlue : Colors.grey,
+          AnimatedCrossFade(
+            crossFadeState: _expanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: Duration(milliseconds: 200),
+            firstChild: ListTile(
+              title: Text("City: " + address!.city!),
+              leading: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _expanded = !_expanded;
+                  });
+                },
+                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                color: _expanded ? Colors.lightBlue : Colors.grey,
+              ),
             ),
-          ),
-          if (_expanded)
-            Container(
+            secondChild: Container(
               // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  ListTile(
+                    title: Text("City: " + address!.city!),
+                    leading: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _expanded = !_expanded;
+                        });
+                      },
+                      icon: Icon(
+                          _expanded ? Icons.expand_less : Icons.expand_more),
+                      color: _expanded ? Colors.lightBlue : Colors.grey,
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -203,6 +220,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                 ],
               ),
             ),
+          ),
           Divider(height: 35),
           Text(
             'Total Price: \$${cart!.totalPrice}',

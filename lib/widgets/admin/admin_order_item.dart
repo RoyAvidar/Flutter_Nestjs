@@ -59,29 +59,34 @@ class _AdminOrderItemState extends State<AdminOrderItem> {
       secondChild: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Address Info: ",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.values[3],
-                ),
-              ),
-              IconButton(
-                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-                onPressed: () {
-                  setState(() {
-                    _expanded = !_expanded;
-                  });
-                },
-                color:
-                    _expanded ? Colors.black : Theme.of(context).primaryColor,
-              ),
-            ],
+          CheckboxListTile(
+            title: Text(
+              DateFormat('dd/MM/yyyy hh:mm').format(order.dateTime!),
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            secondary: IconButton(
+              icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+              onPressed: () {
+                setState(() {
+                  _expanded = !_expanded;
+                });
+              },
+              color: _expanded ? Colors.black : Theme.of(context).primaryColor,
+            ),
+            controlAffinity: ListTileControlAffinity.leading,
+            value: order.isReady! ? true : isChecked,
+            onChanged: (value) {},
+            activeColor: Colors.green,
+            checkColor: Colors.white,
+          ),
+          Text(
+            "Address Info: ",
+            style: TextStyle(
+              fontSize: 15,
+              fontStyle: FontStyle.italic,
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.values[3],
+            ),
           ),
           SizedBox(height: 10),
           Text(

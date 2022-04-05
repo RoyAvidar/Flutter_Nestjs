@@ -306,7 +306,7 @@ class _AddressItemState extends State<AddressItem> {
                                                   },
                                                 ),
                                                 TextButton(
-                                                  child: Text("Submit"),
+                                                  child: Text("Save Changes"),
                                                   onPressed: () {
                                                     //save form & edit address.
                                                     _saveForm();
@@ -365,7 +365,7 @@ class _AddressItemState extends State<AddressItem> {
                                             ),
                                           );
                                         },
-                                        child: Text("HIT IT!"),
+                                        child: Text("Delete Address!"),
                                       )
                                     ],
                                   ),

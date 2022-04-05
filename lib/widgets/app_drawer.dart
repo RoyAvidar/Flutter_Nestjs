@@ -92,84 +92,53 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           SizedBox(height: 2),
           isAdmin
-              ? AnimatedCrossFade(
-                  crossFadeState: _expanded
-                      ? CrossFadeState.showFirst
-                      : CrossFadeState.showSecond,
-                  duration: const Duration(milliseconds: 200),
-                  firstChild: Container(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Text('Admin'),
-                          leading: Icon(Icons.edit),
-                          trailing: IconButton(
-                            icon: Icon(_expanded
-                                ? Icons.expand_less
-                                : Icons.expand_more),
-                            onPressed: () {
-                              setState(() {
-                                _expanded = !_expanded;
-                              });
-                            },
-                          ),
-                        ),
-                        ListTile(
-                          title: Text("Admin Products"),
-                          leading: Icon(
-                            Icons.pin_rounded,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).pushReplacementNamed(
-                                AdminProductsScreen.routeName);
-                          },
-                        ),
-                        ListTile(
-                          title: Text("Admin Orders"),
-                          leading: Icon(
-                            Icons.account_balance_wallet_outlined,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).pushReplacementNamed(
-                                AdminOrderScreen.routeName);
-                          },
-                        ),
-                        ListTile(
-                          title: Text("Admin Categories"),
-                          leading: Icon(
-                            Icons.adjust,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).pushReplacementNamed(
-                                AdminCategoryScreen.routeName);
-                          },
-                        ),
-                        ListTile(
-                          title: Text("Admin Users"),
-                          leading: Icon(
-                            Icons.accessibility,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).pushReplacementNamed(
-                                AdminUserScreen.routeName);
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  secondChild: ListTile(
-                    title: Text('Admin'),
-                    leading: Icon(Icons.edit),
-                    trailing: IconButton(
-                      icon: Icon(
-                          _expanded ? Icons.expand_less : Icons.expand_more),
-                      onPressed: () {
-                        setState(() {
-                          _expanded = !_expanded;
-                        });
+              ? ExpansionTile(
+                  title: Text('Admin'),
+                  leading: Icon(Icons.edit),
+                  textColor: Colors.black,
+                  iconColor: Colors.black,
+                  children: [
+                    ListTile(
+                      title: Text("Admin Products"),
+                      leading: Icon(
+                        Icons.pin_rounded,
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushReplacementNamed(
+                            AdminProductsScreen.routeName);
                       },
                     ),
-                  ),
+                    ListTile(
+                      title: Text("Admin Orders"),
+                      leading: Icon(
+                        Icons.account_balance_wallet_outlined,
+                      ),
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(AdminOrderScreen.routeName);
+                      },
+                    ),
+                    ListTile(
+                      title: Text("Admin Categories"),
+                      leading: Icon(
+                        Icons.adjust,
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushReplacementNamed(
+                            AdminCategoryScreen.routeName);
+                      },
+                    ),
+                    ListTile(
+                      title: Text("Admin Users"),
+                      leading: Icon(
+                        Icons.accessibility,
+                      ),
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(AdminUserScreen.routeName);
+                      },
+                    )
+                  ],
                 )
               : Container(),
           ListTile(
