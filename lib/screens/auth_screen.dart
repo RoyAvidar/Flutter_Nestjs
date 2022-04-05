@@ -182,39 +182,77 @@ class _AuthScreenState extends State<AuthScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: TextField(
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'User Name',
-                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                ),
-                controller: userNameController,
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                ),
-                controller: userPassController,
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            if (_authMode == AuthMode.Signup)
-              Column(
+            AnimatedCrossFade(
+              crossFadeState: _authMode == AuthMode.Login
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              duration: const Duration(milliseconds: 200),
+              firstChild: Column(
                 children: [
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: TextField(
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'User Name',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userNameController,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userPassController,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                ],
+              ),
+              secondChild: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: TextField(
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'User Name',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userNameController,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userPassController,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   Padding(
                     padding: EdgeInsets.all(5),
                     child: TextField(
@@ -253,9 +291,8 @@ class _AuthScreenState extends State<AuthScreen> {
                     height: 5,
                   ),
                 ],
-              )
-            else
-              Container(),
+              ),
+            ),
             if (_authMode == AuthMode.Login)
               ElevatedButton(
                 onPressed: () {

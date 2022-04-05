@@ -135,6 +135,7 @@ class _MyAppState extends State<MyApp> {
         ),
         initial: AdaptiveThemeMode.system,
         builder: (light, dark) => MaterialApp(
+          // showPerformanceOverlay: true,
           theme: light,
           darkTheme: dark,
           home: SplashScreen(),

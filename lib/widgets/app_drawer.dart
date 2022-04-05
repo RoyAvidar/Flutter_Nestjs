@@ -171,69 +171,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     ),
                   ),
                 )
-              // ? ListTile(
-              //     title: Text('Admin'),
-              //     leading: Icon(Icons.edit),
-              //     trailing: IconButton(
-              //       icon:
-              //           Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-              //       onPressed: () {
-              //         setState(() {
-              //           _expanded = !_expanded;
-              //         });
-              //       },
-              //     ),
-              //   )
               : Container(),
-          // if (_expanded)
-          // Container(
-          //   padding: EdgeInsets.symmetric(horizontal: 4, vertical: 14),
-          //   child: Column(
-          //     children: [
-          //       ListTile(
-          //         title: Text("Admin Products"),
-          //         leading: Icon(
-          //           Icons.pin_rounded,
-          //         ),
-          //         onTap: () {
-          //           Navigator.of(context)
-          //               .pushReplacementNamed(AdminProductsScreen.routeName);
-          //         },
-          //       ),
-          //       ListTile(
-          //         title: Text("Admin Orders"),
-          //         leading: Icon(
-          //           Icons.account_balance_wallet_outlined,
-          //         ),
-          //         onTap: () {
-          //           Navigator.of(context)
-          //               .pushReplacementNamed(AdminOrderScreen.routeName);
-          //         },
-          //       ),
-          //       ListTile(
-          //         title: Text("Admin Categories"),
-          //         leading: Icon(
-          //           Icons.adjust,
-          //         ),
-          //         onTap: () {
-          //           Navigator.of(context)
-          //               .pushReplacementNamed(AdminCategoryScreen.routeName);
-          //         },
-          //       ),
-          //       ListTile(
-          //         title: Text("Admin Users"),
-          //         leading: Icon(
-          //           Icons.accessibility,
-          //         ),
-          //         onTap: () {
-          //           Navigator.of(context)
-          //               .pushReplacementNamed(AdminUserScreen.routeName);
-          //         },
-          //       )
-          //     ],
-          //   ),
-          // ),
-          // Divider(),
           ListTile(
             title: Text('Settings'),
             leading: Icon(Icons.settings),
