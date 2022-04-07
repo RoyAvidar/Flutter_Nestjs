@@ -28,7 +28,7 @@ class _AdminMainCategoriesScreenState extends State<AdminMainCategoriesScreen> {
           padding: EdgeInsets.all(12),
           children: [
             SimpleSettingsTile(
-              title: "Create a Category",
+              title: "Add a Category",
               subtitle: "",
               leading: Icon(
                 Icons.create_sharp,

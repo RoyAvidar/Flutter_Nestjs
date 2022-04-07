@@ -15,7 +15,16 @@ class AdminEditCategoryScreen extends StatefulWidget {
 }
 
 class _AdminEditCategoryScreenState extends State<AdminEditCategoryScreen> {
+  TextEditingController categoryNameController = TextEditingController();
+  bool _validate = false;
   List<Category> categories = [];
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    categoryNameController.dispose();
+    super.dispose();
+  }
 
   Future<List<Category>> getCategories() async {
     final cat = await Provider.of<CategoryProvider>(context, listen: false)
@@ -54,20 +63,22 @@ class _AdminEditCategoryScreenState extends State<AdminEditCategoryScreen> {
             height: 10,
           ),
           Expanded(
-              child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: ListView.builder(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              itemCount: categories.length,
-              padding: EdgeInsets.all(12),
-              itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                create: (c) => categories[i],
-                child: AdminCategoryItem(),
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: ListView.builder(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                itemCount: categories.length,
+                padding: EdgeInsets.all(12),
+                itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                  create: (c) => categories[i],
+                  child: AdminCategoryItem(),
+                ),
               ),
             ),
-          ))
+          )
         ],
       ),
     );

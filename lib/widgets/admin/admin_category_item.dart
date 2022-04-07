@@ -25,6 +25,7 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
   @override
   Widget build(BuildContext context) {
     Category category = Provider.of<Category>(context, listen: false);
+    // return Text(category.name!);
     return Container(
       padding: EdgeInsets.only(left: 16, top: 35, right: 15),
       child: Column(

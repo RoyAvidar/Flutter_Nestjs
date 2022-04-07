@@ -13,10 +13,28 @@ const categoriesGraphql = """
 }
 """;
 
+const createCategoryGraphql = """
+  mutation
+    createCategory(\$createCategoryInput: CreateCategoryInput!) {
+      createCategory(createCategoryInput: \$createCategoryInput) {
+        categoryId,
+        categoryName,
+        categoryIcon,
+      }
+    }
+""";
+
 const updateCategoryGraphql = """
   mutation 
     updateCategory(\$updateCategoryInput: UpdateCategoryInput!) {
       updateCategory(updateCategoryInput: \$updateCategoryInput)
+    }
+""";
+
+const deleteCategoryGraphql = """
+  mutation
+    deleteCategory(\$categoryId: String!) {
+      deleteCategory(categoryId: \$categoryId)
     }
 """;
 
@@ -34,6 +52,27 @@ class CategoryProvider with ChangeNotifier {
     // print(_categories);
     notifyListeners();
     return _categories;
+  }
+
+  Future<Category> createCategory(
+      String categoryName, String categoryIcon) async {
+    MutationOptions queryOptions = MutationOptions(
+      document: gql(createCategoryGraphql),
+      variables: <String, dynamic>{
+        "createCategoryInput": {
+          "categoryName": categoryName,
+          "categoryIcon": categoryIcon,
+        }
+      },
+    );
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["createCategory"];
+    final category = Category.fromJson(resultData);
+    notifyListeners();
+    return category;
   }
 
   Future<bool> updateCategory(
@@ -54,5 +93,20 @@ class CategoryProvider with ChangeNotifier {
     }
     final isUpdated = result.data?["updateCategory"];
     return isUpdated;
+  }
+
+  Future<bool> deleteCategory(String categoryId) async {
+    MutationOptions queryoptions = MutationOptions(
+        document: gql(deleteCategoryGraphql),
+        variables: <String, dynamic>{
+          "categoryId": categoryId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryoptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final isDeleted = result.data?["deleteCategory"];
+    notifyListeners();
+    return isDeleted;
   }
 }
