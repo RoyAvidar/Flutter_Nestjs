@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/user.dart';
 import 'package:flutter_main/providers/user_provider.dart';
+import 'package:flutter_main/widgets/admin/admin_user_item.dart';
 import 'package:provider/provider.dart';
 
 class SearchBar extends StatefulWidget {
@@ -83,13 +84,17 @@ class CustomSearchDelegate extends SearchDelegate {
     }
     return ListView.builder(
       itemCount: matchQuery.length,
-      itemBuilder: (context, i) {
-        var result = matchQuery[i];
-        print(result);
-        return ListTile(
-          title: Text(result.userName!),
-        );
-      },
+      // itemBuilder: (context, i) {
+      //   var result = matchQuery[i];
+      //   // print(result);
+      //   return ListTile(
+      //     title: Text(result.userName!),
+      //   );
+      // },
+      itemBuilder: (context, i) => ChangeNotifierProvider.value(
+        value: matchQuery[i],
+        child: AdminUserItem(),
+      ),
     );
   }
 
@@ -105,7 +110,7 @@ class CustomSearchDelegate extends SearchDelegate {
       itemCount: matchQuery.length,
       itemBuilder: (context, i) {
         var result = matchQuery[i];
-        print(result);
+        // print(result);
         return ListTile(
           title: Text(result.userName!),
         );

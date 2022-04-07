@@ -57,9 +57,7 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
               itemCount: users.length,
               itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                 value: users[i],
-                child: Container(
-                  child: AdminUserItem(),
-                ),
+                child: AdminUserItem(),
               ),
             ),
           ),
