@@ -45,9 +45,7 @@ class _AdminEditCategoryScreenState extends State<AdminEditCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Hello Admin'),
-      ),
+      appBar: AppBar(),
       // drawer: AppDrawer(),
       body: Column(
         children: [

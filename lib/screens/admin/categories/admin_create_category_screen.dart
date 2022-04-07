@@ -19,14 +19,17 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
       appBar: AppBar(),
       body: Column(
         children: [
-          Text(
-            "Create Category",
-            style: TextStyle(
-              fontSize: 15,
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold,
+          Center(
+            child: Text(
+              "Create Category",
+              style: TextStyle(
+                fontSize: 15,
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
+          //a form with textformfields & a submit function that implements the method of createCategory (icon/text Button).
         ],
       ),
     );
