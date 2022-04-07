@@ -61,6 +61,7 @@ const getAllUsers = """
       userId
       userName,
       userPhone,
+      userProfilePic,
       isAdmin
   }
 }

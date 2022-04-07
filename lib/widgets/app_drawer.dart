@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
 import 'package:flutter_main/providers/auth.dart';
-import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
+import 'package:flutter_main/screens/admin/categories/admin_edit_categories_screen.dart';
 import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
 import 'package:flutter_main/screens/admin/admin_user_screen.dart';
+import 'package:flutter_main/screens/admin/categories/admin_main_categories_screen.dart';
 import 'package:flutter_main/screens/auth_screen.dart';
 import 'package:flutter_main/screens/reviews_screen.dart';
 import 'package:flutter_main/screens/settings/settings_screen.dart';
@@ -125,7 +126,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       onTap: () {
                         Navigator.of(context).pushReplacementNamed(
-                            AdminCategoryScreen.routeName);
+                            AdminMainCategoriesScreen.routeName);
                       },
                     ),
                     ListTile(

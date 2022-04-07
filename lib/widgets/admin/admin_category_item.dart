@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_main/models/category.dart';
 import 'package:flutter_main/providers/category_provider.dart';
-import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
+import 'package:flutter_main/screens/admin/categories/admin_edit_categories_screen.dart';
 import 'package:provider/provider.dart';
 
 class AdminCategoryItem extends StatefulWidget {

@@ -139,6 +139,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
                                     content: Text(
                                       'Password Change Successfuly!',
                                       textAlign: TextAlign.left,
+                                      style:
+                                          TextStyle(color: Colors.lightGreen),
                                     ),
                                     duration: Duration(seconds: 2),
                                   ),

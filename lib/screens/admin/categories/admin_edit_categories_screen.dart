@@ -5,15 +5,16 @@ import 'package:flutter_main/widgets/admin/admin_category_item.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 
-class AdminCategoryScreen extends StatefulWidget {
-  const AdminCategoryScreen({Key? key}) : super(key: key);
-  static const routeName = '/admin-category';
+class AdminEditCategoryScreen extends StatefulWidget {
+  const AdminEditCategoryScreen({Key? key}) : super(key: key);
+  static const routeName = '/admin-edit-category';
 
   @override
-  State<AdminCategoryScreen> createState() => _AdminCategoryScreenState();
+  State<AdminEditCategoryScreen> createState() =>
+      _AdminEditCategoryScreenState();
 }
 
-class _AdminCategoryScreenState extends State<AdminCategoryScreen> {
+class _AdminEditCategoryScreenState extends State<AdminEditCategoryScreen> {
   List<Category> categories = [];
 
   Future<List<Category>> getCategories() async {
@@ -38,7 +39,7 @@ class _AdminCategoryScreenState extends State<AdminCategoryScreen> {
       appBar: AppBar(
         title: Text('Hello Admin'),
       ),
-      drawer: AppDrawer(),
+      // drawer: AppDrawer(),
       body: Column(
         children: [
           Text(

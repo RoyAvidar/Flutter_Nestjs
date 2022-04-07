@@ -31,6 +31,13 @@ class _AdminUserItemState extends State<AdminUserItem> {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               dense: true,
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  user.userProfilePic.toString().isNotEmpty
+                      ? "http://10.0.2.2:8000/" + user.userProfilePic!
+                      : "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg",
+                ),
+              ),
               trailing: IconButton(
                 icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
                 onPressed: () {
@@ -59,6 +66,13 @@ class _AdminUserItemState extends State<AdminUserItem> {
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     dense: true,
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        user.userProfilePic.toString().isNotEmpty
+                            ? "http://10.0.2.2:8000/" + user.userProfilePic!
+                            : "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg",
+                      ),
+                    ),
                     trailing: IconButton(
                       icon: Icon(
                           _expanded ? Icons.expand_less : Icons.expand_more),

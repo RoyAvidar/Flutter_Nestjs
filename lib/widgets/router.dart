@@ -1,9 +1,12 @@
 import 'package:flutter_main/screens/account_address_screen.dart';
 import 'package:flutter_main/screens/add_address_screen.dart';
 import 'package:flutter_main/screens/address_screen.dart';
-import 'package:flutter_main/screens/admin/admin_categories_screen.dart';
+import 'package:flutter_main/screens/admin/categories/admin_create_category_screen.dart';
+import 'package:flutter_main/screens/admin/categories/admin_delete_category_screen.dart';
+import 'package:flutter_main/screens/admin/categories/admin_edit_categories_screen.dart';
 import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
 import 'package:flutter_main/screens/admin/admin_user_screen.dart';
+import 'package:flutter_main/screens/admin/categories/admin_main_categories_screen.dart';
 import 'package:flutter_main/screens/confirm_order_screen.dart';
 import 'package:flutter_main/screens/create_review_screen.dart';
 import 'package:flutter_main/screens/edit_review_screen.dart';
@@ -29,7 +32,10 @@ class Routes {
     CartScreen.routeName: (ctx) => CartScreen(),
     OrdersScreen.routeName: (ctx) => OrdersScreen(),
     AdminProductsScreen.routeName: (ctx) => AdminProductsScreen(),
-    AdminCategoryScreen.routeName: (ctx) => AdminCategoryScreen(),
+    AdminMainCategoriesScreen.routeName: (ctx) => AdminMainCategoriesScreen(),
+    AdminEditCategoryScreen.routeName: (ctx) => AdminEditCategoryScreen(),
+    AdminCreateCategoryScreen.routeName: (ctx) => AdminCreateCategoryScreen(),
+    AdminDeleteCategoryScreen.routeName: (ctx) => AdminDeleteCategoryScreen(),
     AdminOrderScreen.routeName: (ctx) => AdminOrderScreen(),
     AdminUserScreen.routeName: (ctx) => AdminUserScreen(),
     EditProductScreen.routeName: (ctx) => EditProductScreen(),
