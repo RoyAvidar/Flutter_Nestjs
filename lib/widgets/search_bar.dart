@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/models/user.dart';
+import 'package:flutter_main/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -8,6 +11,26 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+  List<User> users = [];
+  var isLoading = true;
+
+  Future<List<User>> getUsers() async {
+    final usersData =
+        await Provider.of<UserProvider>(context, listen: false).getUsers();
+    setState(() {
+      users = usersData;
+      isLoading = false;
+    });
+    return users;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getUsers();
+  }
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -15,7 +38,7 @@ class _SearchBarState extends State<SearchBar> {
       onPressed: () {
         showSearch(
           context: context,
-          delegate: CustomSearchDelegate(),
+          delegate: CustomSearchDelegate(users),
         );
       },
     );
@@ -23,14 +46,10 @@ class _SearchBarState extends State<SearchBar> {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
-  List<String> searchTerms = [
-    'Apple',
-    'Banana',
-    'Pear',
-    'Watermelons',
-    'Blueberries',
-    'Strawberries',
-  ];
+  CustomSearchDelegate(List<User> users) {
+    this.users = users;
+  }
+  List<User> users = [];
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -56,10 +75,10 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    List<User> matchQuery = [];
+    for (var user in users) {
+      if (user.userName!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(user);
       }
     }
     return ListView.builder(
@@ -68,7 +87,7 @@ class CustomSearchDelegate extends SearchDelegate {
         var result = matchQuery[i];
         print(result);
         return ListTile(
-          title: Text(result),
+          title: Text(result.userName!),
         );
       },
     );
@@ -76,18 +95,19 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    List<User> matchQuery = [];
+    for (var user in users) {
+      if (user.userName!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(user);
       }
     }
     return ListView.builder(
       itemCount: matchQuery.length,
       itemBuilder: (context, i) {
         var result = matchQuery[i];
+        print(result);
         return ListTile(
-          title: Text(result),
+          title: Text(result.userName!),
         );
       },
     );

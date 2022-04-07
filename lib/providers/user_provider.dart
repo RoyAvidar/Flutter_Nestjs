@@ -40,6 +40,21 @@ const getUserIdGraphql = """
   }
 """;
 
+const getUserByNameGraphql = """
+  query {
+    getUserByName(\$userName: String!) {
+      getUserByName(userName: \$userName) {
+        userId,
+        userName,
+        userPhone,
+        userProfilePic,
+        isAdmin,
+        isDarkMode,
+      }
+    }
+  }
+""";
+
 const getAllUsers = """
   query {
     users {
@@ -127,6 +142,19 @@ class UserProvider with ChangeNotifier {
     final userId = result.data?["getUserId"];
     notifyListeners();
     return userId;
+  }
+
+  Future<User> getUserByName(String userName) async {
+    QueryOptions queryOptions =
+        QueryOptions(document: gql(getUserByNameGraphql));
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final resultData = result.data?["getUserByName"];
+    final user = User.fromJson(resultData);
+    notifyListeners();
+    return user;
   }
 
   Future<List<User>> getUsers() async {
