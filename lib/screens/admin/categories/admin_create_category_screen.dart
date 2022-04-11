@@ -62,7 +62,6 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
               ),
             ),
           ),
-
           Form(
             key: _formKey,
             child: Padding(
@@ -72,6 +71,7 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   TextFormField(
+                    controller: categoryNameController,
                     decoration: InputDecoration(labelText: 'Name: '),
                     textInputAction: TextInputAction.next,
                     validator: (value) {
@@ -89,7 +89,9 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                       );
                     },
                   ),
+                  //should be a dropdown bar with a list of icons.
                   TextFormField(
+                    controller: categoryIconController,
                     decoration: InputDecoration(labelText: 'Icon Name: '),
                     textInputAction: TextInputAction.done,
                     validator: (value) {
@@ -108,9 +110,11 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                     },
                   ),
                   TextButton(
-                    child: Text("Save Category"),
+                    child: Text(
+                      "Save Category",
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                     onPressed: () {
-                      //save form & edit address.
                       _saveForm();
                     },
                   ),
@@ -118,7 +122,6 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
               ),
             ),
           ),
-          //a form with textformfields & a submit function that implements the method of createCategory (icon/text Button).
         ],
       ),
     );

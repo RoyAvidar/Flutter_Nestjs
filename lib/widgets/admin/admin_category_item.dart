@@ -58,7 +58,6 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
       return isDeleted;
     }
 
-    // return Text(category.name!);
     return Column(
       children: [
         ListTile(
@@ -67,6 +66,7 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
           trailing: isEditCategory!
               ? IconButton(
                   icon: Icon(Icons.edit),
+                  color: Colors.green,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -136,9 +136,13 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
                                       },
                                     ),
                                     TextButton(
-                                      child: Text("Save Changes"),
+                                      child: Text(
+                                        "Save Changes",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                      ),
                                       onPressed: () {
-                                        //save form & edit address.
                                         _saveForm();
                                       },
                                     ),
@@ -154,17 +158,19 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
                 )
               : IconButton(
                   icon: Icon(Icons.delete),
+                  color: Colors.red,
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          title: Text('Are you sure?'),
                           content: Stack(
                             clipBehavior: Clip.none,
-                            children: [
+                            children: <Widget>[
                               Positioned(
                                 right: -40.0,
-                                top: -40.0,
+                                top: -85.0,
                                 child: InkResponse(
                                   onTap: () {
                                     Navigator.of(context).pop();

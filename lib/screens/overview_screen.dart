@@ -57,11 +57,11 @@ class _OverviewScreenState extends State<OverviewScreen> {
         .toList();
     tabs.add(
         Tab(text: "Favorites", icon: Icon(Icons.favorite_border_outlined)));
-    // print(tabs.length);
+
     return categories.length == 0
         ? Container()
         : DefaultTabController(
-            length: tabs.length,
+            length: categories.length + 1,
             initialIndex: 0,
             // The Builder widget is used to have a different BuildContext to access
             // closest DefaultTabController.
@@ -110,6 +110,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 ),
                 drawer: AppDrawer(),
                 body: TabBarView(
+                  //should be a default screen that does the job of filtering categories.
                   children: [
                     SandwichScreen(),
                     SaladScreen(),
