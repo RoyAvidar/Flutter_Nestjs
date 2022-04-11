@@ -61,22 +61,17 @@ class _AdminEditCategoryScreenState extends State<AdminEditCategoryScreen> {
             height: 10,
           ),
           Expanded(
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: ListView.builder(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                itemCount: categories.length,
-                padding: EdgeInsets.all(12),
-                itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                  create: (c) => categories[i],
-                  child: AdminCategoryItem(),
+            child: ListView.builder(
+              itemCount: categories.length,
+              padding: EdgeInsets.all(12),
+              itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                create: (c) => categories[i],
+                child: AdminCategoryItem(
+                  isEditCategory: true,
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

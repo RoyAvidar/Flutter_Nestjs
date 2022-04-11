@@ -55,9 +55,8 @@ class _AdminDeleteCategoryScreenState extends State<AdminDeleteCategoryScreen> {
               padding: EdgeInsets.all(12),
               itemBuilder: (ctx, i) => ChangeNotifierProvider(
                 create: (c) => categories[i],
-                //should be a listTile inside a listView with a trailing delete button.
-                child: Container(
-                  child: Text(categories[i].name!),
+                child: AdminCategoryItem(
+                  isEditCategory: false,
                 ),
               ),
             ),

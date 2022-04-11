@@ -2,10 +2,14 @@ import "package:flutter/material.dart";
 import 'package:flutter_main/models/category.dart';
 import 'package:flutter_main/providers/category_provider.dart';
 import 'package:flutter_main/screens/admin/categories/admin_edit_categories_screen.dart';
+import 'package:flutter_main/screens/admin/categories/admin_main_categories_screen.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 class AdminCategoryItem extends StatefulWidget {
-  const AdminCategoryItem({Key? key}) : super(key: key);
+  const AdminCategoryItem({Key? key, this.isEditCategory}) : super(key: key);
+
+  final bool? isEditCategory;
 
   @override
   State<AdminCategoryItem> createState() => _AdminCategoryItemState();
@@ -13,7 +17,8 @@ class AdminCategoryItem extends StatefulWidget {
 
 class _AdminCategoryItemState extends State<AdminCategoryItem> {
   TextEditingController categoryNameController = TextEditingController();
-  bool _validate = false;
+  final _formKey = GlobalKey<FormState>();
+  var _editedCateogy = Category(id: null, name: '', icon: '');
 
   @override
   void dispose() {
@@ -22,72 +27,183 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
     super.dispose();
   }
 
+  void _saveForm() {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _formKey.currentState!.save();
+    Provider.of<CategoryProvider>(context, listen: false).updateCategory(
+        _editedCateogy.id!, _editedCateogy.name!, _editedCateogy.icon!);
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Category Edited Successfuly!',
+          textAlign: TextAlign.left,
+        ),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Category category = Provider.of<Category>(context, listen: false);
+    final category = Provider.of<Category>(context, listen: false);
+    final isEditCategory = widget.isEditCategory;
+
+    Future<bool> deleteCategory() async {
+      final isDeleted = Provider.of<CategoryProvider>(context, listen: false)
+          .deleteCategory(category.id!);
+      return isDeleted;
+    }
+
     // return Text(category.name!);
-    return Container(
-      padding: EdgeInsets.only(left: 16, top: 35, right: 15),
-      child: Column(
-        children: [
-          TextField(
-            decoration: InputDecoration(
-              errorText: _validate ? "Please Enter a Value" : null,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              labelText: category.name,
-            ),
-            controller: categoryNameController,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    categoryNameController.text = "";
-                  });
-                },
-                child: Text("Clear"),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    categoryNameController.text.isEmpty
-                        ? _validate = true
-                        : _validate = false;
-                  });
-                  if (!_validate) {
-                    setState(
-                      () {
-                        Provider.of<CategoryProvider>(context, listen: false)
-                            .updateCategory(
-                                category.id!,
-                                categoryNameController.text,
-                                categoryNameController.text);
-                        category.name = categoryNameController.text;
-                        categoryNameController.text = "";
-                        // Navigator.of(context)
-                        //     .pushNamed(AdminCategoryScreen.routeName);
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Category Updated',
-                              textAlign: TextAlign.left,
-                            ),
-                            duration: Duration(seconds: 2),
+    return Column(
+      children: [
+        ListTile(
+          title: Text('Name: ' + category.name!),
+          subtitle: Text('Icon: ' + category.icon!),
+          trailing: isEditCategory!
+              ? IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Stack(
+                            clipBehavior: Clip.none,
+                            children: <Widget>[
+                              Positioned(
+                                right: -40.0,
+                                top: -40.0,
+                                child: InkResponse(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: CircleAvatar(
+                                    child: Icon(Icons.close),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                ),
+                              ),
+                              Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    TextFormField(
+                                      initialValue: category.name,
+                                      decoration:
+                                          InputDecoration(labelText: 'Name:'),
+                                      textInputAction: TextInputAction.next,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please provide a value.';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      onSaved: (value) {
+                                        _editedCateogy = Category(
+                                          id: category.id,
+                                          name: value,
+                                          icon: _editedCateogy.icon,
+                                        );
+                                      },
+                                    ),
+                                    TextFormField(
+                                      initialValue: category.icon,
+                                      decoration:
+                                          InputDecoration(labelText: 'Icon:'),
+                                      textInputAction: TextInputAction.done,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please provide a value.';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      onSaved: (value) {
+                                        _editedCateogy = Category(
+                                          id: category.id,
+                                          name: _editedCateogy.name,
+                                          icon: value,
+                                        );
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text("Save Changes"),
+                                      onPressed: () {
+                                        //save form & edit address.
+                                        _saveForm();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       },
                     );
-                  }
-                },
-                child: Text("Update"),
-              ),
-            ],
-          ),
-        ],
-      ),
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Positioned(
+                                right: -40.0,
+                                top: -40.0,
+                                child: InkResponse(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: CircleAvatar(
+                                    child: Icon(Icons.close),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 55),
+                                child: TextButton(
+                                  onPressed: () {
+                                    deleteCategory();
+                                    Navigator.of(context).pushNamed(
+                                        AdminMainCategoriesScreen.routeName);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Category Deleted Successfuly!',
+                                          textAlign: TextAlign.left,
+                                        ),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                  },
+                                  child: Text("Delete category"),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+        ),
+      ],
     );
   }
 }

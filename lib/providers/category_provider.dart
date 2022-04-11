@@ -17,7 +17,6 @@ const createCategoryGraphql = """
   mutation
     createCategory(\$createCategoryInput: CreateCategoryInput!) {
       createCategory(createCategoryInput: \$createCategoryInput) {
-        categoryId,
         categoryName,
         categoryIcon,
       }
