@@ -16,7 +16,9 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
   TextEditingController categoryNameController = TextEditingController();
   TextEditingController categoryIconController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  var _dropdownValue = null;
   var _editedCateogy = Category(id: null, name: '', icon: '');
+  List<String> _icons = [];
 
   @override
   void dispose() {
@@ -24,6 +26,13 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
     categoryNameController.dispose();
     categoryIconController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this._getIcons();
   }
 
   void _saveForm() {
@@ -44,6 +53,15 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
         duration: Duration(seconds: 2),
       ),
     );
+  }
+
+  List<String> _getIcons() {
+    final icons =
+        Provider.of<CategoryProvider>(context, listen: false).getIconList;
+    setState(() {
+      _icons = icons;
+    });
+    return _icons;
   }
 
   @override
@@ -89,26 +107,57 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                       );
                     },
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   //should be a dropdown bar with a list of icons.
-                  TextFormField(
-                    controller: categoryIconController,
-                    decoration: InputDecoration(labelText: 'Icon Name: '),
-                    textInputAction: TextInputAction.done,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please provide a value.';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onSaved: (value) {
+                  DropdownButton<String>(
+                    iconSize: 30,
+                    iconEnabledColor: Colors.black,
+                    isExpanded: true,
+                    elevation: 16,
+                    style: Theme.of(context).textTheme.bodyText1,
+                    value: _dropdownValue,
+                    underline: Container(
+                      height: 1,
+                      color: Colors.grey,
+                    ),
+                    items: _icons.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? value) {
                       _editedCateogy = Category(
                         id: '-1',
                         name: _editedCateogy.name,
                         icon: value,
                       );
+                      setState(() {
+                        _dropdownValue = value!;
+                      });
                     },
                   ),
+                  // TextFormField(
+                  //   controller: categoryIconController,
+                  //   decoration: InputDecoration(labelText: 'Icon Name: '),
+                  //   textInputAction: TextInputAction.done,
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return 'Please provide a value.';
+                  //     } else {
+                  //       return null;
+                  //     }
+                  //   },
+                  //   onSaved: (value) {
+                  //     _editedCateogy = Category(
+                  //       id: '-1',
+                  //       name: _editedCateogy.name,
+                  //       icon: value,
+                  //     );
+                  //   },
+                  // ),
                   TextButton(
                     child: Text(
                       "Save Category",

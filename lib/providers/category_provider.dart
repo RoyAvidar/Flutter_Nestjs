@@ -39,7 +39,22 @@ const deleteCategoryGraphql = """
 
 class CategoryProvider with ChangeNotifier {
   List<Category> _categories = [];
-  List<String> _iconList = [];
+  List<String> iconList = [
+    'local_drink ',
+    'breakfast_dining_outlined',
+    'rice_bowl_outlined',
+    'lunch_dining_outlined',
+    'cake_outlined',
+    'emoji_food_beverage_outlined',
+    'emoji_people_outlined',
+    'emoji_nature_outlined',
+    'event_note_outlined',
+    'fastfood_outlined',
+  ];
+
+  List<String> get getIconList {
+    return iconList;
+  }
 
   Future<List<Category>> get getCategories async {
     QueryOptions queryOptions = QueryOptions(document: gql(categoriesGraphql));

@@ -21,6 +21,22 @@ const productsGraphql = """
 }
 """;
 
+const productsByCategoryGraphql = """
+  query 
+    getProductsByCategory(\$categoryId: Float!) {
+      getProductsByCategory(categoryId: \$categoryId) {
+        productId,
+        productName,
+        productPrice,
+        productDesc,
+        imageUrl,
+        category {
+        categoryId
+       }
+      }
+    }
+""";
+
 const createProductGraphql = """
   mutation createProduct(\$createProductInput: CreateProductInput!, \$file: Upload!) {
     createProduct(createProductInput: \$createProductInput, file: \$file) {
@@ -73,6 +89,21 @@ class ProductsProvider with ChangeNotifier {
   }
 
   //write a function that takes a number wich be the categoryId n filter the products accordingly.
+  Future<List<Product>> getProductByCategory(int categoryId) async {
+    QueryOptions queryOptions = QueryOptions(
+        document: gql(productsByCategoryGraphql),
+        variables: <String, dynamic>{
+          "categoryId": categoryId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    _items = (result.data?['getProductsByCategory']
+        .map<Product>((p) => Product.fromJson(p))).toList();
+    notifyListeners();
+    return _items;
+  }
 
   // List<Product> get items {
   //   return _items;
