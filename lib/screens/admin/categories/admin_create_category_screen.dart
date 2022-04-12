@@ -87,6 +87,7 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
                     controller: categoryNameController,
@@ -109,6 +110,10 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                   ),
                   SizedBox(
                     height: 20,
+                  ),
+                  Text(
+                    'Icon Name:',
+                    style: TextStyle(color: Colors.grey[700]),
                   ),
                   //should be a dropdown bar with a list of icons.
                   DropdownButton<String>(
@@ -139,25 +144,6 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                       });
                     },
                   ),
-                  // TextFormField(
-                  //   controller: categoryIconController,
-                  //   decoration: InputDecoration(labelText: 'Icon Name: '),
-                  //   textInputAction: TextInputAction.done,
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return 'Please provide a value.';
-                  //     } else {
-                  //       return null;
-                  //     }
-                  //   },
-                  //   onSaved: (value) {
-                  //     _editedCateogy = Category(
-                  //       id: '-1',
-                  //       name: _editedCateogy.name,
-                  //       icon: value,
-                  //     );
-                  //   },
-                  // ),
                   TextButton(
                     child: Text(
                       "Save Category",

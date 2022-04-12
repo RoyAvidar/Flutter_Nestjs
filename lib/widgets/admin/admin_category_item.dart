@@ -44,7 +44,7 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
     _formKey.currentState!.save();
     Provider.of<CategoryProvider>(context, listen: false).updateCategory(
         _editedCateogy.id!, _editedCateogy.name!, _editedCateogy.icon!);
-    Navigator.of(context).pop();
+    Navigator.of(context).pushNamed(AdminMainCategoriesScreen.routeName);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -133,55 +133,35 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
                                         );
                                       },
                                     ),
-                                    // DropdownButton<String>(
-                                    //   iconSize: 30,
-                                    //   iconEnabledColor: Colors.black,
-                                    //   isExpanded: true,
-                                    //   elevation: 16,
-                                    //   style:
-                                    //       Theme.of(context).textTheme.bodyText1,
-                                    //   value: _dropdownValue,
-                                    //   underline: Container(
-                                    //     height: 1,
-                                    //     color: Colors.grey,
-                                    //   ),
-                                    //   items: _icons
-                                    //       .map<DropdownMenuItem<String>>(
-                                    //           (String value) {
-                                    //     return DropdownMenuItem<String>(
-                                    //       value: value,
-                                    //       child: Text(value),
-                                    //     );
-                                    //   }).toList(),
-                                    //   onChanged: (String? value) {
-                                    //     _editedCateogy = Category(
-                                    //       id: '-1',
-                                    //       name: _editedCateogy.name,
-                                    //       icon: value,
-                                    //     );
-                                    //     setState(() {
-                                    //       _dropdownValue = value!;
-                                    //     });
-                                    //   },
-                                    // ),
-                                    TextFormField(
-                                      initialValue: category.icon,
-                                      decoration:
-                                          InputDecoration(labelText: 'Icon:'),
-                                      textInputAction: TextInputAction.done,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Please provide a value.';
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      onSaved: (value) {
+                                    DropdownButton<String>(
+                                      iconSize: 30,
+                                      iconEnabledColor: Colors.black,
+                                      isExpanded: true,
+                                      elevation: 16,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
+                                      value: _dropdownValue,
+                                      underline: Container(
+                                        height: 1,
+                                        color: Colors.grey,
+                                      ),
+                                      items: _icons
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {
                                         _editedCateogy = Category(
-                                          id: category.id,
+                                          id: '-1',
                                           name: _editedCateogy.name,
                                           icon: value,
                                         );
+                                        setState(() {
+                                          _dropdownValue = value!;
+                                        });
                                       },
                                     ),
                                     TextButton(

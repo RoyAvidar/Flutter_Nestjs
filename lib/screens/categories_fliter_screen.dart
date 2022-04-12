@@ -15,8 +15,6 @@ class CategoriesFilter extends StatefulWidget {
 }
 
 class _CategoriesFilterState extends State<CategoriesFilter> {
-  List<String> _icons = [];
-
   @override
   Widget build(BuildContext context) {
     int? categoryId = widget.categoryId;

@@ -21,6 +21,8 @@ class OverviewScreen extends StatefulWidget {
 class _OverviewScreenState extends State<OverviewScreen> {
   List<Category> categories = [];
 
+  List<String> _icons = [];
+
   Future<List<Category>> getCategories() async {
     final cat = await Provider.of<CategoryProvider>(context, listen: false)
         .getCategories;
