@@ -17,8 +17,8 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
   TextEditingController categoryIconController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   var _dropdownValue = null;
-  var _editedCateogy = Category(id: null, name: '', icon: '');
   List<String> _icons = [];
+  var _editedCateogy = Category(id: null, name: '', icon: '');
 
   @override
   void dispose() {

@@ -7,6 +7,7 @@ import 'package:flutter_main/screens/admin/categories/admin_edit_categories_scre
 import 'package:flutter_main/screens/admin/admin_orders_screen.dart';
 import 'package:flutter_main/screens/admin/admin_user_screen.dart';
 import 'package:flutter_main/screens/admin/categories/admin_main_categories_screen.dart';
+import 'package:flutter_main/screens/categories_fliter_screen.dart';
 import 'package:flutter_main/screens/confirm_order_screen.dart';
 import 'package:flutter_main/screens/create_review_screen.dart';
 import 'package:flutter_main/screens/edit_review_screen.dart';
@@ -40,6 +41,7 @@ class Routes {
     AdminUserScreen.routeName: (ctx) => AdminUserScreen(),
     EditProductScreen.routeName: (ctx) => EditProductScreen(),
     OverviewScreen.routeName: (ctx) => OverviewScreen(),
+    CategoriesFilter.routeName: (ctx) => CategoriesFilter(),
     SettingsScreen.routeName: (ctx) => SettingsScreen(),
     InfoScreen.routeName: (ctx) => InfoScreen(),
     SecurityScreen.routeName: (ctx) => SecurityScreen(),

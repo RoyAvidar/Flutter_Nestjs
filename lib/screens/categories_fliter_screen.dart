@@ -13,11 +13,19 @@ class CategoriesFilter extends StatefulWidget {
 //this class/screen will get a categoryId and will generate products according to the category.
 //saving time and space with just one screen insted of a lot of screens for each category...
 class _CategoriesFilterState extends State<CategoriesFilter> {
+  List<String> _icons = [];
+
+  //futureBuilder getProductByCategory;
+
   @override
   Widget build(BuildContext context) {
+    int? id = widget.categoryId;
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(),
+      body: Container(
+        child: Text(
+          id.toString(),
+        ),
+      ),
     );
   }
 }

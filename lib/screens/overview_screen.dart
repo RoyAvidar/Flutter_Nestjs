@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_main/models/category.dart';
 import 'package:flutter_main/providers/cart.dart';
 import 'package:flutter_main/providers/category_provider.dart';
+import 'package:flutter_main/screens/categories_fliter_screen.dart';
 import 'package:flutter_main/screens/favorites_screen.dart';
 import 'package:flutter_main/widgets/badge.dart';
 import 'package:provider/provider.dart';
@@ -112,6 +113,11 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 body: TabBarView(
                   //should be a default screen that does the job of filtering categories.
                   children: [
+                    // ...categories
+                    //     .map((cat) => CategoriesFilter(
+                    //           categoryId: int.parse(cat.id!),
+                    //         ))
+                    //     .toList(),
                     SandwichScreen(),
                     SaladScreen(),
                     LunchScreen(),

@@ -18,6 +18,8 @@ class AdminCategoryItem extends StatefulWidget {
 class _AdminCategoryItemState extends State<AdminCategoryItem> {
   TextEditingController categoryNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  var _dropdownValue = null;
+  List<String> _icons = [];
   var _editedCateogy = Category(id: null, name: '', icon: '');
 
   @override
@@ -25,6 +27,13 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
     // TODO: implement dispose
     categoryNameController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this._getIcons();
   }
 
   void _saveForm() {
@@ -45,6 +54,15 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
         duration: Duration(seconds: 2),
       ),
     );
+  }
+
+  List<String> _getIcons() {
+    final icons =
+        Provider.of<CategoryProvider>(context, listen: false).getIconList;
+    setState(() {
+      _icons = icons;
+    });
+    return _icons;
   }
 
   @override
@@ -115,6 +133,37 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
                                         );
                                       },
                                     ),
+                                    // DropdownButton<String>(
+                                    //   iconSize: 30,
+                                    //   iconEnabledColor: Colors.black,
+                                    //   isExpanded: true,
+                                    //   elevation: 16,
+                                    //   style:
+                                    //       Theme.of(context).textTheme.bodyText1,
+                                    //   value: _dropdownValue,
+                                    //   underline: Container(
+                                    //     height: 1,
+                                    //     color: Colors.grey,
+                                    //   ),
+                                    //   items: _icons
+                                    //       .map<DropdownMenuItem<String>>(
+                                    //           (String value) {
+                                    //     return DropdownMenuItem<String>(
+                                    //       value: value,
+                                    //       child: Text(value),
+                                    //     );
+                                    //   }).toList(),
+                                    //   onChanged: (String? value) {
+                                    //     _editedCateogy = Category(
+                                    //       id: '-1',
+                                    //       name: _editedCateogy.name,
+                                    //       icon: value,
+                                    //     );
+                                    //     setState(() {
+                                    //       _dropdownValue = value!;
+                                    //     });
+                                    //   },
+                                    // ),
                                     TextFormField(
                                       initialValue: category.icon,
                                       decoration:

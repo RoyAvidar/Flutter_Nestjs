@@ -88,7 +88,6 @@ class ProductsProvider with ChangeNotifier {
     return _items;
   }
 
-  //write a function that takes a number wich be the categoryId n filter the products accordingly.
   Future<List<Product>> getProductByCategory(int categoryId) async {
     QueryOptions queryOptions = QueryOptions(
         document: gql(productsByCategoryGraphql),
@@ -104,10 +103,6 @@ class ProductsProvider with ChangeNotifier {
     notifyListeners();
     return _items;
   }
-
-  // List<Product> get items {
-  //   return _items;
-  // }
 
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
