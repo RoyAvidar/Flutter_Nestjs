@@ -9,9 +9,6 @@ import 'package:provider/provider.dart';
 // import 'package:badges/badges.dart';
 
 import '../widgets/app_drawer.dart';
-import '../screens/salad_screen.dart';
-import '../screens/sandwich_screen.dart';
-import '../screens/lunch_screen.dart';
 import '../screens/cart_screen.dart';
 
 class OverviewScreen extends StatefulWidget {
@@ -69,13 +66,15 @@ class _OverviewScreenState extends State<OverviewScreen> {
             child: Builder(builder: (BuildContext context) {
               final TabController tabController =
                   DefaultTabController.of(context)!;
-              tabController.addListener(() {
-                if (!tabController.indexIsChanging) {
-                  // To get index of current tab use tabController.index
-                  var index = tabController.index;
-                  // Your code goes here.
-                }
-              });
+              tabController.addListener(
+                () {
+                  if (!tabController.indexIsChanging) {
+                    // To get index of current tab use tabController.index
+                    var index = tabController.index;
+                    // Your code goes here.
+                  }
+                },
+              );
               return Scaffold(
                 appBar: AppBar(
                   title: const Text('Home'),
@@ -113,14 +112,13 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 body: TabBarView(
                   //should be a default screen that does the job of filtering categories.
                   children: [
-                    // ...categories
-                    //     .map((cat) => CategoriesFilter(
-                    //           categoryId: int.parse(cat.id!),
-                    //         ))
-                    //     .toList(),
-                    SandwichScreen(),
-                    SaladScreen(),
-                    LunchScreen(),
+                    ...categories
+                        .map(
+                          (cat) => CategoriesFilter(
+                            categoryId: int.parse(cat.id!),
+                          ),
+                        )
+                        .toList(),
                     FavoriteScreen(),
                   ],
                 ),
