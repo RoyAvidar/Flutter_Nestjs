@@ -88,6 +88,41 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 icon: Icon(Icons.cake_outlined),
               );
             }
+          case 'emoji_food_beverage_outlined':
+            {
+              return Tab(
+                text: c.name,
+                icon: Icon(Icons.emoji_food_beverage_outlined),
+              );
+            }
+          case 'emoji_people_outlined':
+            {
+              return Tab(
+                text: c.name,
+                icon: Icon(Icons.emoji_people_outlined),
+              );
+            }
+          case 'emoji_nature_outlined':
+            {
+              return Tab(
+                text: c.name,
+                icon: Icon(Icons.emoji_nature_outlined),
+              );
+            }
+          case 'event_note_outlined':
+            {
+              return Tab(
+                text: c.name,
+                icon: Icon(Icons.event_note_outlined),
+              );
+            }
+          case 'fastfood_outlined':
+            {
+              return Tab(
+                text: c.name,
+                icon: Icon(Icons.fastfood_outlined),
+              );
+            }
           default:
             {
               print('error');
