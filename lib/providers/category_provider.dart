@@ -40,7 +40,7 @@ const deleteCategoryGraphql = """
 class CategoryProvider with ChangeNotifier {
   List<Category> _categories = [];
   List<String> iconList = [
-    'local_drink ',
+    'local_drink',
     'breakfast_dining_outlined',
     'rice_bowl_outlined',
     'lunch_dining_outlined',
