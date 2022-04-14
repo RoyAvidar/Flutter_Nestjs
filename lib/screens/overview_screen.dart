@@ -20,7 +20,6 @@ class OverviewScreen extends StatefulWidget {
 
 class _OverviewScreenState extends State<OverviewScreen> {
   List<Category> categories = [];
-
   List<String> _icons = [];
 
   Future<List<Category>> getCategories() async {
@@ -32,11 +31,21 @@ class _OverviewScreenState extends State<OverviewScreen> {
     return categories;
   }
 
+  List<String> _getIcons() {
+    final icons =
+        Provider.of<CategoryProvider>(context, listen: false).getIconList;
+    setState(() {
+      _icons = icons;
+    });
+    return _icons;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     this.getCategories();
+    this._getIcons();
   }
 
   @override
@@ -112,7 +121,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 ),
                 drawer: AppDrawer(),
                 body: TabBarView(
-                  //should be a default screen that does the job of filtering categories.
                   children: [
                     ...categories
                         .map(

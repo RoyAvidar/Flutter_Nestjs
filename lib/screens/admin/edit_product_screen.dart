@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main/models/category.dart';
+import 'package:flutter_main/providers/category_provider.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   //allow me to interact with the state behind the Form widget.
   final _form = GlobalKey<FormState>();
   var _dropdownValue = null;
+  List<Category> categories = [];
   var _editedProduct = Product(
     id: null,
     name: '',
@@ -36,6 +39,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
   };
   var _isInit = true;
   var _image;
+
+  Future<List<Category>> getCategories() async {
+    final cat = await Provider.of<CategoryProvider>(context, listen: false)
+        .getCategories;
+    setState(() {
+      categories = cat;
+    });
+    return categories;
+  }
 
   void _saveForm() {
     final isValid = _form.currentState!.validate();
@@ -92,6 +104,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
       filename: image.name,
     );
     return true;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getCategories();
   }
 
   //extract data from admin_product_item.
@@ -203,7 +222,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               SizedBox(height: 5),
-              DropdownButton<String>(
+              DropdownButton<Category>(
                 iconSize: 30,
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
@@ -221,23 +240,25 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: _editedProduct.price,
                     description: _editedProduct.description,
                     imageUrl: _editedProduct.imageUrl,
-                    categoryId: value!.contains("Sandwich")
-                        ? 1
-                        : value.contains("Salad")
-                            ? 2
-                            : 3,
+                    // categoryId: value!.name!.contains("Sandwich")
+                    //     ? 1
+                    //     : value.name!.contains("Salad")
+                    //         ? 2
+                    //         : 3,
+                    categoryId: int.parse(value!.id!),
                   );
                   setState(() {
                     _dropdownValue = value;
                   });
                 },
-                items: <String>["Sandwich", "Salad", "Lunch"]
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+                items: categories.map<DropdownMenuItem<Category>>(
+                  (Category value) {
+                    return DropdownMenuItem<Category>(
+                      value: value,
+                      child: Text(value.name!),
+                    );
+                  },
+                ).toList(),
               ),
               SizedBox(height: 5),
               Row(

@@ -29,12 +29,14 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
       child: Scaffold(
         appBar: AppBar(),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Divider(height: 25),
-            Text('What do you think about this app?'),
+            Text(
+              'What do you think about this app?',
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
             Container(
-              padding: EdgeInsets.only(left: 25, top: 100, right: 25),
+              padding: EdgeInsets.only(left: 25, right: 25),
               child: TextField(
                 maxLines: null,
                 minLines: 2,
@@ -66,7 +68,10 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
                       .pushReplacementNamed(ReviewsScreen.routeName);
                 }
               },
-              child: const Text('Post A Review'),
+              child: Text(
+                'Post A Review',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
           ],
         ),
