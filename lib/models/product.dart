@@ -7,7 +7,7 @@ class Product with ChangeNotifier {
   final String? description;
   final double? price;
   final String? imageUrl;
-  final int? categoryId;
+  int? categoryId;
 
   Product({
     @required this.id,
@@ -15,7 +15,7 @@ class Product with ChangeNotifier {
     @required this.description,
     @required this.price,
     @required this.imageUrl,
-    @required this.categoryId,
+    this.categoryId,
   });
 
   Product.fromJson(Map<String, dynamic> json)
@@ -23,6 +23,9 @@ class Product with ChangeNotifier {
         name = json['productName'],
         description = json['productDesc'],
         price = double.parse(json['productPrice'].toString()),
-        imageUrl = json['imageUrl'],
-        categoryId = int.parse(json['category']['categoryId']);
+        imageUrl = json['imageUrl'];
+  // categoryId = int.parse(json['category']['categoryId']);
+
+  // Product.fromJsonNew(Map<String, dynamic> json)
+  //     : id =
 }
