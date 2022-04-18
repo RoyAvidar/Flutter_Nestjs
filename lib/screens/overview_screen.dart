@@ -53,21 +53,21 @@ class _OverviewScreenState extends State<OverviewScreen> {
     var tabs = categories.map(
       (c) {
         switch (c.icon) {
-          case 'Sandwich':
+          case 'breakfast_dining_outlined':
             {
               return Tab(
                 text: c.name,
                 icon: Icon(Icons.breakfast_dining_outlined),
               );
             }
-          case 'Salad':
+          case 'rice_bowl_outlined':
             {
               return Tab(
                 text: c.name,
                 icon: Icon(Icons.rice_bowl_outlined),
               );
             }
-          case 'Lunch':
+          case 'lunch_dining_outlined':
             {
               return Tab(
                 text: c.name,

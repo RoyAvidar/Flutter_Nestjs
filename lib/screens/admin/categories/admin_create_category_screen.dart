@@ -120,6 +120,7 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                     iconSize: 30,
                     iconEnabledColor: Colors.black,
                     isExpanded: true,
+                    isDense: true,
                     elevation: 16,
                     style: Theme.of(context).textTheme.bodyText1,
                     value: _dropdownValue,
@@ -130,7 +131,16 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                     items: _icons.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(value),
+                            Text(
+                              value,
+                              style: TextStyle(fontFamily: 'MaterialIcons'),
+                            ),
+                          ],
+                        ),
                       );
                     }).toList(),
                     onChanged: (String? value) {
@@ -144,6 +154,7 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                       });
                     },
                   ),
+                  SizedBox(height: 10),
                   TextButton(
                     child: Text(
                       "Save Category",

@@ -150,7 +150,19 @@ class _AdminCategoryItemState extends State<AdminCategoryItem> {
                                               (String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
-                                          child: Text(value),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(value),
+                                              Text(
+                                                value,
+                                                style: TextStyle(
+                                                  fontFamily: 'MaterialIcons',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         );
                                       }).toList(),
                                       onChanged: (String? value) {
