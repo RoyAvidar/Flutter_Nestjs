@@ -28,9 +28,7 @@ const productsByCategoryGraphql = """
         productPrice,
         productDesc,
         imageUrl,
-        category {
-        categoryId
-       }
+       
       }
     }
 """;
