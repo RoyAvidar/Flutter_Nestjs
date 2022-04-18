@@ -32,25 +32,57 @@ class AdminProductItem extends StatelessWidget {
               color: Colors.lightBlue[300],
             ),
             IconButton(
-              onPressed: () {
-                //snackBar Product deleted.
-                Provider.of<ProductsProvider>(context, listen: false)
-                    .deleteProduct(product.id!);
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Product Deleted Successfuly!',
-                      textAlign: TextAlign.left,
-                    ),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-                Navigator.of(context)
-                    .pushReplacementNamed(OverviewScreen.routeName);
-              },
               icon: Icon(Icons.delete),
               color: Theme.of(context).errorColor,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Are you sure?'),
+                      content: Stack(
+                        clipBehavior: Clip.none,
+                        children: <Widget>[
+                          Positioned(
+                            right: -40.0,
+                            top: -85.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: CircleAvatar(
+                                child: Icon(Icons.close),
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 55),
+                            child: TextButton(
+                              onPressed: () {
+                                Provider.of<ProductsProvider>(context,
+                                        listen: false)
+                                    .deleteProduct(product.id!);
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Category Deleted Successfuly!',
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              },
+                              child: Text("Delete this product"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),

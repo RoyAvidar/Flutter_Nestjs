@@ -125,7 +125,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             }
           default:
             {
-              print('error');
+              print('error has occurred in tabs');
               return Tab(
                 text: c.name,
                 icon: Icon(Icons.error),
@@ -135,20 +135,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
       },
     ).toList();
 
-    // List<Tab> tabs = categories
-    //     .map(
-    //       (c) => Tab(
-    //         text: c.name,
-    //         icon: c.icon!.contains("Sandwich")
-    //             ? Icon(Icons.breakfast_dining_outlined)
-    //             : c.icon!.contains("Salad")
-    //                 ? Icon(Icons.rice_bowl_outlined)
-    //                 : c.icon!.contains("Lunch")
-    //                     ? Icon(Icons.lunch_dining_outlined)
-    //                     : null,
-    //       ),
-    //     )
-    //     .toList();
     tabs.add(
       Tab(
         text: "Favorites",

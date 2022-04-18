@@ -17,24 +17,6 @@ class AdminProductsScreen extends StatefulWidget {
 }
 
 class _AdminProductsScreenState extends State<AdminProductsScreen> {
-  List<Product> products = [];
-
-  Future<List<Product>> getProds() async {
-    final prods =
-        await Provider.of<ProductsProvider>(context, listen: false).items;
-    setState(() {
-      products = prods;
-    });
-    return products;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    this.getProds();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,31 +34,66 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      //can use consumer here, insted of provider.
-      body: Column(
-        children: [
-          SizedBox(height: 15),
-          Expanded(
-            child: ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                create: (c) => products[i],
-                child: AdminProductItem(),
+      body: Consumer<ProductsProvider>(
+        builder: (co, productsData, ch) => FutureBuilder<List<Product>>(
+          future: productsData.items,
+          builder: (context, snapshot) {
+            List<Widget> children;
+
+            if (snapshot.hasError) {
+              children = <Widget>[
+                const Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                  size: 60,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text('Error: ${snapshot.error}'),
+                )
+              ];
+            } else if (snapshot.hasData) {
+              if (snapshot.data.toString() == "[]") {
+                children = <Widget>[
+                  Text(
+                    "No items found",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ];
+              } else {
+                children = <Widget>[
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (ctx, i) => ChangeNotifierProvider(
+                        create: (c) => snapshot.data![i],
+                        child: AdminProductItem(),
+                      ),
+                    ),
+                  ),
+                ];
+              }
+            } else {
+              children = const <Widget>[
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: CircularProgressIndicator(),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Text('Awaiting result...'),
+                )
+              ];
+            }
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: children,
               ),
-            ),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 16),
-            ),
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(EditProductScreen.routeName, arguments: null);
-            },
-            child: const Text('Add A Product'),
-          ),
-          SizedBox(height: 10),
-        ],
+            );
+          },
+        ),
       ),
     );
   }
