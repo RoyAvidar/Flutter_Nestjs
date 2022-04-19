@@ -16,8 +16,9 @@ const loginGraphQl = """
 const signupGraphql = """
   mutation signUp(\$createUserInput: CreateUserInput!) {
     signUp(createUserInput: \$createUserInput) {
-      userName
-      userPhone
+      userName,
+      userLastName,
+      userPhone,
       isAdmin
     }
   }
@@ -35,6 +36,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   TextEditingController userNameController = TextEditingController();
+  TextEditingController userLastNameController = TextEditingController();
   TextEditingController userPassController = TextEditingController();
   TextEditingController validatePassController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
@@ -46,6 +48,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   void dispose() {
     userNameController.dispose();
+    userLastNameController.dispose();
     userPassController.dispose();
     validatePassController.dispose();
     userPhoneController.dispose();
@@ -121,21 +124,24 @@ class _AuthScreenState extends State<AuthScreen> {
 
   signUp() async {
     String userName = userNameController.text;
+    String userLastName = userLastNameController.text;
     String userPassword = userPassController.text;
     String userValidatePass = validatePassController.text;
     String userPhone = userPhoneController.text;
     bool isAdmin = false;
 
     MutationOptions queryOptions = MutationOptions(
-        document: gql(signupGraphql),
-        variables: <String, dynamic>{
-          "createUserInput": {
-            "userName": userName,
-            "userPassword": userPassword,
-            "userPhone": userPhone,
-            "isAdmin": isAdmin
-          }
-        });
+      document: gql(signupGraphql),
+      variables: <String, dynamic>{
+        "createUserInput": {
+          "userName": userName,
+          "userLastName": userLastName,
+          "userPassword": userPassword,
+          "userPhone": userPhone,
+          "isAdmin": isAdmin
+        }
+      },
+    );
 
     QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
     if (userPassword != userValidatePass) {
@@ -179,7 +185,7 @@ class _AuthScreenState extends State<AuthScreen> {
           title: Text('Welcome'),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AnimatedCrossFade(
@@ -189,106 +195,92 @@ class _AuthScreenState extends State<AuthScreen> {
               duration: const Duration(milliseconds: 200),
               firstChild: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: TextField(
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'User Name',
-                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                      ),
-                      controller: userNameController,
+                  TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.only(bottom: 5),
+                      labelText: 'First Name',
+                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
                     ),
+                    controller: userNameController,
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                      ),
-                      controller: userPassController,
+                  SizedBox(height: 5),
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.only(bottom: 5),
+                      labelText: 'Password',
+                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
                     ),
-                  ),
-                  SizedBox(
-                    height: 5,
+                    controller: userPassController,
                   ),
                 ],
               ),
               secondChild: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: TextField(
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'User Name',
-                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                      ),
-                      controller: userNameController,
+                  TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.only(bottom: 5),
+                      labelText: 'First Name',
+                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
                     ),
+                    controller: userNameController,
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                      ),
-                      controller: userPassController,
+                  SizedBox(height: 5),
+                  TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.only(bottom: 5),
+                      labelText: 'Last Name',
+                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
                     ),
+                    controller: userLastNameController,
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: TextField(
-                      obscureText: _showPassword,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Validate Password',
-                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.remove_red_eye),
-                          onPressed: () {
-                            setState(() {
-                              _showPassword = !_showPassword;
-                            });
-                          },
-                        ),
-                      ),
-                      controller: validatePassController,
+                  SizedBox(height: 5),
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.only(bottom: 5),
+                      labelText: 'Password',
+                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
                     ),
+                    controller: userPassController,
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: TextField(
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Phone Number',
+                  SizedBox(height: 5),
+                  TextField(
+                    obscureText: _showPassword,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.only(bottom: 5),
+                      labelText: 'Validate Password',
+                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.remove_red_eye),
+                        onPressed: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
                       ),
-                      controller: userPhoneController,
                     ),
+                    controller: validatePassController,
                   ),
-                  SizedBox(
-                    height: 5,
+                  SizedBox(height: 5),
+                  TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.only(bottom: 5),
+                      labelText: 'Phone Number',
+                    ),
+                    controller: userPhoneController,
                   ),
                 ],
               ),

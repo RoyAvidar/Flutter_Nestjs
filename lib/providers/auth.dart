@@ -30,7 +30,7 @@ class AuthProvider with ChangeNotifier {
   Future<bool> logout() async {
     MutationOptions queryOptions =
         MutationOptions(document: gql(logoutGraphql));
-    QueryResult result = await GraphQLConfig.client.mutate(queryOptions);
+    QueryResult result = await GraphQLConfig.authClient.mutate(queryOptions);
     if (result.hasException) {
       print(result.exception);
     }

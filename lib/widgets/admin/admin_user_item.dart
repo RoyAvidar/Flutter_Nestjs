@@ -27,7 +27,7 @@ class _AdminUserItemState extends State<AdminUserItem> {
           children: [
             ListTile(
               title: Text(
-                "${user.userName}",
+                "${user.userName}  ${user.userLastName}",
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               dense: true,
@@ -62,7 +62,7 @@ class _AdminUserItemState extends State<AdminUserItem> {
                 children: [
                   ListTile(
                     title: Text(
-                      "${user.userName}",
+                      "${user.userName}  ${user.userLastName}",
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     dense: true,

@@ -302,7 +302,7 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
             ),
             ListTile(
-              title: Text("User Name:"),
+              title: Text("Name:"),
               subtitle: Text(
                 userName,
                 style: TextStyle(
@@ -312,7 +312,7 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
             ),
             ListTile(
-              title: Text("User Last Name:"),
+              title: Text("Last Name:"),
               subtitle: Text(
                 userLastName,
                 style: TextStyle(
@@ -322,7 +322,7 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
             ),
             ListTile(
-              title: Text("User Phone Number:"),
+              title: Text("Phone Number:"),
               subtitle: Text(
                 userPhone,
                 style: TextStyle(
