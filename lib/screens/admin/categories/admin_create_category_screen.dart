@@ -135,6 +135,7 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(value),
+                            //You can use the icons directly with their literal names by accessing the Material Icons font directly with Text() widget.
                             Text(
                               value,
                               style: TextStyle(fontFamily: 'MaterialIcons'),

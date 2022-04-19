@@ -42,11 +42,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               child: Container(
                 child: Text(
                   'You Have No Orders Yet.',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
             )

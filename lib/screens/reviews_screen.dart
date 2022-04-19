@@ -40,36 +40,46 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         title: Text("Reviews"),
       ),
       drawer: AppDrawer(),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.only(
-                  top: 25, left: 15, right: 15, bottom: 25),
-              itemCount: reviews.length,
-              itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                value: reviews[i],
-                //A Review was used after being disposed.
-                //You should move your provider above MaterialApp/Navigator.
-                //or use ChangeNotifierProvider.value
-                child: ReviewItem(),
+      body: reviews.isEmpty
+          ? Center(
+              child: Container(
+                child: Text(
+                  'No reviews on this app yet.',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(
+                        top: 25, left: 15, right: 15, bottom: 25),
+                    itemCount: reviews.length,
+                    itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                      value: reviews[i],
+                      //A Review was used after being disposed.
+                      //You should move your provider above MaterialApp/Navigator.
+                      //or use ChangeNotifierProvider.value
+                      child: ReviewItem(),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.bodyText2,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    primary: Colors.black,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(CreateReviewScreen.routeName);
+                  },
+                  child: const Text('Add A Review'),
+                ),
+                SizedBox(height: 45),
+              ],
             ),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.bodyText2,
-              backgroundColor: Theme.of(context).primaryColor,
-              primary: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
-            },
-            child: const Text('Add A Review'),
-          ),
-          SizedBox(height: 45),
-        ],
-      ),
     );
   }
 }

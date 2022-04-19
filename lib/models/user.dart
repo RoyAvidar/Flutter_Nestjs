@@ -5,6 +5,7 @@ import 'package:flutter_main/models/product.dart';
 class User with ChangeNotifier {
   final int? userId;
   final String? userName;
+  final String? userLastName;
   String? userPassword;
   final String? userPhone;
   final bool? isAdmin;
@@ -16,6 +17,7 @@ class User with ChangeNotifier {
   User({
     @required this.userId,
     @required this.userName,
+    @required this.userLastName,
     @required this.userPassword,
     @required this.userPhone,
     this.isAdmin,
@@ -28,6 +30,7 @@ class User with ChangeNotifier {
   User.fromJson(Map<String, dynamic> json)
       : userId = json['userId'],
         userName = json['userName'],
+        userLastName = json['userLastName'],
         userPhone = json['userPhone'],
         userProfilePic = json['userProfilePic'],
         isAdmin = json['isAdmin'];
