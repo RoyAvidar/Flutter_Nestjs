@@ -33,6 +33,7 @@ class _InfoScreenState extends State<InfoScreen> {
   var isLoading = true;
   bool isAdmin = false;
   String userName = "";
+  String userLastName = "";
   String userPhone = "";
   int userId = 0;
   var _image;
@@ -43,6 +44,7 @@ class _InfoScreenState extends State<InfoScreen> {
     setState(() {
       isAdmin = userData.isAdmin!;
       userName = userData.userName!;
+      userLastName = userData.userLastName!;
       userPhone = userData.userPhone!;
       userId = userData.userId!;
       _image = userData.userProfilePic;
@@ -292,16 +294,10 @@ class _InfoScreenState extends State<InfoScreen> {
                               backgroundColor: Colors.blueGrey[200],
                             ),
                           );
-
-                          // if (newImage) {
-                          //   print('sda');
-                          //
-                          // Navigator.of(context).pop();
-                          // }
                         },
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -309,6 +305,16 @@ class _InfoScreenState extends State<InfoScreen> {
               title: Text("User Name:"),
               subtitle: Text(
                 userName,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text("User Last Name:"),
+              subtitle: Text(
+                userLastName,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,

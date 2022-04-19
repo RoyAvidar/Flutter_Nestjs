@@ -39,12 +39,6 @@ class _AccountAddressScreenState extends State<AccountAddressScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            child: Text(
-              "My Addresses",
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-          ),
           addresses.isNotEmpty
               ? Expanded(
                   child: ListView.builder(
@@ -61,18 +55,14 @@ class _AccountAddressScreenState extends State<AccountAddressScreen> {
               : Center(
                   child: Text(
                     'You Have No Addresses Yet.',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).accentColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
           TextButton(
             style: TextButton.styleFrom(
-              textStyle: const TextStyle(
-                fontSize: 16,
-              ),
+              textStyle: Theme.of(context).textTheme.bodyText2,
+              backgroundColor: Theme.of(context).primaryColor,
+              primary: Colors.black,
             ),
             child: Text('Add A New Address'),
             onPressed: () {
@@ -80,7 +70,6 @@ class _AccountAddressScreenState extends State<AccountAddressScreen> {
                   .pushReplacementNamed(AddAddressScreen.routeName);
             },
           ),
-          SizedBox(height: 35),
         ],
       ),
     );

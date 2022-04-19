@@ -45,11 +45,7 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
               child: Container(
                 child: Text(
                   'No Orders Yet.',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
             )

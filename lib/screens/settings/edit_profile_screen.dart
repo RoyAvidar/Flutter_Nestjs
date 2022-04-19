@@ -15,12 +15,14 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController userNameController = TextEditingController();
+  TextEditingController userLastNameController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
 
   bool _validate = false;
   var isLoading = true;
   bool isAdmin = false;
   String userName = "";
+  String userLastName = "";
   String userPhone = "";
   int userId = 0;
 
@@ -30,6 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     setState(() {
       isAdmin = userData.isAdmin!;
       userName = userData.userName!;
+      userLastName = userData.userLastName!;
       userPhone = userData.userPhone!;
       userId = userData.userId!;
       isLoading = false;
@@ -47,6 +50,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void dispose() {
     // TODO: implement dispose
     userNameController.dispose();
+    userLastNameController.dispose();
     userPhoneController.dispose();
     super.dispose();
   }
@@ -66,7 +70,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: ListView(
             children: [
               SizedBox(height: 35),
-              buildTextField("Full Name", userName, userNameController),
+              buildTextField("First Name", userName, userNameController),
+              buildTextField("Last Name", userLastName, userLastNameController),
               buildTextField("Phone Number", userPhone, userPhoneController),
               SizedBox(height: 50),
               Row(
@@ -89,6 +94,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     onPressed: () {
                       setState(() {
                         userNameController.text.isEmpty ||
+                                userLastNameController.text.isEmpty ||
                                 userPhoneController.text.isEmpty
                             ? _validate = true
                             : _validate = false;
@@ -110,7 +116,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           builder: (BuildContext context) => AlertDialog(
                             title: Text("Are You Sure?"),
                             content: Text(
-                              "This Procses will update your profile.",
+                              "This Process will update your profile.",
                             ),
                             actions: [
                               TextButton(
@@ -124,6 +130,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           listen: false)
                                       .updateUser(
                                     userNameController.text,
+                                    userLastNameController.text,
                                     userPhoneController.text,
                                   );
                                   ScaffoldMessenger.of(context).showSnackBar(

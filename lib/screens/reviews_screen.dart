@@ -41,15 +41,36 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
       ),
       drawer: AppDrawer(),
       body: reviews.isEmpty
-          ? Center(
-              child: Container(
-                child: Text(
-                  'No reviews on this app yet.',
-                  style: Theme.of(context).textTheme.bodyText1,
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Center(
+                  child: Container(
+                    child: Text(
+                      'No reviews on this app yet.',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
                 ),
-              ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.bodyText2,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    primary: Colors.black,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(CreateReviewScreen.routeName);
+                  },
+                  child: Text(
+                    'Review our app!',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+              ],
             )
           : Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
                   child: ListView.builder(
@@ -75,9 +96,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                     Navigator.of(context)
                         .pushNamed(CreateReviewScreen.routeName);
                   },
-                  child: const Text('Add A Review'),
+                  child: Text(
+                    'Add A Review',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                 ),
-                SizedBox(height: 45),
               ],
             ),
     );
