@@ -35,6 +35,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       isAdmin = userData.isAdmin!;
       userName = userData.userName!;
       userLastName = userData.userLastName!;
+      userEmail = userData.userEmail!;
       userPhone = userData.userPhone!;
       userId = userData.userId!;
       isLoading = false;

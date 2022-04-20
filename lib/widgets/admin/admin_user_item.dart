@@ -90,21 +90,28 @@ class _AdminUserItemState extends State<AdminUserItem> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("User ID: "),
                 Text(user.userId.toString()),
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("User Email Address: "),
+                Text(user.userEmail!),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Phone Number:"),
                 Text('${user.userPhone}'),
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Admin Status: "),
                 Text(user.isAdmin!.toString()),

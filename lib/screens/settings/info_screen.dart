@@ -130,7 +130,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 15),
+        padding: EdgeInsets.only(left: 15, top: 25, right: 15),
         child: ListView(
           children: [
             Center(
@@ -337,16 +337,6 @@ class _InfoScreenState extends State<InfoScreen> {
               title: Text("Phone Number:"),
               subtitle: Text(
                 userPhone,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text("Admin Status:"),
-              subtitle: Text(
-                isAdmin.toString(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
