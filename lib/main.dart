@@ -110,9 +110,10 @@ class _MyAppState extends State<MyApp> {
           appBarTheme: AppBarTheme(backgroundColor: Colors.blueGrey),
           textTheme: const TextTheme(
             headline1: TextStyle(
-              fontSize: 18.0,
+              fontSize: 12.0,
               fontWeight: FontWeight.w500,
               fontStyle: FontStyle.italic,
+              color: Colors.grey,
             ),
             headline6: TextStyle(
               fontSize: 18.0,

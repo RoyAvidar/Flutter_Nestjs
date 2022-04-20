@@ -43,25 +43,26 @@ class _AddressScreenState extends State<AddressScreen> {
                 Center(
                   child: Text(
                     'You Have No Addresses Yet.',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).accentColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
                 SizedBox(height: 35),
                 TextButton(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   onPressed: () {
                     Navigator.of(context)
                         .pushReplacementNamed(AddAddressScreen.routeName);
                   },
-                  child: Text('Add A New Address'),
+                  child: Text(
+                    'Add A New Address',
+                    style: TextStyle(
+                      color: Colors.green[500],
+                    ),
+                  ),
                 ),
               ],
             )
@@ -72,11 +73,7 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
                 Text(
                   "Pick an Address",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headline1,
                 ),
                 SizedBox(
                   height: 10,
@@ -87,7 +84,6 @@ class _AddressScreenState extends State<AddressScreen> {
                     itemCount: addresses.length,
                     itemBuilder: (ctx, i) => ChangeNotifierProvider(
                       create: (c) => addresses[i],
-                      // child: AddressItem(arrivedFromSettings: true),
                       child: AddressItem(
                         arrivedFromSettings: false,
                       ),
@@ -97,17 +93,22 @@ class _AddressScreenState extends State<AddressScreen> {
                 TextButton(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   onPressed: () {
-                    //navigate to addAddressScreen.
-                    Navigator.of(context).pushNamed(AddAddressScreen.routeName);
+                    Navigator.of(context)
+                        .pushReplacementNamed(AddAddressScreen.routeName);
                   },
-                  child: Text('Add A New Address'),
+                  child: Text(
+                    'Add A New Address',
+                    style: TextStyle(
+                      color: Colors.green[500],
+                    ),
+                  ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
               ],
             ),

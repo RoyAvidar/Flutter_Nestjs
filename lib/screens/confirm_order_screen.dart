@@ -5,8 +5,8 @@ import 'package:flutter_main/providers/address_provider.dart';
 import 'package:flutter_main/providers/cart.dart';
 import 'package:flutter_main/providers/orders.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
-import 'package:flutter_main/widgets/address_item.dart';
-import 'package:flutter_main/widgets/cart_item.dart';
+// import 'package:flutter_main/widgets/address_item.dart';
+// import 'package:flutter_main/widgets/cart_item.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmOrderScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
       cart = cartData;
       isLoading = false;
     });
-    // print(cart);
+    // print(cart!.cartId.toString());
     return cart;
   }
 
@@ -79,178 +79,98 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            padding: EdgeInsets.all(20),
+          Center(
             child: Text(
-              "Order Information: ",
-              style: Theme.of(context).textTheme.headline6,
+              "Confirmation: ",
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              "Cart Items: ",
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ),
-          Container(
-            width: 380,
-            height: 180,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Center(
+            child: Stack(
               children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: cart!.products!.length,
-                    itemBuilder: (ctx, i) => Card(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 4,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            child: FittedBox(
-                              child: Container(
-                                width: 300,
-                                height: 300,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 3,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      spreadRadius: 1,
-                                      blurRadius: 5,
-                                      color: Colors.black.withOpacity(0.5),
-                                      offset: Offset(0, 15),
-                                    )
-                                  ],
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      "http://10.0.2.2:8000/" +
-                                          cart!.products![i].imageUrl
-                                              .toString(),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          title: Text('${cart!.products![i].title}'),
-                          subtitle: Text(
-                            'Price: \$${(cart!.products![i].price!)}',
-                          ),
-                          trailing: Text('x ${cart!.products![i].quantity}'),
-                        ),
-                      ),
-                    ),
-                  ),
+                Icon(
+                  Icons.shopping_bag_outlined,
+                  size: 100,
                 ),
+                Positioned(
+                  top: 40,
+                  right: 30,
+                  child: Icon(
+                    Icons.verified_outlined,
+                    size: 40,
+                  ),
+                )
               ],
             ),
           ),
-          SizedBox(height: 15),
-          Container(
-            padding: EdgeInsets.all(15),
-            child: Text(
-              "Address Information: ",
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ),
-          AnimatedCrossFade(
-            crossFadeState: _expanded
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            duration: Duration(milliseconds: 200),
-            firstChild: ListTile(
-              title: Text("City: " + address!.city!),
-              leading: IconButton(
-                onPressed: () {
-                  setState(() {
-                    _expanded = !_expanded;
-                  });
-                },
-                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-                color: _expanded ? Colors.lightBlue : Colors.grey,
-              ),
-            ),
-            secondChild: Container(
-              // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    title: Text("City: " + address!.city!),
-                    leading: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _expanded = !_expanded;
-                        });
-                      },
-                      icon: Icon(
-                          _expanded ? Icons.expand_less : Icons.expand_more),
-                      color: _expanded ? Colors.lightBlue : Colors.grey,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("Sreet: " + address!.streetName!),
-                      Text(
-                        "Number: " + address!.streetNumber.toString() + "  ",
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("Floor: " + address!.floorNumber.toString()),
-                      Text(
-                          "Apartment:  " + address!.apartmentNumber.toString()),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-          Divider(height: 35),
           Text(
-            'Total Price: \$${cart!.totalPrice}',
+            "Thanks for your purchase.",
             style: Theme.of(context).textTheme.bodyText1,
           ),
-          SizedBox(height: 15),
-          Dismissible(
-            key: ValueKey(cart!.cartId),
-            background: Container(
-              color: Colors.lightGreen,
-              child: Icon(Icons.send),
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.symmetric(horizontal: 15),
-            ),
-            direction: DismissDirection.startToEnd,
-            child: Container(
-              // padding: EdgeInsets.only(left: 15),
-              width: 360,
-              height: 30,
-              child: Text(
-                "Swipe right to order now!",
-                style: Theme.of(context).textTheme.bodyText1,
+          SizedBox(height: 50),
+          Expanded(
+            child: ListView.builder(
+              itemCount: cart!.products!.length,
+              itemBuilder: (ctx, i) => Card(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 4,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: FittedBox(
+                        child: Container(
+                          width: 300,
+                          height: 300,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 3,
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                color: Colors.black.withOpacity(0.5),
+                                offset: Offset(0, 15),
+                              )
+                            ],
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                "http://10.0.2.2:8000/" +
+                                    cart!.products![i].imageUrl.toString(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    title: Text('${cart!.products![i].title}'),
+                    subtitle: Text(
+                      'Price: \$${(cart!.products![i].price!)}',
+                    ),
+                    trailing: Text('x ${cart!.products![i].quantity}'),
+                  ),
+                ),
               ),
             ),
-            onDismissed: (direction) {
-              submit();
-            },
           ),
+          //show address and payment method.
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+            ),
+            child: Text('Order Details'),
+          ),
+          SizedBox(height: 110),
           Container(
-            // padding: EdgeInsets.only(left: 10),
             child: TextButton(
               child: Text(
                 "Back to main screen",

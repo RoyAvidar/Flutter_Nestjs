@@ -222,6 +222,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               SizedBox(height: 5),
+              Text('Category'),
               DropdownButton<Category>(
                 iconSize: 30,
                 iconEnabledColor: Colors.black,

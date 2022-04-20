@@ -59,332 +59,273 @@ class _AddressItemState extends State<AddressItem> {
 
     return Column(
       children: [
+        //CheckboxListTile maybe?
         ListTile(
           title: Text(address.city!),
-          leading: IconButton(
-            onPressed: () {
-              setState(() {
-                _expanded = !_expanded;
-              });
-            },
-            icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-            color: _expanded ? Colors.black : Theme.of(context).primaryColor,
+          subtitle: Text(
+            address.streetName! +
+                " " +
+                address.streetNumber!.toString() +
+                ",                      Floor: " +
+                address.floorNumber.toString() +
+                ", Apartment: " +
+                address.apartmentNumber.toString(),
           ),
+          isThreeLine: true,
           trailing: Container(
-            width: 50,
-            child: Row(
-              children: [
-                if (!isFrom!)
-                  IconButton(
+            width: 100,
+            child: !isFrom!
+                ? IconButton(
                     icon: Icon(Icons.check),
                     color: Colors.lightGreen,
                     onPressed: () {
-                      //will navigate to confirm order screen where submit will use this addressId & cartId.
+                      //will navigate to choosePayment screen where submit will use this addressId & cartId.
                       Navigator.of(context).pushNamed(
                           ConfirmOrderScreen.routeName,
                           arguments: address.addressId);
                     },
-                  ),
-              ],
-            ),
-          ),
-        ),
-        if (_expanded)
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            child: Column(
-              children: [
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  )
+                : Row(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Sreet: " + address.streetName!),
-                          Text(
-                            "Number: " + address.streetNumber.toString() + "  ",
-                          ),
-                          if (isFrom)
-                            IconButton(
-                              onPressed: () {
-                                // popup
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content: Stack(
-                                        // overflow: Overflow.visible,
-                                        clipBehavior: Clip.none,
+                      IconButton(
+                        onPressed: () {
+                          // popup
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Stack(
+                                  // overflow: Overflow.visible,
+                                  clipBehavior: Clip.none,
+                                  children: <Widget>[
+                                    Positioned(
+                                      right: -40.0,
+                                      top: -40.0,
+                                      child: InkResponse(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: CircleAvatar(
+                                          child: Icon(Icons.close),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                    Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         children: <Widget>[
-                                          Positioned(
-                                            right: -40.0,
-                                            top: -40.0,
-                                            child: InkResponse(
-                                              onTap: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: CircleAvatar(
-                                                child: Icon(Icons.close),
-                                                backgroundColor: Colors.red,
-                                              ),
+                                          TextFormField(
+                                            initialValue: address.city,
+                                            decoration: InputDecoration(
+                                              labelText: 'City',
                                             ),
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Please provide a value.';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            onSaved: (value) {
+                                              _editedAddress = Address(
+                                                addressId: address.addressId,
+                                                city: value,
+                                                streetName:
+                                                    _editedAddress.streetName,
+                                                streetNumber:
+                                                    _editedAddress.streetNumber,
+                                                floorNumber:
+                                                    _editedAddress.floorNumber,
+                                                apartmentNumber: _editedAddress
+                                                    .apartmentNumber,
+                                              );
+                                            },
                                           ),
-                                          Form(
-                                            key: _formKey,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: <Widget>[
-                                                TextFormField(
-                                                  initialValue: address.city,
-                                                  decoration: InputDecoration(
-                                                    labelText: 'City',
-                                                  ),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'Please provide a value.';
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                  onSaved: (value) {
-                                                    _editedAddress = Address(
-                                                      addressId:
-                                                          address.addressId,
-                                                      city: value,
-                                                      streetName: _editedAddress
-                                                          .streetName,
-                                                      streetNumber:
-                                                          _editedAddress
-                                                              .streetNumber,
-                                                      floorNumber:
-                                                          _editedAddress
-                                                              .floorNumber,
-                                                      apartmentNumber:
-                                                          _editedAddress
-                                                              .apartmentNumber,
-                                                    );
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  initialValue:
-                                                      address.streetName,
-                                                  decoration: InputDecoration(
-                                                    labelText: 'Street',
-                                                  ),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'Please provide a value.';
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                  onSaved: (value) {
-                                                    _editedAddress = Address(
-                                                      addressId:
-                                                          address.addressId,
-                                                      city: _editedAddress.city,
-                                                      streetName: value,
-                                                      streetNumber:
-                                                          _editedAddress
-                                                              .streetNumber,
-                                                      floorNumber:
-                                                          _editedAddress
-                                                              .floorNumber,
-                                                      apartmentNumber:
-                                                          _editedAddress
-                                                              .apartmentNumber,
-                                                    );
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  initialValue: address
-                                                      .streetNumber
-                                                      .toString(),
-                                                  decoration: InputDecoration(
-                                                    labelText: 'Number',
-                                                  ),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'Please provide a value.';
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                  onSaved: (value) {
-                                                    _editedAddress = Address(
-                                                      addressId:
-                                                          address.addressId,
-                                                      city: _editedAddress.city,
-                                                      streetName: _editedAddress
-                                                          .streetName,
-                                                      streetNumber:
-                                                          int.parse(value!),
-                                                      floorNumber:
-                                                          _editedAddress
-                                                              .floorNumber,
-                                                      apartmentNumber:
-                                                          _editedAddress
-                                                              .apartmentNumber,
-                                                    );
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  initialValue: address
-                                                      .floorNumber
-                                                      .toString(),
-                                                  decoration: InputDecoration(
-                                                    labelText: 'Floor',
-                                                  ),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'Please provide a value.';
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                  onSaved: (value) {
-                                                    _editedAddress = Address(
-                                                      addressId:
-                                                          address.addressId,
-                                                      city: _editedAddress.city,
-                                                      streetName: _editedAddress
-                                                          .streetName,
-                                                      streetNumber:
-                                                          _editedAddress
-                                                              .streetNumber,
-                                                      floorNumber:
-                                                          int.parse(value!),
-                                                      apartmentNumber:
-                                                          _editedAddress
-                                                              .apartmentNumber,
-                                                    );
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  initialValue: address
-                                                      .apartmentNumber
-                                                      .toString(),
-                                                  decoration: InputDecoration(
-                                                    labelText: 'Apartment',
-                                                  ),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'Please provide a value.';
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                  onSaved: (value) {
-                                                    _editedAddress = Address(
-                                                      addressId:
-                                                          address.addressId,
-                                                      city: _editedAddress.city,
-                                                      streetName: _editedAddress
-                                                          .streetName,
-                                                      streetNumber:
-                                                          _editedAddress
-                                                              .streetNumber,
-                                                      floorNumber:
-                                                          _editedAddress
-                                                              .floorNumber,
-                                                      apartmentNumber:
-                                                          int.parse(value!),
-                                                    );
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: Text("Save Changes"),
-                                                  onPressed: () {
-                                                    //save form & edit address.
-                                                    _saveForm();
-                                                  },
-                                                ),
-                                              ],
+                                          TextFormField(
+                                            initialValue: address.streetName,
+                                            decoration: InputDecoration(
+                                              labelText: 'Street',
                                             ),
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Please provide a value.';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            onSaved: (value) {
+                                              _editedAddress = Address(
+                                                addressId: address.addressId,
+                                                city: _editedAddress.city,
+                                                streetName: value,
+                                                streetNumber:
+                                                    _editedAddress.streetNumber,
+                                                floorNumber:
+                                                    _editedAddress.floorNumber,
+                                                apartmentNumber: _editedAddress
+                                                    .apartmentNumber,
+                                              );
+                                            },
+                                          ),
+                                          TextFormField(
+                                            initialValue:
+                                                address.streetNumber.toString(),
+                                            decoration: InputDecoration(
+                                              labelText: 'Number',
+                                            ),
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Please provide a value.';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            onSaved: (value) {
+                                              _editedAddress = Address(
+                                                addressId: address.addressId,
+                                                city: _editedAddress.city,
+                                                streetName:
+                                                    _editedAddress.streetName,
+                                                streetNumber: int.parse(value!),
+                                                floorNumber:
+                                                    _editedAddress.floorNumber,
+                                                apartmentNumber: _editedAddress
+                                                    .apartmentNumber,
+                                              );
+                                            },
+                                          ),
+                                          TextFormField(
+                                            initialValue:
+                                                address.floorNumber.toString(),
+                                            decoration: InputDecoration(
+                                              labelText: 'Floor',
+                                            ),
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Please provide a value.';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            onSaved: (value) {
+                                              _editedAddress = Address(
+                                                addressId: address.addressId,
+                                                city: _editedAddress.city,
+                                                streetName:
+                                                    _editedAddress.streetName,
+                                                streetNumber:
+                                                    _editedAddress.streetNumber,
+                                                floorNumber: int.parse(value!),
+                                                apartmentNumber: _editedAddress
+                                                    .apartmentNumber,
+                                              );
+                                            },
+                                          ),
+                                          TextFormField(
+                                            initialValue: address
+                                                .apartmentNumber
+                                                .toString(),
+                                            decoration: InputDecoration(
+                                              labelText: 'Apartment',
+                                            ),
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Please provide a value.';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            onSaved: (value) {
+                                              _editedAddress = Address(
+                                                addressId: address.addressId,
+                                                city: _editedAddress.city,
+                                                streetName:
+                                                    _editedAddress.streetName,
+                                                streetNumber:
+                                                    _editedAddress.streetNumber,
+                                                floorNumber:
+                                                    _editedAddress.floorNumber,
+                                                apartmentNumber:
+                                                    int.parse(value!),
+                                              );
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text("Save Changes"),
+                                            onPressed: () {
+                                              //save form & edit address.
+                                              _saveForm();
+                                            },
                                           ),
                                         ],
                                       ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        icon: Icon(Icons.edit),
+                        color: Colors.lightBlue,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          //delete this address.
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: Text("Are You Sure?"),
+                              content: Text(
+                                  "You will not be able to restore this address!"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, "Oops"),
+                                  child: Text("Oops"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    deleteAddress();
+                                    Navigator.of(context)
+                                        .pushNamed(SettingsScreen.routeName);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Address Deleted Successfuly!',
+                                          textAlign: TextAlign.left,
+                                        ),
+                                        duration: Duration(seconds: 2),
+                                      ),
                                     );
                                   },
-                                );
-                              },
-                              icon: Icon(Icons.edit),
-                              color: Colors.lightBlue,
+                                  child: Text("Delete Address!"),
+                                )
+                              ],
                             ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Floor: " + address.floorNumber.toString()),
-                          Text("Apartment:  " +
-                              address.apartmentNumber.toString()),
-                          if (isFrom)
-                            IconButton(
-                              onPressed: () {
-                                //delete this address.
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    title: Text("Are You Sure?"),
-                                    content: Text(
-                                        "You will not be able to restore this address!"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, "Oops"),
-                                        child: Text("Oops"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          deleteAddress();
-                                          Navigator.of(context).pushNamed(
-                                              SettingsScreen.routeName);
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'Address Deleted Successfuly!',
-                                                textAlign: TextAlign.left,
-                                              ),
-                                              duration: Duration(seconds: 2),
-                                            ),
-                                          );
-                                        },
-                                        child: Text("Delete Address!"),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                              icon: Icon(Icons.delete),
-                              color: Colors.red,
-                            ),
-                        ],
+                          );
+                        },
+                        icon: Icon(Icons.delete),
+                        color: Colors.red,
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-              ],
-            ),
-          )
+          ),
+        ),
       ],
     );
   }

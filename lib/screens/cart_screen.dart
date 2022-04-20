@@ -52,18 +52,6 @@ class _CartScreenState extends State<CartScreen> {
     return result;
   }
 
-  // submit() async {
-  //   final cartId =
-  //       await Provider.of<CartProvider>(context, listen: false).getCartId();
-  //   Provider.of<OrdersProvider>(context, listen: false).addOrder(cartId);
-  //   final isClean = await this.cleanCart(cartId);
-  //   if (isClean) {
-  //     Navigator.of(context).pop();
-  //   } else {
-  //     throw new Error();
-  //   }
-  // }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -73,9 +61,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-      textStyle: TextStyle(color: Theme.of(context).primaryColor),
-    );
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Cart'),
@@ -107,24 +92,6 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     // listView of cartItem's ,
                     Expanded(
-                      // child: ChangeNotifierProvider(
-                      //   create: (_) => CartProvider(),
-                      //   child: Consumer<CartProvider>(
-                      //     builder: (co, cartData, ch) => ListView.builder(
-                      //       itemCount: cart!.products!.length,
-                      //       itemBuilder: (ctx, i) {
-                      //         return CartItemWidget(
-                      //           DateTime.now().toString(),
-                      //           cart!.products![i].id!,
-                      //           cart!.products![i].price!,
-                      //           cart!.products![i].quantity!,
-                      //           cart!.products![i].title!,
-                      //           cart!.products![i].imageUrl,
-                      //         );
-                      //       },
-                      //     ),
-                      //   ),
-                      // ),
                       child: ChangeNotifierProvider(
                         create: (_) => CartProvider(),
                         child: ListView.builder(
@@ -141,19 +108,6 @@ class _CartScreenState extends State<CartScreen> {
                           },
                         ),
                       ),
-                      // child: ListView.builder(
-                      //   itemCount: cart!.products!.length,
-                      //   itemBuilder: (ctx, i) => ChangeNotifierProvider(
-                      //     create: (c) => cart!.products![i],
-                      //     child: CartItemWidget(
-                      //         DateTime.now().toString(),
-                      //         cart!.products![i].id!,
-                      //         cart!.products![i].price!,
-                      //         cart!.products![i].quantity!,
-                      //         cart!.products![i].title!,
-                      //         cart!.products![i].imageUrl),
-                      //   ),
-                      // ),
                     ),
                     Consumer<CartProvider>(
                       builder: (co, cartData, child) => FutureBuilder<int?>(
@@ -170,11 +124,10 @@ class _CartScreenState extends State<CartScreen> {
                             child: Padding(
                               padding: EdgeInsets.all(8),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Total',
+                                    'Total:',
                                     style:
                                         Theme.of(context).textTheme.bodyText1,
                                   ),
@@ -182,9 +135,6 @@ class _CartScreenState extends State<CartScreen> {
                                     label: Text(
                                       // '\$${cart.totalAmount.toStringAsFixed(2)}',
                                       "${snapshot.data.toString()}",
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
                                     ),
                                   ),
                                 ],
@@ -194,26 +144,27 @@ class _CartScreenState extends State<CartScreen> {
                         },
                       ),
                     ),
-                    ElevatedButton.icon(
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                      ),
                       onPressed: () {
-                        // submit();
                         Navigator.of(context)
                             .pushNamed(AddressScreen.routeName);
                       },
-                      style: buttonStyle,
-                      icon: const Icon(Icons.check),
-                      label: Text('Order Now'),
+                      child: Text('Choose An Address'),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
-                    ElevatedButton.icon(
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.grey,
+                      ),
                       onPressed: () {
                         cleanCart(cart!.cartId!);
                       },
-                      style: buttonStyle,
-                      icon: const Icon(Icons.clear),
-                      label: Text('Clear Cart'),
+                      child: Text('Clear Cart'),
                     ),
                   ],
                 ),
