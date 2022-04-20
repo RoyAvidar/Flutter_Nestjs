@@ -80,6 +80,10 @@ class _AddressItemState extends State<AddressItem> {
                     color: Colors.lightGreen,
                     onPressed: () {
                       //will navigate to choosePayment screen where submit will use this addressId & cartId.
+                      //  Navigator.of(context).pushNamed(
+                      //   PaymentScreen.routeName,
+                      //   arguments: address.addressId,
+                      // );
                       Navigator.of(context).pushNamed(
                           ConfirmOrderScreen.routeName,
                           arguments: address.addressId);

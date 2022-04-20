@@ -12,6 +12,7 @@ import 'package:flutter_main/screens/confirm_order_screen.dart';
 import 'package:flutter_main/screens/create_review_screen.dart';
 import 'package:flutter_main/screens/edit_review_screen.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
+import 'package:flutter_main/screens/payment_screen.dart';
 import 'package:flutter_main/screens/report_bug_screen.dart';
 import 'package:flutter_main/screens/reviews_screen.dart';
 import 'package:flutter_main/screens/settings/edit_profile_screen.dart';
@@ -53,6 +54,7 @@ class Routes {
     AddressScreen.routeName: (ctx) => AddressScreen(),
     AccountAddressScreen.routeName: (ctx) => AccountAddressScreen(),
     ConfirmOrderScreen.routeName: (ctx) => ConfirmOrderScreen(),
+    PaymentScreen.routeName: (ctx) => PaymentScreen(),
     AddAddressScreen.routeName: (ctx) => AddAddressScreen(),
   };
 }
