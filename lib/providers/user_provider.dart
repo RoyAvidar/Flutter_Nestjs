@@ -25,6 +25,7 @@ const getSingleUser = """
     userId,
     userName,
     userLastName,
+    userEmail,
     userPhone,
     userProfilePic,
     isAdmin,
@@ -48,6 +49,7 @@ const getUserByNameGraphql = """
         userId,
         userName,
         userLastName,
+        userEmail,
         userPhone,
         userProfilePic,
         isAdmin,
@@ -63,6 +65,7 @@ const getAllUsers = """
       userId
       userName,
       userLastName,
+      userEmail,
       userPhone,
       userProfilePic,
       isAdmin
@@ -91,6 +94,7 @@ const updateUserGraphql = """
         userId,
         userName,
         userLastName,
+        userEmail,
         userPhone,
         isAdmin
       }
@@ -245,14 +249,15 @@ class UserProvider with ChangeNotifier {
     return resultData;
   }
 
-  Future<User> updateUser(
-      String userName, String userLastName, String userPhone) async {
+  Future<User> updateUser(String userName, String userLastName,
+      String userEmail, String userPhone) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(updateUserGraphql),
         variables: <String, dynamic>{
           "updateUserData": {
             "userName": userName,
             "userLastName": userLastName,
+            "userEmail": userEmail,
             "userPhone": userPhone,
           },
         });

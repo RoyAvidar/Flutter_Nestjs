@@ -18,6 +18,7 @@ const signupGraphql = """
     signUp(createUserInput: \$createUserInput) {
       userName,
       userLastName,
+      userEmail,
       userPhone,
       isAdmin
     }
@@ -37,6 +38,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController userLastNameController = TextEditingController();
+  TextEditingController userEmailController = TextEditingController();
   TextEditingController userPassController = TextEditingController();
   TextEditingController validatePassController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
@@ -49,6 +51,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void dispose() {
     userNameController.dispose();
     userLastNameController.dispose();
+    userEmailController.dispose();
     userPassController.dispose();
     validatePassController.dispose();
     userPhoneController.dispose();
@@ -125,6 +128,7 @@ class _AuthScreenState extends State<AuthScreen> {
   signUp() async {
     String userName = userNameController.text;
     String userLastName = userLastNameController.text;
+    String userEmail = userEmailController.text;
     String userPassword = userPassController.text;
     String userValidatePass = validatePassController.text;
     String userPhone = userPhoneController.text;
@@ -136,6 +140,7 @@ class _AuthScreenState extends State<AuthScreen> {
         "createUserInput": {
           "userName": userName,
           "userLastName": userLastName,
+          "userEmail": userEmail,
           "userPassword": userPassword,
           "userPhone": userPhone,
           "isAdmin": isAdmin
@@ -231,7 +236,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     controller: userNameController,
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 4),
                   TextField(
                     obscureText: false,
                     decoration: InputDecoration(
@@ -242,7 +247,18 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     controller: userLastNameController,
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 4),
+                  TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.only(bottom: 5),
+                      labelText: 'Email Address',
+                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                    ),
+                    controller: userEmailController,
+                  ),
+                  SizedBox(height: 4),
                   TextField(
                     obscureText: true,
                     decoration: InputDecoration(
@@ -253,7 +269,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     controller: userPassController,
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 4),
                   TextField(
                     obscureText: _showPassword,
                     decoration: InputDecoration(
@@ -272,7 +288,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     controller: validatePassController,
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 4),
                   TextField(
                     obscureText: false,
                     decoration: InputDecoration(

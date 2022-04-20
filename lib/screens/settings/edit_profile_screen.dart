@@ -16,6 +16,7 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController userLastNameController = TextEditingController();
+  TextEditingController userEmailController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
 
   bool _validate = false;
@@ -23,6 +24,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool isAdmin = false;
   String userName = "";
   String userLastName = "";
+  String userEmail = "";
   String userPhone = "";
   int userId = 0;
 
@@ -51,6 +53,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     // TODO: implement dispose
     userNameController.dispose();
     userLastNameController.dispose();
+    userEmailController.dispose();
     userPhoneController.dispose();
     super.dispose();
   }
@@ -72,6 +75,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               SizedBox(height: 35),
               buildTextField("First Name", userName, userNameController),
               buildTextField("Last Name", userLastName, userLastNameController),
+              buildTextField("Email", userEmail, userEmailController),
               buildTextField("Phone Number", userPhone, userPhoneController),
               SizedBox(height: 50),
               Row(
@@ -131,6 +135,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       .updateUser(
                                     userNameController.text,
                                     userLastNameController.text,
+                                    userEmailController.text,
                                     userPhoneController.text,
                                   );
                                   ScaffoldMessenger.of(context).showSnackBar(

@@ -34,6 +34,7 @@ class _InfoScreenState extends State<InfoScreen> {
   bool isAdmin = false;
   String userName = "";
   String userLastName = "";
+  String userEmail = "";
   String userPhone = "";
   int userId = 0;
   var _image;
@@ -45,6 +46,7 @@ class _InfoScreenState extends State<InfoScreen> {
       isAdmin = userData.isAdmin!;
       userName = userData.userName!;
       userLastName = userData.userLastName!;
+      userEmail = userData.userEmail!;
       userPhone = userData.userPhone!;
       userId = userData.userId!;
       _image = userData.userProfilePic;
@@ -315,6 +317,16 @@ class _InfoScreenState extends State<InfoScreen> {
               title: Text("Last Name:"),
               subtitle: Text(
                 userLastName,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text("Email Address:"),
+              subtitle: Text(
+                userEmail,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,

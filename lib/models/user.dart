@@ -6,6 +6,7 @@ class User with ChangeNotifier {
   final int? userId;
   final String? userName;
   final String? userLastName;
+  final String? userEmail;
   String? userPassword;
   final String? userPhone;
   final bool? isAdmin;
@@ -18,6 +19,7 @@ class User with ChangeNotifier {
     @required this.userId,
     @required this.userName,
     @required this.userLastName,
+    @required this.userEmail,
     @required this.userPassword,
     @required this.userPhone,
     this.isAdmin,
@@ -31,6 +33,7 @@ class User with ChangeNotifier {
       : userId = json['userId'],
         userName = json['userName'],
         userLastName = json['userLastName'],
+        userEmail = json['userEmail'],
         userPhone = json['userPhone'],
         userProfilePic = json['userProfilePic'],
         isAdmin = json['isAdmin'];
