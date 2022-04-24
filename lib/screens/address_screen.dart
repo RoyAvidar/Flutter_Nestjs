@@ -93,6 +93,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           addresses[i].city! +
                               ', ' +
                               addresses[i].streetName! +
+                              ' ' +
                               addresses[i].streetNumber.toString(),
                         ),
                         subtitle: Text(
@@ -105,17 +106,18 @@ class _AddressScreenState extends State<AddressScreen> {
                         controlAffinity: ListTileControlAffinity.leading,
                         activeColor: Colors.green,
                         checkColor: Colors.black,
-                        value: _isChecked,
+                        value: selectedAddressId == null ? false : true,
                         onChanged: (value) {
                           if (value!) {
                             setState(() {
                               selectedAddressId = addresses[i].addressId;
                               print(selectedAddressId);
                             });
+                          } else {
+                            setState(() {
+                              selectedAddressId = null;
+                            });
                           }
-                          setState(() {
-                            _isChecked = value;
-                          });
                         },
                       ),
                     ),

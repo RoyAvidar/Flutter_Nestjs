@@ -18,6 +18,7 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   var isLoading = true;
+  bool _isChecked = false;
   Address? address;
 
   Future<Address?> getAddress() async {
@@ -65,23 +66,51 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(),
       body: Column(
         children: [
-          Text(
-            'Pick Payment Method',
-            style: Theme.of(context).textTheme.headline1,
-          ),
           Center(
-            child: address == null
-                ? Text('no address')
-                : Text(
-                    address!.addressId!.toString(),
-                  ),
+            child: Text(
+              'Pick Payment Method',
+              style: Theme.of(context).textTheme.headline1,
+            ),
           ),
+          address == null
+              ? Text('Error: no address was chosen.')
+              : Column(
+                  children: [
+                    CheckboxListTile(
+                      dense: true,
+                      title: Text('Cash On Delivery'),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: Colors.green,
+                      checkColor: Colors.black,
+                      value: _isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          _isChecked = value!;
+                        });
+                      },
+                    ),
+                    CheckboxListTile(
+                      dense: true,
+                      title: Text('Google Pay'),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: Colors.green,
+                      checkColor: Colors.black,
+                      value: _isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          _isChecked = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+
           //will submit the order and navigate to confirm_order_screen with orderId.
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Theme.of(context).primaryColor,
             ),
-            child: Text('Order Now!'),
+            child: Text('Complete Order'),
             onPressed: () {
               Navigator.of(context).pushNamed(ConfirmOrderScreen.routeName);
             },
