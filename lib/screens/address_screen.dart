@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_main/models/address.dart';
 import 'package:flutter_main/providers/address_provider.dart';
 import 'package:flutter_main/screens/add_address_screen.dart';
+import 'package:flutter_main/screens/payment_screen.dart';
 import 'package:flutter_main/widgets/address_item.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,8 @@ class AddressScreen extends StatefulWidget {
 
 class _AddressScreenState extends State<AddressScreen> {
   List<Address> addresses = [];
+  bool _isChecked = false;
+  int? selectedAddressId;
 
   Future<List<Address>> getAddressesByUser() async {
     final addre = await Provider.of<AddressProvider>(context, listen: false)
@@ -84,11 +87,52 @@ class _AddressScreenState extends State<AddressScreen> {
                     itemCount: addresses.length,
                     itemBuilder: (ctx, i) => ChangeNotifierProvider(
                       create: (c) => addresses[i],
-                      child: AddressItem(
-                        arrivedFromSettings: false,
+                      child: CheckboxListTile(
+                        dense: true,
+                        title: Text(
+                          addresses[i].city! +
+                              ', ' +
+                              addresses[i].streetName! +
+                              addresses[i].streetNumber.toString(),
+                        ),
+                        subtitle: Text(
+                          'Floor:' +
+                              addresses[i].floorNumber.toString() +
+                              ', Apartment:' +
+                              addresses[i].apartmentNumber.toString(),
+                        ),
+                        secondary: Icon(Icons.cabin),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        activeColor: Colors.green,
+                        checkColor: Colors.black,
+                        value: _isChecked,
+                        onChanged: (value) {
+                          if (value!) {
+                            setState(() {
+                              selectedAddressId = addresses[i].addressId;
+                              print(selectedAddressId);
+                            });
+                          }
+                          setState(() {
+                            _isChecked = value;
+                          });
+                        },
                       ),
                     ),
                   ),
+                ),
+                //should give the address id to the PaymentScreen for later useage.
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).primaryColor,
+                  ),
+                  child: Text('Choose Payment Method'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      PaymentScreen.routeName,
+                      arguments: selectedAddressId,
+                    );
+                  },
                 ),
                 TextButton(
                   style: TextButton.styleFrom(

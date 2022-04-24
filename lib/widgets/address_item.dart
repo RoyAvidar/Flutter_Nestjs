@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_main/models/address.dart';
 import 'package:flutter_main/providers/address_provider.dart';
 import 'package:flutter_main/screens/confirm_order_screen.dart';
+import 'package:flutter_main/screens/payment_screen.dart';
 import 'package:flutter_main/screens/settings/settings_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -79,14 +80,10 @@ class _AddressItemState extends State<AddressItem> {
                     icon: Icon(Icons.check),
                     color: Colors.lightGreen,
                     onPressed: () {
-                      //will navigate to choosePayment screen where submit will use this addressId & cartId.
-                      //  Navigator.of(context).pushNamed(
-                      //   PaymentScreen.routeName,
-                      //   arguments: address.addressId,
-                      // );
                       Navigator.of(context).pushNamed(
-                          ConfirmOrderScreen.routeName,
-                          arguments: address.addressId);
+                        ConfirmOrderScreen.routeName,
+                        arguments: address.addressId,
+                      );
                     },
                   )
                 : Row(

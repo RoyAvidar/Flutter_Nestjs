@@ -3,10 +3,7 @@ import 'package:flutter_main/models/address.dart';
 import 'package:flutter_main/models/cart.dart';
 import 'package:flutter_main/providers/address_provider.dart';
 import 'package:flutter_main/providers/cart.dart';
-import 'package:flutter_main/providers/orders.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
-// import 'package:flutter_main/widgets/address_item.dart';
-// import 'package:flutter_main/widgets/cart_item.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmOrderScreen extends StatefulWidget {
@@ -44,20 +41,6 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
       isLoading = false;
     });
     return address;
-  }
-
-  submit() async {
-    final cartId =
-        await Provider.of<CartProvider>(context, listen: false).getCartId();
-    Provider.of<OrdersProvider>(context, listen: false)
-        .addOrder(cartId, address!.addressId!);
-    final isClean = await Provider.of<CartProvider>(context, listen: false)
-        .clearCart(cartId);
-    if (isClean) {
-      Navigator.of(context).pushReplacementNamed(OverviewScreen.routeName);
-    } else {
-      throw new Error();
-    }
   }
 
   @override
