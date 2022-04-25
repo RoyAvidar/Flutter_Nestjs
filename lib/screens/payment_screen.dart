@@ -38,6 +38,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         await Provider.of<CartProvider>(context, listen: false).getCartId();
     final order = await Provider.of<OrdersProvider>(context, listen: false)
         .addOrder(cartId, address!.addressId!);
+    //make a call to the sendConfirmOrderEmail() here.
     final isClean = await Provider.of<CartProvider>(context, listen: false)
         .clearCart(cartId);
     if (isClean) {

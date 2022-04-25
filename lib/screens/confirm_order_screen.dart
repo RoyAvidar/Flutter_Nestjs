@@ -70,11 +70,13 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             ),
           ),
           Text(
-            "Thanks for your purchase.",
+            "Thank you for your purchase.",
             style: Theme.of(context).textTheme.bodyText1,
           ),
           SizedBox(height: 50),
-          Text(order!.id.toString()),
+          order == null
+              ? Text('Error: no order was found.')
+              : Text(order!.id.toString()),
           // Expanded(
           //   child: ListView.builder(
           //     itemCount: cart!.products!.length,
