@@ -75,7 +75,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   height: 25,
                 ),
                 Text(
-                  "Pick an Address",
+                  "Shipping",
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 SizedBox(
@@ -106,12 +106,11 @@ class _AddressScreenState extends State<AddressScreen> {
                         controlAffinity: ListTileControlAffinity.leading,
                         activeColor: Colors.green,
                         checkColor: Colors.black,
-                        value: selectedAddressId == null ? false : true,
+                        value: selectedAddressId == addresses[i].addressId,
                         onChanged: (value) {
                           if (value!) {
                             setState(() {
                               selectedAddressId = addresses[i].addressId;
-                              print(selectedAddressId);
                             });
                           } else {
                             setState(() {

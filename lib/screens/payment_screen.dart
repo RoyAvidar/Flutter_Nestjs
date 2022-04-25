@@ -36,12 +36,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
   submit() async {
     final cartId =
         await Provider.of<CartProvider>(context, listen: false).getCartId();
-    Provider.of<OrdersProvider>(context, listen: false)
+    final order = await Provider.of<OrdersProvider>(context, listen: false)
         .addOrder(cartId, address!.addressId!);
     final isClean = await Provider.of<CartProvider>(context, listen: false)
         .clearCart(cartId);
     if (isClean) {
-      Navigator.of(context).pushReplacementNamed(ConfirmOrderScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(
+        ConfirmOrderScreen.routeName,
+        arguments: int.parse(order.id!),
+      );
     } else {
       throw new Error();
     }
@@ -68,7 +71,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         children: [
           Center(
             child: Text(
-              'Pick Payment Method',
+              'Payment',
               style: Theme.of(context).textTheme.headline1,
             ),
           ),
@@ -79,6 +82,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     CheckboxListTile(
                       dense: true,
                       title: Text('Cash On Delivery'),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: Colors.green,
+                      checkColor: Colors.black,
+                      value: _isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          _isChecked = value!;
+                        });
+                      },
+                    ),
+                    CheckboxListTile(
+                      dense: true,
+                      title: Text('PayPal'),
                       controlAffinity: ListTileControlAffinity.leading,
                       activeColor: Colors.green,
                       checkColor: Colors.black,
@@ -112,7 +128,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             ),
             child: Text('Complete Order'),
             onPressed: () {
-              Navigator.of(context).pushNamed(ConfirmOrderScreen.routeName);
+              submit();
             },
           ),
         ],

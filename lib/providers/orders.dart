@@ -52,13 +52,49 @@ const userOrdersGraphql = """
 }
 """;
 
-const createOrderGraphql = """
-  mutation 
-    createOrder(\$createOrderData: CreateOrderInput!) {
-      createOrder(createOrderData: \$createOrderData) {
-        orderId
+const getSingleOrderGraphql = """
+  query
+    getSingleOrder(\$getOrderArgs: GetOrderArgs!) {
+      getSingleOrder(getOrderArgs: \$getOrderArgs) {
+       orderId,
+      createdAt,
+      orderPrice,
+      isReady,
+      address,
+      productOrder {
+      id,
+      quantity,
+      product {
+        productId,
+        productName,
+        productPrice,
+        productDesc,
+        imageUrl,
       }
     }
+      }
+    }
+""";
+
+const createOrderGraphql = """
+  mutation createOrder(\$createOrderData: CreateOrderInput!) {
+      createOrder(createOrderData: \$createOrderData) {
+        orderId,
+        orderPrice,
+        createdAt,
+        isReady,
+        address,
+        productOrder {
+        quantity,
+        product {
+          productId,
+          productName,
+          productPrice,
+          productDesc
+        }
+      }
+  }  
+}
 """;
 
 const toggleIsReadyGraphql = """
@@ -97,8 +133,26 @@ class OrdersProvider with ChangeNotifier {
     return _orders;
   }
 
+  Future<Order> getOrderById(int orderId) async {
+    QueryOptions queryOptions = QueryOptions(
+      document: gql(getSingleOrderGraphql),
+      variables: <String, dynamic>{
+        "getOrderArgs": {
+          "orderId": orderId,
+        }
+      },
+    );
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final order = Order.fromJson(result.data?['getSingleOrder']);
+    notifyListeners();
+    return order;
+  }
+
   //add all the content of the cart into the order.
-  void addOrder(int cartId, int addressId) async {
+  Future<Order> addOrder(int cartId, int addressId) async {
     MutationOptions queryOptions = MutationOptions(
         document: gql(createOrderGraphql),
         variables: <String, dynamic>{
@@ -112,7 +166,11 @@ class OrdersProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
+    print(result.data?['createOrder']);
+    final ord = result.data?['createOrder'];
+    final order = Order.fromJson(ord);
     notifyListeners();
+    return order;
   }
 
   Future<bool> toggleIsReady(int orderId) async {
