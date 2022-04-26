@@ -228,6 +228,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 children: [
                   TextField(
                     obscureText: false,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: EdgeInsets.only(bottom: 5),
@@ -239,6 +240,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   SizedBox(height: 4),
                   TextField(
                     obscureText: false,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: EdgeInsets.only(bottom: 5),
@@ -250,6 +252,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   SizedBox(height: 4),
                   TextField(
                     obscureText: false,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: EdgeInsets.only(bottom: 5),
@@ -261,6 +264,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   SizedBox(height: 4),
                   TextField(
                     obscureText: true,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: EdgeInsets.only(bottom: 5),
@@ -272,6 +276,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   SizedBox(height: 4),
                   TextField(
                     obscureText: _showPassword,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: EdgeInsets.only(bottom: 5),
@@ -291,6 +296,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   SizedBox(height: 4),
                   TextField(
                     obscureText: false,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: EdgeInsets.only(bottom: 5),

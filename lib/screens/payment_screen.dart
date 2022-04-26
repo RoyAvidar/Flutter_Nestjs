@@ -39,6 +39,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     final order = await Provider.of<OrdersProvider>(context, listen: false)
         .addOrder(cartId, address!.addressId!);
     //make a call to the sendConfirmOrderEmail() here.
+    Provider.of<OrdersProvider>(context, listen: false)
+        .sendConfirmOrderEmail(int.parse(order.id!));
     final isClean = await Provider.of<CartProvider>(context, listen: false)
         .clearCart(cartId);
     if (isClean) {
@@ -83,19 +85,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     CheckboxListTile(
                       dense: true,
                       title: Text('Cash On Delivery'),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      activeColor: Colors.green,
-                      checkColor: Colors.black,
-                      value: _isChecked,
-                      onChanged: (value) {
-                        setState(() {
-                          _isChecked = value!;
-                        });
-                      },
-                    ),
-                    CheckboxListTile(
-                      dense: true,
-                      title: Text('PayPal'),
                       controlAffinity: ListTileControlAffinity.leading,
                       activeColor: Colors.green,
                       checkColor: Colors.black,

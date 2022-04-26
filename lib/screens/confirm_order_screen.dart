@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_main/models/address.dart';
-import 'package:flutter_main/models/cart.dart';
 import 'package:flutter_main/models/order.dart';
-import 'package:flutter_main/providers/address_provider.dart';
-import 'package:flutter_main/providers/cart.dart';
 import 'package:flutter_main/providers/orders.dart';
 import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:provider/provider.dart';

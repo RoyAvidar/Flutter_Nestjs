@@ -104,6 +104,13 @@ const toggleIsReadyGraphql = """
     }
 """;
 
+const sendConfirmOrderEmailGraphql = """
+  query
+    sendConfirmOrderEmail(\$orderId: Float!) {
+      sendConfirmOrderEmail(orderId: \$orderId)
+    }
+""";
+
 class OrdersProvider with ChangeNotifier {
   List<Order> _orders = [];
 
@@ -166,7 +173,7 @@ class OrdersProvider with ChangeNotifier {
     if (result.hasException) {
       print(result.exception);
     }
-    print(result.data?['createOrder']);
+    // print(result.data?['createOrder']);
     final ord = result.data?['createOrder'];
     final order = Order.fromJson(ord);
     notifyListeners();
@@ -188,7 +195,18 @@ class OrdersProvider with ChangeNotifier {
     return isReady;
   }
 
-  double get totalAmount {
-    return totalAmount;
+  Future<bool> sendConfirmOrderEmail(int orderId) async {
+    QueryOptions queryOptions = QueryOptions(
+        document: gql(sendConfirmOrderEmailGraphql),
+        variables: <String, dynamic>{
+          "orderId": orderId,
+        });
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final emailSent = result.data?['sendConfirmOrderEmail'];
+    notifyListeners();
+    return emailSent;
   }
 }
