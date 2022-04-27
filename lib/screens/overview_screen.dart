@@ -164,7 +164,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 );
                 return Scaffold(
                   appBar: AppBar(
-                    title: const Text('Home'),
+                    title: const Text('Shop'),
                     bottom: TabBar(
                       indicatorWeight: 2.5,
                       indicatorSize: TabBarIndicatorSize.tab,

@@ -83,7 +83,7 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
           Form(
             key: _formKey,
             child: Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(25),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -156,14 +156,18 @@ class Admin_CreateCategoryScreenState extends State<AdminCreateCategoryScreen> {
                     },
                   ),
                   SizedBox(height: 10),
-                  TextButton(
-                    child: Text(
-                      "Save Category",
-                      style: Theme.of(context).textTheme.bodyText2,
+                  Center(
+                    child: TextButton(
+                      child: Text(
+                        "Save Category",
+                        style: TextStyle(
+                          color: Colors.green,
+                        ),
+                      ),
+                      onPressed: () {
+                        _saveForm();
+                      },
                     ),
-                    onPressed: () {
-                      _saveForm();
-                    },
                   ),
                 ],
               ),
