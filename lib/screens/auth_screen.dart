@@ -200,110 +200,134 @@ class _AuthScreenState extends State<AuthScreen> {
               duration: const Duration(milliseconds: 200),
               firstChild: Column(
                 children: [
-                  TextField(
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: EdgeInsets.only(bottom: 5),
-                      labelText: 'First Name',
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: TextField(
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: EdgeInsets.only(bottom: 5),
+                        labelText: 'First Name',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userNameController,
                     ),
-                    controller: userNameController,
                   ),
                   SizedBox(height: 5),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: EdgeInsets.only(bottom: 5),
-                      labelText: 'Password',
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: EdgeInsets.only(bottom: 5),
+                        labelText: 'Password',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userPassController,
                     ),
-                    controller: userPassController,
                   ),
                 ],
               ),
               secondChild: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextField(
-                    obscureText: false,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: EdgeInsets.only(bottom: 5),
-                      labelText: 'First Name',
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                    ),
-                    controller: userNameController,
-                  ),
-                  SizedBox(height: 4),
-                  TextField(
-                    obscureText: false,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: EdgeInsets.only(bottom: 5),
-                      labelText: 'Last Name',
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                    ),
-                    controller: userLastNameController,
-                  ),
-                  SizedBox(height: 4),
-                  TextField(
-                    obscureText: false,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: EdgeInsets.only(bottom: 5),
-                      labelText: 'Email Address',
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                    ),
-                    controller: userEmailController,
-                  ),
-                  SizedBox(height: 4),
-                  TextField(
-                    obscureText: true,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: EdgeInsets.only(bottom: 5),
-                      labelText: 'Password',
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                    ),
-                    controller: userPassController,
-                  ),
-                  SizedBox(height: 4),
-                  TextField(
-                    obscureText: _showPassword,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: EdgeInsets.only(bottom: 5),
-                      labelText: 'Validate Password',
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.remove_red_eye),
-                        onPressed: () {
-                          setState(() {
-                            _showPassword = !_showPassword;
-                          });
-                        },
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      obscureText: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: EdgeInsets.only(bottom: 5),
+                        labelText: 'First Name',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
                       ),
+                      controller: userNameController,
                     ),
-                    controller: validatePassController,
                   ),
                   SizedBox(height: 4),
-                  TextField(
-                    obscureText: false,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: EdgeInsets.only(bottom: 5),
-                      labelText: 'Phone Number',
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      obscureText: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: EdgeInsets.only(bottom: 5),
+                        labelText: 'Last Name',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userLastNameController,
                     ),
-                    controller: userPhoneController,
+                  ),
+                  SizedBox(height: 4),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      obscureText: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: EdgeInsets.only(bottom: 5),
+                        labelText: 'Email Address',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userEmailController,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      obscureText: true,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: EdgeInsets.only(bottom: 5),
+                        labelText: 'Password',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      controller: userPassController,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      obscureText: _showPassword,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: EdgeInsets.only(bottom: 5),
+                        labelText: 'Validate Password',
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.remove_red_eye),
+                          onPressed: () {
+                            setState(() {
+                              _showPassword = !_showPassword;
+                            });
+                          },
+                        ),
+                      ),
+                      controller: validatePassController,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      obscureText: false,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: EdgeInsets.only(bottom: 5),
+                        labelText: 'Phone Number',
+                      ),
+                      controller: userPhoneController,
+                    ),
                   ),
                 ],
               ),

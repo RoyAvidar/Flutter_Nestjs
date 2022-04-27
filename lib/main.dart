@@ -1,12 +1,12 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:flutter_main/providers/address_provider.dart';
 import 'package:flutter_main/providers/auth.dart';
 import 'package:flutter_main/providers/category_provider.dart';
 import 'package:flutter_main/providers/reviews.dart';
 import 'package:flutter_main/providers/user_provider.dart';
-import 'package:flutter_main/screens/settings/header_settings_screen.dart';
+// import 'package:flutter_main/screens/settings/header_settings_screen.dart';
 import 'package:flutter_main/screens/splash_screen.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:provider/provider.dart';
@@ -136,6 +136,15 @@ class _MyAppState extends State<MyApp> {
         ),
         initial: AdaptiveThemeMode.system,
         builder: (light, dark) => MaterialApp(
+          //     localizationsDelegates: [
+          //   GlobalMaterialLocalizations.delegate,
+          //   GlobalWidgetsLocalizations.delegate,
+          // ],
+          // supportedLocales: [
+          //   const Locale('en', ''),
+          //   const Locale('es', ''),
+          //   const Locale('de', ''),
+          // ],
           // showPerformanceOverlay: true,
           theme: light,
           darkTheme: dark,

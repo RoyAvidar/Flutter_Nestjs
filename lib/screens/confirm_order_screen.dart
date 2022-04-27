@@ -201,7 +201,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             ),
             child: Text('Order Details'),
           ),
-          Text("Order #" + order!.id!),
+          order == null ? Text("Order #" + order!.id!) : Container(),
           SizedBox(height: 110),
           Container(
             child: ElevatedButton(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/address.dart';
-import 'package:flutter_main/models/cart.dart';
 import 'package:flutter_main/providers/address_provider.dart';
 import 'package:flutter_main/providers/cart.dart';
 import 'package:flutter_main/providers/orders.dart';
 import 'package:flutter_main/screens/confirm_order_screen.dart';
-import 'package:flutter_main/screens/overview_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pay/pay.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -20,6 +20,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
   var isLoading = true;
   bool _isChecked = false;
   Address? address;
+
+  // final _paymentItems = [
+  //   PaymentItem(
+  //     label: 'Total',
+  //     amount: '99.99',
+  //     status: PaymentItemStatus.final_price,
+  //   )
+  // ];
+
+  // void onGooglePayResult(paymentResult) {
+  //   debugPrint(paymentResult.toString());
+  // }
+
+  // void onApplePayResult(paymentResult) {
+  //   debugPrint(paymentResult.toString());
+  // }
 
   Future<Address?> getAddress() async {
     final addressId = ModalRoute.of(context)!.settings.arguments as int;
@@ -38,7 +54,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
         await Provider.of<CartProvider>(context, listen: false).getCartId();
     final order = await Provider.of<OrdersProvider>(context, listen: false)
         .addOrder(cartId, address!.addressId!);
-    //make a call to the sendConfirmOrderEmail() here.
     Provider.of<OrdersProvider>(context, listen: false)
         .sendConfirmOrderEmail(int.parse(order.id!));
     final isClean = await Provider.of<CartProvider>(context, listen: false)
@@ -110,6 +125,29 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                   ],
                 ),
+          // GooglePayButton(
+          //   paymentConfigurationAsset:
+          //       'default_payment_profile_google_pay.json',
+          //   paymentItems: _paymentItems,
+          //   style: GooglePayButtonStyle.black,
+          //   type: GooglePayButtonType.pay,
+          //   margin: const EdgeInsets.only(top: 15.0),
+          //   onPaymentResult: onGooglePayResult,
+          //   loadingIndicator: const Center(
+          //     child: CircularProgressIndicator(),
+          //   ),
+          // ),
+          // ApplePayButton(
+          //   paymentConfigurationAsset: 'default_payment_profile_apple_pay.json',
+          //   paymentItems: _paymentItems,
+          //   style: ApplePayButtonStyle.black,
+          //   type: ApplePayButtonType.buy,
+          //   margin: const EdgeInsets.only(top: 15.0),
+          //   onPaymentResult: onApplePayResult,
+          //   loadingIndicator: const Center(
+          //     child: CircularProgressIndicator(),
+          //   ),
+          // ),
 
           //will submit the order and navigate to confirm_order_screen with orderId.
           ElevatedButton(
