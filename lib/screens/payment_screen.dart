@@ -5,8 +5,8 @@ import 'package:flutter_main/providers/cart.dart';
 import 'package:flutter_main/providers/orders.dart';
 import 'package:flutter_main/screens/confirm_order_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:pay/pay.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:pay/pay.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -19,6 +19,7 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   var isLoading = true;
   bool _isChecked = false;
+  bool _isChecked2 = false;
   Address? address;
 
   // final _paymentItems = [
@@ -70,13 +71,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     this.getAddress();
   }
@@ -116,10 +115,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       controlAffinity: ListTileControlAffinity.leading,
                       activeColor: Colors.green,
                       checkColor: Colors.black,
-                      value: _isChecked,
+                      value: _isChecked2,
                       onChanged: (value) {
                         setState(() {
-                          _isChecked = value!;
+                          _isChecked2 = value!;
                         });
                       },
                     ),

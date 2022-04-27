@@ -16,7 +16,6 @@ class AddressScreen extends StatefulWidget {
 
 class _AddressScreenState extends State<AddressScreen> {
   List<Address> addresses = [];
-  bool _isChecked = false;
   int? selectedAddressId;
 
   Future<List<Address>> getAddressesByUser() async {
@@ -128,12 +127,14 @@ class _AddressScreenState extends State<AddressScreen> {
                     primary: Theme.of(context).primaryColor,
                   ),
                   child: Text('Choose Payment Method'),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      PaymentScreen.routeName,
-                      arguments: selectedAddressId,
-                    );
-                  },
+                  onPressed: selectedAddressId != null
+                      ? () {
+                          Navigator.of(context).pushNamed(
+                            PaymentScreen.routeName,
+                            arguments: selectedAddressId,
+                          );
+                        }
+                      : () {},
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
