@@ -224,11 +224,16 @@ class _ReviewItemState extends State<ReviewItem> {
                                 ),
                               );
                             },
+                      // icon: review.userDidLikeOrDislike!
+                      // ? review.whatUserActuallyDid!
+                      //     ? Icon(Icons.fav)
+                      //     : Icon(Icons.heart_broken)
+                      // : Icon(Icons.heart_broken_outlined),
                       icon: review.userDidLikeOrDislike!
                           ? review.whatUserActuallyDid!
-                              ? Icon(Icons.heart_broken_outlined)
-                              : Icon(Icons.heart_broken)
-                          : Icon(Icons.heart_broken_outlined),
+                              ? Icon(Icons.favorite_border_outlined)
+                              : Icon(Icons.favorite_border)
+                          : Icon(Icons.favorite_border_outlined),
                       color: Colors.red,
                     ),
                   ],
