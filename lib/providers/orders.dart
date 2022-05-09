@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/config/gql_client.dart';
+import 'package:flutter_main/models/product_order.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../models/order.dart';
 
@@ -111,6 +112,20 @@ const sendConfirmOrderEmailGraphql = """
     }
 """;
 
+const getOrderProductsGraphql = """
+  query
+    getOrderProducts {
+      id,
+      order {
+        orderId
+      },
+      product {
+        productId
+      },
+      quantity,
+    }
+""";
+
 class OrdersProvider with ChangeNotifier {
   List<Order> _orders = [];
 
@@ -208,5 +223,19 @@ class OrdersProvider with ChangeNotifier {
     final emailSent = result.data?['sendConfirmOrderEmail'];
     notifyListeners();
     return emailSent;
+  }
+
+  Future<List<ProductOrder>> get getOrderProducts async {
+    QueryOptions queryOptions =
+        QueryOptions(document: gql(getOrderProductsGraphql));
+    QueryResult result = await GraphQLConfig.authClient.query(queryOptions);
+    if (result.hasException) {
+      print(result.exception);
+    }
+    final orderProducts = result.data?['getOrderProducts']
+        .map<ProductOrder>((ordProd) => ProductOrder.fromJson(ordProd))
+        .toList();
+    notifyListeners();
+    return orderProducts;
   }
 }
