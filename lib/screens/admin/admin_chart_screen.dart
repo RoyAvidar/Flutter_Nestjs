@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:fl_chart/fl_chart.dart';
 
 class AdminChartScreen extends StatefulWidget {
   const AdminChartScreen({Key? key}) : super(key: key);
@@ -13,7 +14,17 @@ class _AdminChartScreenState extends State<AdminChartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(),
+      body: Card(
+        child: Column(
+          children: [
+            PieChart(
+              PieChartData(
+                  // sections: getSections(),
+                  ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
