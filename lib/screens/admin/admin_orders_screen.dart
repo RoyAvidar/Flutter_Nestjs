@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main/models/order.dart';
 import 'package:flutter_main/providers/orders.dart';
+import 'package:flutter_main/screens/admin/admin_chart_screen.dart';
 import 'package:flutter_main/widgets/admin/admin_order_item.dart';
 import 'package:flutter_main/widgets/app_drawer.dart';
 import 'package:flutter_main/widgets/order_item.dart';
@@ -38,6 +39,14 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hello Admin'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(AdminChartScreen.routeName);
+            },
+            icon: Icon(Icons.pie_chart_outline),
+          ),
+        ],
       ),
       drawer: AppDrawer(),
       body: orders.isEmpty

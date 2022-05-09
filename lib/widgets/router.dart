@@ -1,6 +1,7 @@
 import 'package:flutter_main/screens/account_address_screen.dart';
 import 'package:flutter_main/screens/add_address_screen.dart';
 import 'package:flutter_main/screens/address_screen.dart';
+import 'package:flutter_main/screens/admin/admin_chart_screen.dart';
 import 'package:flutter_main/screens/admin/categories/admin_create_category_screen.dart';
 import 'package:flutter_main/screens/admin/categories/admin_delete_category_screen.dart';
 import 'package:flutter_main/screens/admin/categories/admin_edit_categories_screen.dart';
@@ -40,6 +41,7 @@ class Routes {
     AdminDeleteCategoryScreen.routeName: (ctx) => AdminDeleteCategoryScreen(),
     AdminOrderScreen.routeName: (ctx) => AdminOrderScreen(),
     AdminUserScreen.routeName: (ctx) => AdminUserScreen(),
+    AdminChartScreen.routeName: (ctx) => AdminChartScreen(),
     EditProductScreen.routeName: (ctx) => EditProductScreen(),
     OverviewScreen.routeName: (ctx) => OverviewScreen(),
     CategoriesFilter.routeName: (ctx) => CategoriesFilter(),

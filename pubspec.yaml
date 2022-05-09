@@ -37,6 +37,7 @@ dependencies:
   flutter_settings_screens: ^0.2.2+1
   image_picker: ^0.8.4+4
   pay: ^1.0.8
+  fl_chart: ^0.50.1
 
 dev_dependencies:
   flutter_test:
