@@ -113,7 +113,7 @@ const sendConfirmOrderEmailGraphql = """
 """;
 
 const getOrderProductsGraphql = """
-  query
+  query {
     getOrderProducts {
       id,
       order {
@@ -124,6 +124,7 @@ const getOrderProductsGraphql = """
       },
       quantity,
     }
+  }
 """;
 
 class OrdersProvider with ChangeNotifier {
