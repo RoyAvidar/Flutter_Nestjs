@@ -37,8 +37,14 @@ class _IndicatorsWidgetState extends State<IndicatorsWidget> {
           .map(
             (data) => Container(
               padding: EdgeInsets.symmetric(vertical: 2),
-              child:
-                  buildIndicator(color: Colors.green, text: data.product!.name),
+              child: buildIndicator(
+                color: data.product!.id == "1"
+                    ? Colors.red
+                    : data.product!.id == "2"
+                        ? Colors.blue
+                        : Colors.green,
+                text: data.product!.name,
+              ),
             ),
           )
           .toList(),
@@ -62,7 +68,7 @@ class _IndicatorsWidgetState extends State<IndicatorsWidget> {
               color: color,
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Text(
             text!,
             style: TextStyle(

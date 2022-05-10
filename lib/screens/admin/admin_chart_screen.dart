@@ -29,7 +29,11 @@ class _AdminChartScreenState extends State<AdminChartScreen> {
       .asMap()
       .map<int, PieChartSectionData>((index, data) {
         final value = PieChartSectionData(
-          color: data.product!.id == "1" ? Colors.black : Colors.yellow,
+          color: data.product!.id == "1"
+              ? Colors.red
+              : data.product!.id == "2"
+                  ? Colors.blue
+                  : Colors.green,
           value: double.parse(data.quantity.toString()),
           title: data.product!.name,
           titleStyle: TextStyle(
