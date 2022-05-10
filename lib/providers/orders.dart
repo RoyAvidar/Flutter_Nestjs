@@ -120,7 +120,11 @@ const getOrderProductsGraphql = """
         orderId
       },
       product {
-        productId
+        productId,
+        productName,
+        productDesc,
+        productPrice,
+        imageUrl
       },
       quantity,
     }
